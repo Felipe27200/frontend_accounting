@@ -1,0 +1,30 @@
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div class="grid">
+        <div class="col-4 col-offset-4 mt-6">
+            <label for="" class="">Username:</label>
+            <input 
+              formControlName="username"
+              type="text" 
+              pInputText 
+              class="p-inputtext-sm text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full mt-2">
+        </div>
+    
+        <div class="col-4 col-offset-4 col-offset-3">
+            <label for="">Password:</label>
+            <input 
+              formControlName="password"
+              type="password" 
+              pInputText 
+              class="p-inputtext-sm text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full mt-2">
+        </div>
+    
+        <div class="col-4 col-offset-4 text-center mt-4">
+            <p-button type="submit" label="Login" styleClass="w-full" [disabled]="!loginForm.valid"></p-button>
+        </div>
+    </div>
+</form>
+
+<div class="col-4 col-offset-4 text-center">
+    <p-button (onClick)="test()" label="Test" styleClass="w-full" severity="danger"></p-button>
+</div>
+
