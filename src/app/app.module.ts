@@ -9,9 +9,14 @@ import { LoginComponent } from './login/login.component';
 
 import { AppRoutingModule } from './app-routing.module';
 
+// App Modules
+import { AccountModule } from './account/account.module';
+import { CategoryModule } from './category/category.module';
+
 // PrimeNg Components
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
+import { CardModule } from 'primeng/card';
 
 @NgModule({
   declarations: [
@@ -20,10 +25,13 @@ import { InputTextModule } from 'primeng/inputtext';
   ],
   imports: [
     BrowserModule,
+    CardModule,
     ButtonModule,
     InputTextModule,
     FormsModule,
     ReactiveFormsModule,
+    AccountModule,
+    CategoryModule,
     AppRoutingModule,
     HttpClientModule
   ],

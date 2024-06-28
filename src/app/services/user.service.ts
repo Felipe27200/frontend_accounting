@@ -51,7 +51,7 @@ export class UserService {
     else
     {
       console.error("The Backend returned the code: " 
-        + error.status + "\nBody: \n\t" + error.error);
+        + error.status + "\nBody: \n\t" + error.error.errors);
     }
 
     return throwError(() => error);

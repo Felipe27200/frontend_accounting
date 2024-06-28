@@ -5,6 +5,8 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import { LocalStorageService } from '../services/local-storage.service';
 
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -16,10 +18,14 @@ export class LoginComponent implements OnInit {
     password: ['', Validators.required],
   });
 
+  errors: any[] = [];
+
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    private route: ActivatedRoute,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -28,6 +34,8 @@ export class LoginComponent implements OnInit {
 
   onSubmit()
   {
+    this.errors = [];
+
     if (!this.loginForm.valid)
       return;
 
@@ -37,17 +45,19 @@ export class LoginComponent implements OnInit {
     };
 
     this.userService.login(formData)
-      .subscribe((response: any) => {
-        this.localStorageService.setItem('Bearer-token', response.body);
-      });
-  }
+      .subscribe({
+        next: (response) => {    
+            this.localStorageService.setItem('Bearer-token', response.body);
 
-  test()
-  {
-    this.userService.test()
-      .subscribe((response: any) => {
-        console.log(response);
-      })
+            this.router.navigate(['/accounts']);
+        },
+        error: (e) => {
+          if (e.error.hasOwnProperty("errors"))
+            this.errors = e.error.errors;
+          else
+            this.errors.push(e.error.message);
+        }
+      });
   }
 
   get username() { return this.loginForm.controls.username }
