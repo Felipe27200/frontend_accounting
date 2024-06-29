@@ -17,6 +17,7 @@ import { CategoryModule } from './category/category.module';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { CardModule } from 'primeng/card';
+import { MenubarModule } from 'primeng/menubar';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { CardModule } from 'primeng/card';
     CardModule,
     ButtonModule,
     InputTextModule,
+    MenubarModule,
     FormsModule,
     ReactiveFormsModule,
     AccountModule,
