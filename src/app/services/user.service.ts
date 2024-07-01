@@ -4,8 +4,6 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { catchError, } from "rxjs/operators";
 import { throwError } from 'rxjs';
 
-import { LocalStorageService } from './local-storage.service';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -18,7 +16,6 @@ export class UserService {
 
   constructor(
     private http: HttpClient,
-    private localStorageService: LocalStorageService
   ) { }
 
   login(formData: any) {
@@ -28,20 +25,6 @@ export class UserService {
       .pipe(
         catchError(this.handleError)
       );
-  }
-
-  test()
-  {
-    let url = `${this.prefix}/test`;
-    let bearerToken = this.localStorageService.getItem('Bearer-token');
-
-    const headers = new HttpHeaders({ 
-      'Content-type': 'application/json',
-      'Authorization': `Bearer ${ bearerToken ?? '' }`
-    })
-
-    return this.http.get<any>(url, { headers })
-      .pipe(catchError(this.handleError));
   }
 
   public handleError(error: HttpErrorResponse)
