@@ -24,11 +24,32 @@ export class NavBarComponent implements OnInit {
     this.items = [
       {
           label: 'Account',
-          icon: 'pi pi-dollar',
+          icon: 'pi pi-wallet',
           items: [
               {
                   label: 'Register',
                   icon: 'pi pi-plus-circle'
+              },
+              {
+                  label: 'List',
+                  icon: 'pi pi-list'
+              },
+              {
+                  label: 'Update',
+                  icon: 'pi pi-pencil'
+              }
+          ]
+      },
+      {
+          label: 'Category',
+          icon: 'pi pi-receipt',
+          items: [
+              {
+                  label: 'Create',
+                  icon: 'pi pi-plus-circle',
+                  command: () => {
+                    this.router.navigate(["/categories/create"]);
+                  }
               },
               {
                   label: 'List',
@@ -46,6 +67,7 @@ export class NavBarComponent implements OnInit {
         items: [
           {
             label: "Logout",
+            icon: "pi pi-sign-out",
             command: () => {
               this.logout();
             }

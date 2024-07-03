@@ -12,6 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 // App Modules
 import { AccountModule } from './account/account.module';
 import { CategoryModule } from './category/category.module';
+import { SharedComponentModule } from './common_components/shared-component.module';
 
 // PrimeNg Components
 import { ButtonModule } from 'primeng/button';
@@ -32,6 +33,7 @@ import { MenubarModule } from 'primeng/menubar';
     MenubarModule,
     FormsModule,
     ReactiveFormsModule,
+    SharedComponentModule,
     AccountModule,
     CategoryModule,
     AppRoutingModule,

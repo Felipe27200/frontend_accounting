@@ -10,8 +10,8 @@ const routes: Routes = [
     path: 'categories',
     component: CategoryCenterComponent,
     children: [
-      { path: '', component: CategoryListComponent },
       { path: 'create', component: CategoryCreateComponent },
+      { path: '', component: CategoryListComponent },
     ]
   }
 ];
