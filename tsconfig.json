@@ -2,6 +2,16 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    /**
+      These two properties let us to define an
+      aliases for some routes in our project
+      with the purpose to get files without 
+      writing all their paths.
+    */
+    "baseUrl": "src",
+    "paths": {
+      "@services/*": ["app/services/*"]
+    },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
