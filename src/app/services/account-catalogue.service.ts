@@ -10,7 +10,7 @@ import { LocalStorageService } from './local-storage.service';
   providedIn: 'root'
 })
 export class AccountCatalogueService {
-  private apiUrl = "api/categories";
+  private apiUrl = "api/account-catalogue";
 
   constructor(
     private http: HttpClient,
@@ -25,7 +25,7 @@ export class AccountCatalogueService {
       headers: new HttpHeaders({ 'Authorization': `Bearer ${token!}` })
     };
 
-    return this.http.get<any>(this.apiUrl, httpOptions)
+    return this.http.get<any>(`${this.apiUrl}/`, httpOptions)
       .pipe(
         catchError(this.handleError)
       );

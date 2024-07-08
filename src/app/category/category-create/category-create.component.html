@@ -2,10 +2,24 @@
     <div class="flex mt-4">
         <p class="font-bold text-2xl"><span class="font-bold pi pi-plus-circle"></span> Create Category</p>
     </div>
-
-    <div class="flex">
-        <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
-
-        </form>
-    </div>
 </div>
+
+<div class="flex justify-content-center mt-7">
+    <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()" class="w-3">
+        <div class="field">
+            <label for="username">Account Type:</label>
+            <p-dropdown 
+              formControlName="accountCatalogueId"
+              [options]="accountsCatalogue"
+              optionLabel="name"
+              optionValue="name"
+              placeholder="Select a type" 
+              styleClass="text-base text-color surface-overlay border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"/>
+        </div>
+        <div class="field">
+            <label for="lastname1">Name:</label>
+            <input pInputText id="name" formControlName="name" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+        </div>
+    </form>
+</div>
+

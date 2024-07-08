@@ -8,9 +8,11 @@ import { AccountCatalogueService } from '@services/account-catalogue.service';
   styleUrl: './category-create.component.css'
 })
 export class CategoryCreateComponent implements OnInit {
+  
+  accountsCatalogue: any[] = [];
   categoryForm = this.formBuilder.group({
     name: ['', Validators.required],
-    parentCategory: [''],
+    parentCategory: [this.accountsCatalogue],
     accountCatalogueId: ['', Validators.required]
   });
 
@@ -22,11 +24,11 @@ export class CategoryCreateComponent implements OnInit {
   ngOnInit(): void {
     this.accountCatalogueService.getAccountsCatalogue()
       .subscribe({
-        next: () => {
-
+        next: (response: any) => {
+          this.accountsCatalogue = response;
         },
-        error: () => {
-          
+        error: (error) => {
+          console.log(error);
         }
       });
   }
@@ -34,4 +36,6 @@ export class CategoryCreateComponent implements OnInit {
   onSubmit() {
 
   }
+
+  get name() { return this.formBuilder.control.name }
 }

@@ -19,6 +19,8 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { CardModule } from 'primeng/card';
 import { MenubarModule } from 'primeng/menubar';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 @NgModule({
   declarations: [
@@ -27,6 +29,7 @@ import { MenubarModule } from 'primeng/menubar';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     CardModule,
     ButtonModule,
     InputTextModule,
