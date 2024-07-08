@@ -14,6 +14,7 @@ import { CategoryListComponent } from './category-list/category-list.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { InputTextModule } from 'primeng/inputtext';
     ReactiveFormsModule,
     InputTextModule,
     DropdownModule,
+    ButtonModule,
     SharedComponentModule,
     CategoryRoutingModule
   ]

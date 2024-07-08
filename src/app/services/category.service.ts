@@ -2,22 +2,22 @@ import { Injectable } from '@angular/core';
 
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { catchError } from "rxjs/operators";
-import { throwError } from 'rxjs';
 
-import { LocalStorageService } from '@services/local-storage.service';
+import { LocalStorageService } from './local-storage.service';
+import { throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AccountCatalogueService {
-  private apiUrl = "api/account-catalogue";
+export class CategoryService {
+  private apiUrl = "api/categories";
 
   constructor(
     private http: HttpClient,
     private localStorageService: LocalStorageService
   ) { }
 
-  getAccountsCatalogue()
+  getCategories()
   {
     let token = this.localStorageService.getItem('Bearer token');
 

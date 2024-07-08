@@ -7,19 +7,38 @@
 <div class="flex justify-content-center mt-7">
     <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()" class="w-3">
         <div class="field">
-            <label for="username">Account Type:</label>
+            <label for="account-catalogue">Account Type:</label>
             <p-dropdown 
+              id="account-catalogue"
               formControlName="accountCatalogueId"
               [options]="accountsCatalogue"
               optionLabel="name"
-              optionValue="name"
+              optionValue="id"
               placeholder="Select a type" 
               styleClass="text-base text-color surface-overlay border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"/>
         </div>
         <div class="field">
-            <label for="lastname1">Name:</label>
+            <label for="name">Name:</label>
             <input pInputText id="name" formControlName="name" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
         </div>
+        <div class="field">
+            <label for="parent-category">Parent Category:</label>
+            <p-dropdown 
+              id="parent-category"
+              formControlName="parentCategory"
+              [options]="parentCategoryList"
+              optionLabel="name"
+              optionValue="id"
+              placeholder="Select a type" 
+              styleClass="text-base text-color surface-overlay border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"/>
+        </div>
+
+        <p-button 
+          type="submit" 
+          label="Create Category" 
+          styleClass="w-full" 
+          [disabled]="!categoryForm.valid"
+        ></p-button>
     </form>
 </div>
 
