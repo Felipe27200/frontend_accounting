@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, SimpleChanges, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges, Input, Output, EventEmitter, output } from '@angular/core';
 
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -18,7 +18,7 @@ export class CategoryFormComponent implements OnInit, OnChanges {
    * Let us to emit an event to the parent,
    * so it can handle the rest of the process
    */
-  @Output() submit: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onSubmit = new EventEmitter<any>();
 
   accountsCatalogue: any[] = [];
   parentCategoryList: any[] = [];
@@ -51,7 +51,7 @@ export class CategoryFormComponent implements OnInit, OnChanges {
     this.categoryForm.controls.accountCatalogueId.setValue(this.category.accountCatalogue.id);
   }
 
-  ngOnInit(): void {    
+  ngOnInit(): void {
     this.accountCatalogueService.getAccountsCatalogue()
       .subscribe({
         next: (response: any) => {
@@ -73,7 +73,7 @@ export class CategoryFormComponent implements OnInit, OnChanges {
       });
   }
 
-  onSubmit() {
+  validateForm() {
     if (!this.categoryForm.valid)
       return;
 
@@ -100,7 +100,7 @@ export class CategoryFormComponent implements OnInit, OnChanges {
      * so, in this way all the process pass
      * to it.
      */
-    this.submit.emit(formData);
+    this.onSubmit.emit(formData);
   }
 
   get name() { return this.categoryForm.controls.name }

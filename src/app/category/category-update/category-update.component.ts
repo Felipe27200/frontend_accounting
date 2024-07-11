@@ -34,6 +34,12 @@ export class CategoryUpdateComponent implements OnInit {
         .subscribe({
           next: (response) => {
             this.category = response;
+          },
+          error: (error) => {
+            if (error.status == 404)
+            {
+              this.router.navigate(["/categories"]);
+            }
           }
         });
     }
@@ -44,9 +50,10 @@ export class CategoryUpdateComponent implements OnInit {
     this.categoryService.updateCategory(formData, this.selectedId!)
       .subscribe({
         next: (response: any) => {
-          console.warn(response);
-
           this.router.navigate(["/categories"]);
+        },
+        error: (error) => {
+          console.dir(error);
         }
       });
   }

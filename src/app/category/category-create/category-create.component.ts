@@ -13,16 +13,17 @@ export class CategoryCreateComponent {
   constructor(
     private categoryService: CategoryService,
     private router: Router,
-  )
-  {}
+  ) { }
+
   onSubmit(formData: any)
-  {
+  {    
     this.categoryService.createCategory(formData)
     .subscribe({
       next: (response: any) => {
-        console.warn(response);
-
         this.router.navigate(["/categories"]);
+      },
+      error: (error) => {
+        console.dir(error);
       }
     });
   }

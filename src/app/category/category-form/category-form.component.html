@@ -3,8 +3,9 @@
       <p class="font-bold text-2xl"><span class="font-bold pi pi-file-edit"></span> {{ title }} Category</p>
   </div>
 </div>
+
 <div class="flex justify-content-center mt-7">
-    <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()" class="w-3">
+    <form [formGroup]="categoryForm" (ngSubmit)="validateForm()" class="w-3">
         <div class="field">
             <label for="account-catalogue">Account Type:</label>
             <p-dropdown 
