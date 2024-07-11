@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, SimpleChanges, Input } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges, Input, Output, EventEmitter } from '@angular/core';
 
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -13,6 +13,12 @@ import { CategoryService } from '@services/category.service';
 })
 export class CategoryFormComponent implements OnInit, OnChanges {
   @Input() title = "";
+  @Input() category: any;
+  /**
+   * Let us to emit an event to the parent,
+   * so it can handle the rest of the process
+   */
+  @Output() submit: EventEmitter<any> = new EventEmitter<any>();
 
   accountsCatalogue: any[] = [];
   parentCategoryList: any[] = [];
@@ -29,14 +35,23 @@ export class CategoryFormComponent implements OnInit, OnChanges {
     private accountCatalogueService: AccountCatalogueService,
     private categoryService: CategoryService,
     private router: Router,
-    private route: ActivatedRoute
   ) {}
   
   ngOnChanges(changes: SimpleChanges): void {
-    // throw new Error('Method not implemented.');
+    if (changes["category"] === null || changes["category"] === undefined 
+        || changes["category"].currentValue === null || changes["category"].currentValue === undefined)
+    {
+      return;
+    }
+
+    this.category = changes["category"].currentValue;
+
+    this.categoryForm.controls.name.setValue(this.category.name);
+    this.categoryForm.controls.parentCategory.setValue(this.category.parentCategory);
+    this.categoryForm.controls.accountCatalogueId.setValue(this.category.accountCatalogue.id);
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
     this.accountCatalogueService.getAccountsCatalogue()
       .subscribe({
         next: (response: any) => {
@@ -57,6 +72,7 @@ export class CategoryFormComponent implements OnInit, OnChanges {
         }
       });
   }
+
   onSubmit() {
     if (!this.categoryForm.valid)
       return;
@@ -67,12 +83,8 @@ export class CategoryFormComponent implements OnInit, OnChanges {
     if (!this.accountCatalogueId.value || typeof(this.accountCatalogueId.value) != "number")
       this.errors.push("That is not a valid account catalogue");
 
-    console.log(this.parentCategory.value);
-
     if ((this.parentCategory.value !== null && this.parentCategory.value !== undefined) && typeof(this.parentCategory.value) != "number")
       this.errors.push("That is not a valid parent category");
-
-    console.dir(this.errors);
 
     if (this.errors.length > 0)
       return;
@@ -83,14 +95,12 @@ export class CategoryFormComponent implements OnInit, OnChanges {
       parentCategory: this.parentCategory.value,
     };
 
-    this.categoryService.createCategorie(formData)
-      .subscribe({
-        next: (response: any) => {
-          console.warn(response);
-
-          this.router.navigate(["/categories"]);
-        }
-      });
+    /**
+     * This trigger the event to the parent,
+     * so, in this way all the process pass
+     * to it.
+     */
+    this.submit.emit(formData);
   }
 
   get name() { return this.categoryForm.controls.name }

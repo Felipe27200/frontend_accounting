@@ -17,11 +17,19 @@ export class CategoryService {
     private localStorageService: LocalStorageService
   ) { }
 
-  createCategorie(categorie: any)
+  createCategory(category: any)
   {
     let httpOptions = this.getHeader();
 
-    return this.http.post<any>(`${this.apiUrl}/create`, categorie, httpOptions)
+    return this.http.post<any>(`${this.apiUrl}/create`, category, httpOptions)
+      .pipe(catchError(this.handleError))
+  }
+
+  updateCategory(category: any, id: number | string)
+  {
+    let httpOptions = this.getHeader();
+
+    return this.http.put<any>(`${this.apiUrl}/${+id}`, category, httpOptions)
       .pipe(catchError(this.handleError))
   }
 
@@ -35,7 +43,7 @@ export class CategoryService {
       );
   }
 
-  getCategory(id: number | string)
+  getCategory(id: number | string | null)
   {
     let httpOptions = this.getHeader();
 

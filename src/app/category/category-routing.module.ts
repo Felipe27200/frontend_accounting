@@ -17,8 +17,8 @@ const routes: Routes = [
         path: '',
         canActivateChild: [authGuard],
         children:[
-          { path: ':id', component: CategoryUpdateComponent },
           { path: 'create', component: CategoryCreateComponent },
+          { path: ':id', component: CategoryUpdateComponent },
           { path: '', component: CategoryListComponent },
         ]
       },

@@ -25,10 +25,9 @@ export class CategoryListComponent implements OnInit {
       .subscribe({
         next: (response: any) => {
           this.categories = response;
-          console.log(response);
         },
         error: (error) => {
-          console.warn(error);
+          console.error(error);
         }
       });
   }

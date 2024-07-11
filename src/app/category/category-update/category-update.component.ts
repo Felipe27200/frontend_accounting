@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 
 import { Router, ActivatedRoute } from '@angular/router';
 import { CategoryService } from '@services/category.service';
-import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-category-update',
@@ -11,39 +10,44 @@ import { switchMap } from 'rxjs';
 })
 export class CategoryUpdateComponent implements OnInit {
   category!: any;
-  selectedId!: number | string;
+  selectedId!: number | string | null;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private categoryService: CategoryService
   ) {}
-  // switchMap(params => {
-  //   this.selectedId = parseInt(params.get("id")!, 10);
-
-  //   this.categoryService.getCategory(this.selectedId)
-  //     .subscribe()
-  // })
 
   ngOnInit(): void {
-    this.selectedId = parseInt(this.route.snapshot.params["id"]!);
+    this.route.paramMap.subscribe(params => {
+      this.selectedId = this.route.snapshot.paramMap.get("id");
+    })
 
-    this.categoryService.getCategory(this.selectedId)
+    if (this.selectedId === null || this.selectedId === undefined || this.selectedId === "")
+      this.router.navigate(["/categories"]);
+
+    if (isNaN(Number(this.selectedId)))
+      this.router.navigate(["/categories"]);
+    else
+    {
+      this.categoryService.getCategory(this.selectedId)
+        .subscribe({
+          next: (response) => {
+            this.category = response;
+          }
+        });
+    }
+  }
+
+  onSubmit(formData: any)
+  {
+    this.categoryService.updateCategory(formData, this.selectedId!)
       .subscribe({
-        next: (response) => {
-          console.dir(response);
+        next: (response: any) => {
+          console.warn(response);
+
+          this.router.navigate(["/categories"]);
         }
       });
-
-    // this.category = this.route.paramMap.pipe(
-    //   switchMap(params => {
-    //     /**
-    //      * El segundo argumento de parseInt() es la base
-    //      * númerica a la que se pasara la conversión.
-    //      */
-    //     this.selectedId = parseInt(params.get("id")!, 10);
-
-    //     return this.crisisService.getCrises();
-    // );
   }
 }
