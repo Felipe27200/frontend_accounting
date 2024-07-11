@@ -4,14 +4,24 @@ import { RouterModule, Routes } from '@angular/router';
 import { CategoryCenterComponent } from './category-center/category-center.component';
 import { CategoryCreateComponent } from './category-create/category-create.component';
 import { CategoryListComponent } from './category-list/category-list.component';
+import { authGuard } from 'app/guards/auth.guard';
+import { CategoryUpdateComponent } from './category-update/category-update.component';
 
 const routes: Routes = [
   {
     path: 'categories',
     component: CategoryCenterComponent,
+    canActivate: [authGuard],
     children: [
-      { path: '', component: CategoryListComponent },
-      { path: 'create', component: CategoryCreateComponent },
+      {
+        path: '',
+        canActivateChild: [authGuard],
+        children:[
+          { path: 'create', component: CategoryCreateComponent },
+          { path: ':id', component: CategoryUpdateComponent },
+          { path: '', component: CategoryListComponent },
+        ]
+      },
     ]
   }
 ];

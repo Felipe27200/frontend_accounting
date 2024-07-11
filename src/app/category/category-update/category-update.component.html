@@ -1,0 +1,11 @@
+<!-- 
+    | SEND DATA TO THE PARENT |
+
+    The (submit) does reference to the
+    EventEmitter in CategoryForm component.
+
+    The $event contents the data that the
+    (submit) send to the onSubmit method
+    in CategoryUpdateComponent
+-->
+<app-category-form [title]="'Update'" [category]="category" (onSubmit)="onSubmit($event)"></app-category-form>

@@ -12,12 +12,15 @@ import { AppRoutingModule } from './app-routing.module';
 // App Modules
 import { AccountModule } from './account/account.module';
 import { CategoryModule } from './category/category.module';
+import { SharedComponentModule } from './common_components/shared-component.module';
 
 // PrimeNg Components
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { CardModule } from 'primeng/card';
 import { MenubarModule } from 'primeng/menubar';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 @NgModule({
   declarations: [
@@ -26,12 +29,14 @@ import { MenubarModule } from 'primeng/menubar';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     CardModule,
     ButtonModule,
     InputTextModule,
     MenubarModule,
     FormsModule,
     ReactiveFormsModule,
+    SharedComponentModule,
     AccountModule,
     CategoryModule,
     AppRoutingModule,

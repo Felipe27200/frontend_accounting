@@ -24,7 +24,7 @@ export class NavBarComponent implements OnInit {
     this.items = [
       {
           label: 'Account',
-          icon: 'pi pi-dollar',
+          icon: 'pi pi-wallet',
           items: [
               {
                   label: 'Register',
@@ -41,11 +41,36 @@ export class NavBarComponent implements OnInit {
           ]
       },
       {
+          label: 'Category',
+          icon: 'pi pi-receipt',
+          items: [
+              {
+                  label: 'Create',
+                  icon: 'pi pi-plus-circle',
+                  command: () => {
+                    this.router.navigate(["/categories/create"]);
+                  }
+              },
+              {
+                  label: 'List',
+                  icon: 'pi pi-list',
+                  command: () => {
+                    this.router.navigate(["/categories"]);
+                  }
+              },
+              {
+                  label: 'Update',
+                  icon: 'pi pi-pencil'
+              }
+          ]
+      },
+      {
         label: 'Users',
         icon: 'pi pi-user',
         items: [
           {
             label: "Logout",
+            icon: "pi pi-sign-out",
             command: () => {
               this.logout();
             }
