@@ -17,15 +17,29 @@ export class CategoryService {
     private localStorageService: LocalStorageService
   ) { }
 
+  createCategorie(categorie: any)
+  {
+    let httpOptions = this.getHeader();
+
+    return this.http.post<any>(`${this.apiUrl}/create`, categorie, httpOptions)
+      .pipe(catchError(this.handleError))
+  }
+
   getCategories()
   {
-    let token = this.localStorageService.getItem('Bearer token');
-
-    let httpOptions = {
-      headers: new HttpHeaders({ 'Authorization': `Bearer ${token!}` })
-    };
+    let httpOptions = this.getHeader();
 
     return this.http.get<any>(`${this.apiUrl}/`, httpOptions)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  getCategory(id: number | string)
+  {
+    let httpOptions = this.getHeader();
+
+    return this.http.get<any>(`${this.apiUrl}/${id}`, httpOptions)
       .pipe(
         catchError(this.handleError)
       );
@@ -42,5 +56,16 @@ export class CategoryService {
     }
 
     return throwError(() => error);
+  }
+
+  getHeader()
+  {
+    let token = this.localStorageService.getItem('Bearer token');
+
+    let httpOptions = {
+      headers: new HttpHeaders({ 'Authorization': `Bearer ${token!}` })
+    };
+
+    return httpOptions;
   }
 }

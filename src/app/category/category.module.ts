@@ -9,24 +9,29 @@ import { SharedComponentModule } from 'app/common_components/shared-component.mo
 import { CategoryCenterComponent } from './category-center/category-center.component';
 import { CategoryCreateComponent } from './category-create/category-create.component';
 import { CategoryListComponent } from './category-list/category-list.component';
+import { CategoryFormComponent } from './category-form/category-form.component';
 
 // Primeng Modules
 import { DropdownModule } from 'primeng/dropdown';
+import { TableModule } from 'primeng/table';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
-
+import { CategoryUpdateComponent } from './category-update/category-update.component';
 
 @NgModule({
   declarations: [
+    CategoryFormComponent,
     CategoryCenterComponent,
     CategoryCreateComponent,
     CategoryListComponent,
+    CategoryUpdateComponent,
   ],
   imports: [
     CommonModule,
     BrowserModule,
     BrowserAnimationsModule,
+    TableModule,
     ReactiveFormsModule,
     InputTextModule,
     DropdownModule,

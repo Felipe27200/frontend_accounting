@@ -5,6 +5,7 @@ import { CategoryCenterComponent } from './category-center/category-center.compo
 import { CategoryCreateComponent } from './category-create/category-create.component';
 import { CategoryListComponent } from './category-list/category-list.component';
 import { authGuard } from 'app/guards/auth.guard';
+import { CategoryUpdateComponent } from './category-update/category-update.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,7 @@ const routes: Routes = [
         path: '',
         canActivateChild: [authGuard],
         children:[
+          { path: ':id', component: CategoryUpdateComponent },
           { path: 'create', component: CategoryCreateComponent },
           { path: '', component: CategoryListComponent },
         ]
