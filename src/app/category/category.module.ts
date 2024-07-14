@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -14,10 +15,11 @@ import { CategoryFormComponent } from './category-form/category-form.component';
 // Primeng Modules
 import { DropdownModule } from 'primeng/dropdown';
 import { TableModule } from 'primeng/table';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { CategoryUpdateComponent } from './category-update/category-update.component';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { CardModule } from 'primeng/card';
 
 @NgModule({
   declarations: [
@@ -30,9 +32,11 @@ import { CategoryUpdateComponent } from './category-update/category-update.compo
   imports: [
     CommonModule,
     BrowserModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     TableModule,
-    ReactiveFormsModule,
+    CardModule,
+    ConfirmDialogModule,
     InputTextModule,
     DropdownModule,
     ButtonModule,

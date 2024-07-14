@@ -1,29 +1,45 @@
 <div class="flex justify-content-center">
     <div class="flex mt-4">
-        <p class="font-bold text-2xl"><span class="font-bold pi pi-plus-circle"></span> List Category</p>
+        <p class="font-bold text-2xl"><span class="font-bold text-2xl pi pi-list mr-1"></span> My Categories</p>
     </div>
 </div>
 
 <div class="flex justify-content-center mt-4">
-    <p-table [value]="categories" [tableStyle]="{ 'min-width': '50rem' }">
-        <ng-template pTemplate="header">
-            <tr>
-                <th>Name</th>
-                <th>Type</th>
-                <th>Actions</th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-category>
-            <tr>
-                <td>{{ category.name }}</td>
-                <td>{{ category.accountCatalogue.name }}</td>
-                <td>
-                    <span class="p-buttonset">
-                        <p-button icon="pi pi-file-edit" (onClick)="editCategory(category.id)" />
-                        <p-button severity="danger" icon="pi pi-trash" />
-                    </span>
-                </td>
-            </tr>
-        </ng-template>
-    </p-table>
+    <p-card>
+        <p-table 
+          [value]="categories"
+          [paginator]="true"
+          [rows]="5"
+          [rowsPerPageOptions]="[5, 10, 20]"
+          styleClass="w-full"
+          sortMode="multiple"
+          [tableStyle]="{'min-width': '50rem'}"
+        >
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="name">
+                        Name <p-sortIcon field="name" />
+                    </th>
+                    <th pSortableColumn="accountCatalogue.name">
+                        Code <p-sortIcon field="accountCatalogue.name" />
+                    </th>
+                    <th>
+                        Actions
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-category>
+                <tr>
+                    <td>{{ category.name }}</td>
+                    <td>{{ category.accountCatalogue.name }}</td>
+                    <td>
+                        <span class="p-buttonset">
+                            <p-button icon="pi pi-file-edit" (onClick)="editCategory(category.id)" />
+                            <p-button severity="danger" icon="pi pi-trash" />
+                        </span>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </p-card>
 </div>

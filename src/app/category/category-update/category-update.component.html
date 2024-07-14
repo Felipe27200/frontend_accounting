@@ -1,11 +1,39 @@
-<!-- 
-    | SEND DATA TO THE PARENT |
-
-    The (submit) does reference to the
-    EventEmitter in CategoryForm component.
-
-    The $event contents the data that the
-    (submit) send to the onSubmit method
-    in CategoryUpdateComponent
--->
-<app-category-form [title]="'Update'" [category]="category" (onSubmit)="onSubmit($event)"></app-category-form>
+@if(error !== null && error !== undefined && error.hasOwnProperty('status'))
+{
+    <div class="flex justify-content-center mt-7">
+        <p-card class="flex align-content-center mb-2" styleClass="bg-red-200">
+            <ng-template pTemplate="header">
+                <p class="ml-4 text-lg font-bold text-red-900">
+                    <span class="font-bold text-lg pi pi-exclamation-circle mr-1"></span>
+                    Category Not Found!
+                </p>
+            </ng-template>
+            <p class="mt-0 pt-0 text-red-800 text-base">
+                {{ error.message }}
+            </p>
+            <ng-template pTemplate="footer">
+                <p-button 
+                  label="Come Back" 
+                  severity="danger" 
+                  class="w-full" 
+                  styleClass="w-full"
+                  routerLink="/categories" 
+                />
+            </ng-template>
+        </p-card>
+    </div>
+}
+@else 
+{
+    <!-- 
+        | SEND DATA TO THE PARENT |
+    
+        The (submit) does reference to the
+        EventEmitter in CategoryForm component.
+    
+        The $event contents the data that the
+        (submit) send to the onSubmit method
+        in CategoryUpdateComponent
+    -->
+    <app-category-form [title]="'Update'" [category]="category" (onSubmit)="onSubmit($event)"></app-category-form>
+}

@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CategoryService } from '@services/category.service';
 
+import { ErrorResponse } from 'app/response/error-response';
+
 @Component({
   selector: 'app-category-update',
   templateUrl: './category-update.component.html',
@@ -11,6 +13,8 @@ import { CategoryService } from '@services/category.service';
 export class CategoryUpdateComponent implements OnInit {
   category!: any;
   selectedId!: number | string | null;
+  categoryExist: boolean = false;
+  error?: ErrorResponse;
 
   constructor(
     private router: Router,
@@ -34,11 +38,15 @@ export class CategoryUpdateComponent implements OnInit {
         .subscribe({
           next: (response) => {
             this.category = response;
+            this.categoryExist = true; 
           },
           error: (error) => {
             if (error.status == 404)
             {
-              this.router.navigate(["/categories"]);
+              if (error.hasOwnProperty('error'))
+                this.error = error.error;
+
+                console.log(this.error)
             }
           }
         });
