@@ -20,6 +20,8 @@ import { ButtonModule } from 'primeng/button';
 import { CategoryUpdateComponent } from './category-update/category-update.component';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { CardModule } from 'primeng/card';
+import { ToastModule } from 'primeng/toast';
+import { RippleModule } from 'primeng/ripple';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,8 @@ import { CardModule } from 'primeng/card';
     BrowserAnimationsModule,
     TableModule,
     CardModule,
+    ToastModule,
+    RippleModule,
     ConfirmDialogModule,
     InputTextModule,
     DropdownModule,
