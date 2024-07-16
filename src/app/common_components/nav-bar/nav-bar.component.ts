@@ -33,10 +33,6 @@ export class NavBarComponent implements OnInit {
               {
                   label: 'List',
                   icon: 'pi pi-list'
-              },
-              {
-                  label: 'Update',
-                  icon: 'pi pi-pencil'
               }
           ]
       },
@@ -57,10 +53,6 @@ export class NavBarComponent implements OnInit {
                   command: () => {
                     this.router.navigate(["/categories"]);
                   }
-              },
-              {
-                  label: 'Update',
-                  icon: 'pi pi-pencil'
               }
           ]
       },

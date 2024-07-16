@@ -60,7 +60,7 @@ export class CategoryService {
     else
     {
       console.error("The Backend returned the code: " 
-        + error.status + "\nBody: \n\t" + error.error.errors);
+        + error.status + "\nBody: \n\t" + error.error.message);
     }
 
     return throwError(() => error);
