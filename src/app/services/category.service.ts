@@ -53,6 +53,16 @@ export class CategoryService {
       );
   }
 
+  deleteCategory(id: number | string | null)
+  {
+    let httpOptions = this.getHeader();
+
+    return this.http.delete<any>(`${this.apiUrl}/delete/${id}`, httpOptions)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
   public handleError(error: HttpErrorResponse)
   {
     if (error.status === 0)

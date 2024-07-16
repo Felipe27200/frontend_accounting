@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Router, ActivatedRoute } from '@angular/router';
-import { CategoryService } from '@services/category.service';
 
+import { CategoryService } from '@services/category.service';
 import { ErrorResponse } from 'app/response/error-response';
 
 import { MessageService } from 'primeng/api';
@@ -65,8 +65,6 @@ export class CategoryUpdateComponent implements OnInit {
           this.router.navigate(["/categories"]);
         },
         error: (error) => {
-          console.dir(error);
-
           if (error.hasOwnProperty("error") && error.error.hasOwnProperty("message"))
             this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.message });
         }
