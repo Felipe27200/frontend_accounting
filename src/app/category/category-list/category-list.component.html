@@ -1,4 +1,7 @@
 <div class="flex justify-content-center">
+    <p-toast />
+    <p-confirmDialog />
+
     <div class="flex mt-4">
         <p class="font-bold text-2xl"><span class="font-bold text-2xl pi pi-list mr-1"></span> My Categories</p>
     </div>
@@ -35,7 +38,11 @@
                     <td>
                         <span class="p-buttonset">
                             <p-button icon="pi pi-file-edit" (onClick)="editCategory(category.id)" />
-                            <p-button severity="danger" icon="pi pi-trash" />
+                            <p-button 
+                              severity="danger" 
+                              icon="pi pi-trash" 
+                              (onClick)="dialogDeleteCategory(category.id, category.name, $event)" 
+                            />
                         </span>
                     </td>
                 </tr>
