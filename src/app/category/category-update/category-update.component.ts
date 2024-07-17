@@ -23,6 +23,8 @@ export class CategoryUpdateComponent implements OnInit {
   error?: ErrorResponse;
   errorToast: any[] = [];
 
+  enableButton: boolean = true;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -59,6 +61,8 @@ export class CategoryUpdateComponent implements OnInit {
 
   onSubmit(formData: any)
   {
+    this.enableButton = false;
+    
     this.categoryService.updateCategory(formData, this.selectedId!)
       .subscribe({
         next: (response: any) => {
@@ -67,6 +71,8 @@ export class CategoryUpdateComponent implements OnInit {
         error: (error) => {
           if (error.hasOwnProperty("error") && error.error.hasOwnProperty("message"))
             this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.message });
+
+          this.enableButton = true;
         }
       });
   }

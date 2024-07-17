@@ -14,6 +14,8 @@ import { MessageService } from 'primeng/api';
   providers: [MessageService],
 })
 export class CategoryCreateComponent {
+  enableButton: boolean = true;
+
   constructor(
     private categoryService: CategoryService,
     private router: Router,
@@ -21,7 +23,9 @@ export class CategoryCreateComponent {
   ) { }
 
   onSubmit(formData: any)
-  {    
+  {
+    this.enableButton = false;
+
     this.categoryService.createCategory(formData)
     .subscribe({
       next: (response: any) => {
@@ -30,6 +34,8 @@ export class CategoryCreateComponent {
       error: (error) => {
         if (error.hasOwnProperty("error") && error.error.hasOwnProperty("message"))
           this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.message });
+
+        this.enableButton = true;
     }
     });
   }
