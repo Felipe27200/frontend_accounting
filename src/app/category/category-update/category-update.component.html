@@ -35,7 +35,12 @@
         (submit) send to the onSubmit method
         in CategoryUpdateComponent
     -->
-    <app-category-form [title]="'Update'" [category]="category" (onSubmit)="onSubmit($event)"></app-category-form>
+    <app-category-form 
+      [title]="'Update'" 
+      [category]="category" 
+      (onSubmit)="onSubmit($event)"
+      [enableButton]="enableButton"
+    ></app-category-form>
 }
 
 <p-toast></p-toast>

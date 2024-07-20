@@ -41,8 +41,9 @@
           <p-button 
             type="submit" 
             label="{{ title }} Category" 
-            styleClass="w-full mb-2" 
-            [disabled]="!categoryForm.valid"
+            styleClass="w-full mb-2"
+            [icon]=""
+            [disabled]="!categoryForm.valid || !enableButton"
           ></p-button>
           <p-button 
             type="button" 

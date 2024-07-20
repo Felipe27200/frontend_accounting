@@ -1,6 +1,4 @@
-import { Component, OnInit, OnChanges, SimpleChanges, Input, Output, EventEmitter, output } from '@angular/core';
-
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit, OnChanges, SimpleChanges, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 
 import { AccountCatalogueService } from '@services/account-catalogue.service';
@@ -14,6 +12,8 @@ import { CategoryService } from '@services/category.service';
 export class CategoryFormComponent implements OnInit, OnChanges {
   @Input() title = "";
   @Input() category: any;
+  @Input() enableButton: boolean = false;
+
   /**
    * Let us to emit an event to the parent,
    * so it can handle the rest of the process
@@ -34,10 +34,9 @@ export class CategoryFormComponent implements OnInit, OnChanges {
     private formBuilder: FormBuilder,
     private accountCatalogueService: AccountCatalogueService,
     private categoryService: CategoryService,
-    private router: Router,
   ) {}
   
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges): void {    
     if (changes["category"] === null || changes["category"] === undefined 
         || changes["category"].currentValue === null || changes["category"].currentValue === undefined)
     {
