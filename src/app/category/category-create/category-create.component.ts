@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 
 import { CategoryService } from '@services/category.service';
 
-import { MessageService } from 'primeng/api';
+import { Message, MessageService } from 'primeng/api';
 
 
 @Component({
@@ -32,8 +32,19 @@ export class CategoryCreateComponent {
         this.router.navigate(["/categories"]);
       },
       error: (error) => {
+        let listErrors: Message[] = [];
+
         if (error.hasOwnProperty("error") && error.error.hasOwnProperty("message"))
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.message });
+          listErrors.push({ severity: 'error', summary: 'Error', detail: error.error.message });
+
+        if (Array.isArray(error.error.errors))
+        {
+          error.error.errors.forEach((element: any) => {
+            listErrors.push({ severity: 'error', summary: 'Error', detail: element });
+          });
+        }
+
+        this.messageService.addAll(listErrors);
 
         this.enableButton = true;
     }

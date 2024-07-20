@@ -57,6 +57,26 @@ export class NavBarComponent implements OnInit {
           ]
       },
       {
+          label: 'Financial Statement',
+          icon: 'pi pi-calculator',
+          items: [
+              {
+                  label: 'Create',
+                  icon: 'pi pi-plus-circle',
+                  command: () => {
+                    this.router.navigate(["/financial-statement/create"]);
+                  }
+              },
+              {
+                  label: 'List',
+                  icon: 'pi pi-list',
+                  command: () => {
+                    this.router.navigate(["/financial-statement"]);
+                  }
+              }
+          ]
+      },
+      {
         label: 'Users',
         icon: 'pi pi-user',
         items: [

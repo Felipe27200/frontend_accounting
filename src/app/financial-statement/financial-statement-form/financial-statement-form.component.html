@@ -1,0 +1,70 @@
+<div class="flex justify-content-center mt-7">
+    <div class="md:w-5 lg:w-4">
+      <p-card>
+        <ng-template pTemplate="header">
+          <div class="flex justify-content-center">
+            <div class="flex mt-2">
+                <p class="font-bold text-2xl">
+                  <span class="font-bold text-2xl pi pi-file-edit mr-1"></span> 
+                  {{ title }} Financial Statement
+                </p>
+            </div>
+          </div>     
+        </ng-template>
+        
+        <form [formGroup]="statementForm" (ngSubmit)="validateForm()">
+            <div class="field">
+                <label for="name">Name:</label>
+                <input pInputText id="name" formControlName="name" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+            </div>
+    
+            <div class="field">
+                <label for="init_date">Init Date:</label>
+                <p-calendar
+                  [showIcon]="true" 
+                  formControlName="init_date" 
+                  inputId="init_date"
+                  styleClass="w-full"
+                  [style]="{ 'height': '40px' }"
+                  [iconDisplay]="'input'"
+                  [dateFormat]="dateFormat"
+                  ></p-calendar>
+            </div>
+    
+            <div class="field">
+                <label for="end_date">End Date:</label>
+                <p-calendar
+                [showIcon]="true" 
+                formControlName="end_date"
+                [iconDisplay]="'input'"
+                inputId="end_date"
+                styleClass="w-full"
+                [style]="{ 'height': '40px' }"
+                [dateFormat]="dateFormat"
+                ></p-calendar>
+            </div>
+
+            @for (error of errors; track error) {
+              <p class="text-sm text-red-500 font-semibold">* {{ error }}</p>
+            }
+    
+            <p-button 
+              type="submit" 
+              label="{{ title }} Financial Statement" 
+              styleClass="w-full mb-2"
+              [icon]=""
+              [disabled]="!statementForm.valid || !enableButton"
+            ></p-button>
+            <p-button 
+              type="button" 
+              label="Go to Fin. Statement" 
+              severity="secondary"
+              styleClass="w-full" 
+              icon="pi pi-chevron-left"
+              routerLink="/financial-statement"
+            >
+          </p-button>
+        </form>
+      </p-card>
+    </div>
+  </div>
