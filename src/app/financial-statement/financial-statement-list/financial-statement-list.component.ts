@@ -23,7 +23,7 @@ export class FinancialStatementListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.statementService.getFinancialStatement()
+    this.statementService.getFinancialStatements()
       .subscribe({
         next: (response) => {
           console.dir(response)

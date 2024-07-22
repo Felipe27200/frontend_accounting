@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnChanges, SimpleChanges } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -9,9 +9,10 @@ import { FormStatement } from '../FormStatement';
   templateUrl: './financial-statement-form.component.html',
   styleUrl: './financial-statement-form.component.css'
 })
-export class FinancialStatementFormComponent {
+export class FinancialStatementFormComponent implements OnChanges {
   @Input() title?: string;
   @Input() enableButton: boolean = false;
+  @Input() statement?: any;
 
   @Output() onSubmit = new EventEmitter(); 
 
@@ -29,6 +30,20 @@ export class FinancialStatementFormComponent {
     private router: Router,
     private route: ActivatedRoute
   ) { }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes["statement"] === null || changes["statement"] === undefined 
+      || changes["statement"].currentValue === null || changes["statement"].currentValue === undefined)
+    {
+      return;
+    }
+
+    this.statement = changes["statement"].currentValue;
+
+    this.statementForm.controls.name.setValue(this.statement.name);
+    this.statementForm.controls.init_date.setValue(this.statement.initDate);
+    this.statementForm.controls.end_date.setValue(this.statement.endDate);
+  }
 
   validateForm()
   {

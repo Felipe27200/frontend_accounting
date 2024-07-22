@@ -36,11 +36,19 @@ export class FinancialStatementService {
       );
   }
 
-  getFinancialStatement()
+  getFinancialStatements()
   {
     let httpOptions = this.getHeader();
 
     return this.http.get<any>(`${this.apiUrl}/`, httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
+  getFinancialStatement(id: number)
+  {
+    let httpOptions = this.getHeader();
+
+    return this.http.get<any>(`${this.apiUrl}/${id}`, httpOptions)
       .pipe(catchError(this.handleError));
   }
 
