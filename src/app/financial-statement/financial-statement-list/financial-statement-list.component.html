@@ -1,6 +1,6 @@
 <div class="flex justify-content-center">
     <p-toast />
-    <!-- <p-confirmDialog /> -->
+    <p-confirmDialog />
 
     <div class="flex mt-4">
         <p class="font-bold text-2xl"><span class="font-bold text-2xl pi pi-list mr-1"></span> Financial Statement</p>
@@ -38,16 +38,16 @@
                 <tr>
                     <td>{{ statement.name }}</td>
                     <td>{{ statement.initDate }}</td>
-                    <td>{{ statement.endDate }}</td>
+                    <td [classList]="(statement.endDate != null ? '' : 'text-center')" >{{ (statement.endDate ?? '•••') }}</td>
                     <td>
-                        <!-- <span class="p-buttonset">
-                            <p-button icon="pi pi-file-edit" (onClick)="editstatement(statement.id)" />
+                        <span class="p-buttonset">
+                            <p-button icon="pi pi-file-edit" (onClick)="editStatement(statement.id)" />
                             <p-button 
                               severity="danger" 
                               icon="pi pi-trash" 
-                              (onClick)="dialogDeletestatement(statement.id, statement.name, $event)" 
+                              (onClick)="dialogDeleteStatement(statement.id, statement.name, statement.initDate, $event)" 
                             />
-                        </span> -->
+                        </span>
                     </td>
                 </tr>
             </ng-template>
