@@ -36,6 +36,30 @@ export class FinancialStatementService {
       );
   }
 
+  updateFinancialStatement(formData: FormStatement, id: number)
+  {
+    console.dir(formData);
+
+    if (typeof formData.initDate === 'string')
+      formData.initDate = this.convertToAccordDate(formData.initDate);
+        
+    formData.initDate = this.formatDate(formData.initDate);
+
+    if (typeof formData.endDate === 'string')
+    {
+      formData.endDate = this.formatDate(this.convertToAccordDate(formData.endDate));
+    }
+    else if (formData.endDate instanceof Date)
+      formData.endDate = this.formatDate(formData.endDate);
+
+    let httpOptions = this.getHeader();
+
+    return this.http.put<any>(`${this.apiUrl}/${id}`, formData, httpOptions)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
   getFinancialStatements()
   {
     let httpOptions = this.getHeader();
@@ -57,9 +81,14 @@ export class FinancialStatementService {
     let format = `${date.getFullYear()}`
 
     format += `-${(date.getMonth() + 1 < 10 ? 0 : '')}` + `${date.getMonth() + 1}`;
-    format += `-${(date.getDate() + 1 < 10 ? 0 : '')}` + `${date.getDate() + 1}`;
+    format += `-${(date.getDate() + 1 < 10 ? 0 : '')}` + `${date.getDate()}`;
 
     return format;
+  }
+
+  convertToAccordDate(dateString: string): Date
+  {
+    return new Date(dateString.replace(/-/g, '\/'));
   }
 
   getHeader()

@@ -25,5 +25,12 @@
 }
 @else 
 {
-    <app-financial-statement-form [title]="'Update'" [statement]="statement" [enableButton]="true"></app-financial-statement-form>
+    <app-financial-statement-form 
+      [title]="'Update'" 
+      [statement]="statement" 
+      [enableButton]="enableButton"
+      (onSubmit)="onSubmit($event)" 
+    ></app-financial-statement-form>
 }
+
+<p-toast></p-toast>

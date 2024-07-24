@@ -49,8 +49,6 @@ export class FinancialStatementFormComponent implements OnChanges {
   {
     this.errors = [];
 
-    console.dir(this.statementForm.controls);
-
     if (!this.statementForm.valid)
     {
       this.errors.push('Check the form something is wrong!!!');
@@ -75,24 +73,49 @@ export class FinancialStatementFormComponent implements OnChanges {
       return;
     }
     
-    if (!(this.init_date.value instanceof Date))
-    {
-      this.errors.push('The init date must be a DATE');
+    if (!this.validateFieldDate(this.init_date.value, 'init date'))
       return;
+
+    if (this.end_date.value !== null && this.end_date != undefined)
+    {      
+      if (!this.validateFieldDate(this.end_date.value, 'end date'))
+        return;
     }
-    
-    if (!(this.end_date.value instanceof Date))
-    {
-      this.statementForm.controls.end_date.setValue(null);
-    }
-  
+      
     let formData: FormStatement = {
       name: this.name.value,
-      initDate: this.init_date.value,
+      initDate: (this.init_date.value instanceof Date || (typeof this.init_date.value == 'string') ? this.init_date.value : new Date()),
       endDate: this.end_date.value,
     };
 
     this.onSubmit.emit(formData);
+  }
+
+  isDate(checkDate: string)
+  {
+    let date = Date.parse(checkDate);
+
+    if (isNaN(date))
+      return false;
+    else
+      return true;
+  }
+
+  validateFieldDate(date: any, message: string): boolean
+  {
+    if (!(date instanceof Date) && !(typeof date == 'string'))
+      {
+        this.errors.push('The init date must be a DATE');
+        return false;
+      }
+  
+      if (typeof date === 'string' && !this.isDate(date))
+      {
+        this.errors.push("The init date must be a DATE");
+        return false;
+      }
+
+      return true;
   }
 
   get name() { return this.statementForm.controls.name; }
