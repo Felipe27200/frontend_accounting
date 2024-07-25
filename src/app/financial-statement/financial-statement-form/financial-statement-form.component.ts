@@ -22,7 +22,7 @@ export class FinancialStatementFormComponent implements OnChanges {
   statementForm = this.fb.group({
     name: ['', Validators.required],
     init_date: [Date, Validators.required],
-    end_date: [Date]
+    end_date: []
   });
 
   constructor (
@@ -101,17 +101,17 @@ export class FinancialStatementFormComponent implements OnChanges {
       return true;
   }
 
-  validateFieldDate(date: any, message: string): boolean
+  validateFieldDate(date: Date | string | DateConstructor, message: string): boolean
   {
     if (!(date instanceof Date) && !(typeof date == 'string'))
       {
-        this.errors.push('The init date must be a DATE');
+        this.errors.push(`The ${message} must be a DATE`);
         return false;
       }
   
       if (typeof date === 'string' && !this.isDate(date))
       {
-        this.errors.push("The init date must be a DATE");
+        this.errors.push(`The ${message} must be a DATE`);
         return false;
       }
 

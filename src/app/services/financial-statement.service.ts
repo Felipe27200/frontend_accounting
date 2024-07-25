@@ -38,8 +38,6 @@ export class FinancialStatementService {
 
   updateFinancialStatement(formData: FormStatement, id: number)
   {
-    console.dir(formData);
-
     if (typeof formData.initDate === 'string')
       formData.initDate = this.convertToAccordDate(formData.initDate);
         
@@ -73,6 +71,14 @@ export class FinancialStatementService {
     let httpOptions = this.getHeader();
 
     return this.http.get<any>(`${this.apiUrl}/${id}`, httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
+  deleteFinancialStatement(id: number)
+  {
+    let httpOptions = this.getHeader();
+
+    return this.http.delete<any>(`${this.apiUrl}/${id}`, httpOptions)
       .pipe(catchError(this.handleError));
   }
 
