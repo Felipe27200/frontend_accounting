@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnChanges, SimpleChanges } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -9,9 +9,10 @@ import { FormStatement } from '../FormStatement';
   templateUrl: './financial-statement-form.component.html',
   styleUrl: './financial-statement-form.component.css'
 })
-export class FinancialStatementFormComponent {
+export class FinancialStatementFormComponent implements OnChanges {
   @Input() title?: string;
   @Input() enableButton: boolean = false;
+  @Input() statement?: any;
 
   @Output() onSubmit = new EventEmitter(); 
 
@@ -30,11 +31,23 @@ export class FinancialStatementFormComponent {
     private route: ActivatedRoute
   ) { }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes["statement"] === null || changes["statement"] === undefined 
+      || changes["statement"].currentValue === null || changes["statement"].currentValue === undefined)
+    {
+      return;
+    }
+
+    this.statement = changes["statement"].currentValue;
+
+    this.statementForm.controls.name.setValue(this.statement.name);
+    this.statementForm.controls.init_date.setValue(this.statement.initDate);
+    this.statementForm.controls.end_date.setValue(this.statement.endDate);
+  }
+
   validateForm()
   {
     this.errors = [];
-
-    console.dir(this.statementForm.controls);
 
     if (!this.statementForm.valid)
     {
@@ -60,24 +73,49 @@ export class FinancialStatementFormComponent {
       return;
     }
     
-    if (!(this.init_date.value instanceof Date))
-    {
-      this.errors.push('The init date must be a DATE');
+    if (!this.validateFieldDate(this.init_date.value, 'init date'))
       return;
+
+    if (this.end_date.value !== null && this.end_date != undefined)
+    {      
+      if (!this.validateFieldDate(this.end_date.value, 'end date'))
+        return;
     }
-    
-    if (!(this.end_date.value instanceof Date))
-    {
-      this.statementForm.controls.end_date.setValue(null);
-    }
-  
+      
     let formData: FormStatement = {
       name: this.name.value,
-      initDate: this.init_date.value,
+      initDate: (this.init_date.value instanceof Date || (typeof this.init_date.value == 'string') ? this.init_date.value : new Date()),
       endDate: this.end_date.value,
     };
 
     this.onSubmit.emit(formData);
+  }
+
+  isDate(checkDate: string)
+  {
+    let date = Date.parse(checkDate);
+
+    if (isNaN(date))
+      return false;
+    else
+      return true;
+  }
+
+  validateFieldDate(date: any, message: string): boolean
+  {
+    if (!(date instanceof Date) && !(typeof date == 'string'))
+      {
+        this.errors.push('The init date must be a DATE');
+        return false;
+      }
+  
+      if (typeof date === 'string' && !this.isDate(date))
+      {
+        this.errors.push("The init date must be a DATE");
+        return false;
+      }
+
+      return true;
   }
 
   get name() { return this.statementForm.controls.name; }

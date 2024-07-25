@@ -33,9 +33,7 @@ export class CategoryUpdateComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
-      this.selectedId = this.route.snapshot.paramMap.get("id");
-    })
+    this.selectedId = this.route.snapshot.paramMap.get("id");
 
     if (this.selectedId === null || this.selectedId === undefined || this.selectedId === "")
       this.router.navigate(["/categories"]);
@@ -52,7 +50,7 @@ export class CategoryUpdateComponent implements OnInit {
           error: (error) => {
             if (error.status == 404 && error.hasOwnProperty('error'))
             {
-                this.error = error.error;
+              this.error = error.error;
             }
           }
         });
