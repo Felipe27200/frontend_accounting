@@ -52,11 +52,14 @@ export class FinancialStatementListComponent implements OnInit {
     this.router.navigate(['/financial-statement', +id!]);
   }
 
-  dialogDeleteStatement(id: string | number, name: string, initDate: string, event: Event)
+  dialogDeleteStatement(statement: any, event: Event)
   {
+    let messageEndDate = (statement.endDate !== null && statement.endDate !== undefined) ? ` to ${statement.endDate}` : '';
+
     this.confirmationService.confirm({
       target: event.target as EventTarget,
-      message: `Do you want to delete the Fin. Statement: <br>${name} with the date ${initDate}?`,
+      message: `Do you want to delete the Fin. Statement: 
+        <br><br><b>${statement.name}</b> with the date ${statement.initDate}${messageEndDate}?`,
       header: 'Delete Fin. Statement',
       icon: 'pi pi-info-circle',
       acceptButtonStyleClass:"p-button-danger p-button-text",
@@ -65,9 +68,24 @@ export class FinancialStatementListComponent implements OnInit {
       rejectIcon:"none",
 
       accept: () => {
-          // this.deleteCategory(id);
+          this.deleteStatement(+statement.id);
       },
       reject: () => { }
     });
+  }
+
+  deleteStatement(id: number)
+  {
+    this.statementService.deleteFinancialStatement(+id)
+      .subscribe({
+        next: (response) => {
+          this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: response.body });
+          this.ngOnInit();
+        },
+        error: (error) => {
+          if (error.hasOwnProperty("error") && error.error.hasOwnProperty("message"))
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.message });
+        }
+      });
   }
 }
