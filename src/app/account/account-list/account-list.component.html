@@ -1,96 +1,98 @@
-<p class="mt-4 ml-28">Filter Accounts</p>
+<div class="grid grid-cols-12">
+  <div class="col-span-2">
+    <p class="ml-4 mt-5 mb-11">Filter Accounts</p>
 
-<form [formGroup]="filterForm" class="flex flex-wrap justify-center mt-5 mb-10">
-  <div class="w-56">
-    <p-floatLabel>
-      <p-calendar 
-        inputId="init_date" 
-        formControlName="init_date"
-        [showButtonBar]="true" 
-        styleClass="h-9"
-        dateFormat="yy-mm-dd"
-        [showIcon]="true"
-        [iconDisplay]="'input'"
-      />
-      <label for="init_date">Init Date:</label>
-    </p-floatLabel>
+    <form [formGroup]="filterForm" class="">
+      <div class="w-56 ml-4 mb-5">
+        <p-floatLabel>
+          <p-calendar 
+            inputId="init_date" 
+            formControlName="init_date"
+            [showButtonBar]="true" 
+            styleClass="h-9"
+            dateFormat="yy-mm-dd"
+            [showIcon]="true"
+            [iconDisplay]="'input'"
+          />
+          <label for="init_date">Init Date:</label>
+        </p-floatLabel>
+      </div>
+    
+      <div class="w-56 ml-4 mb-5">
+        <p-floatLabel>
+          <p-calendar 
+            inputId="end_date" 
+            formControlName="end_date"
+            [showButtonBar]="true" 
+            styleClass="h-9"
+            dateFormat="yy-mm-dd"
+            [showIcon]="true"
+            [iconDisplay]="'input'"
+          />
+          <label for="end_date">End Date:</label>
+        </p-floatLabel>
+      </div>
+      <div class="w-56 ml-4 mb-5">
+        <p-floatLabel>
+            <p-dropdown 
+              id="filter-statement"
+              formControlName="statementSelected" 
+              [options]="statementList"
+              [showClear]="true"
+              optionLabel="name"
+              optionValue="id"
+              placeholder="Select a Fin. Statement"
+              styleClass="h-9 w-full items-center"
+              panelStyleClass="block w-full border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 p-1"
+            />
+            <label for="filter-statement" class="">Filter Statement:</label>
+          </p-floatLabel>
+      </div>
+    
+      <div class="w-56 ml-4 mb-5">
+        <p-floatLabel>
+            <p-dropdown 
+              id="filter-statement"
+              formControlName="categorySelected" 
+              [options]="categoryList"
+              [showClear]="true"
+              optionLabel="name"
+              optionValue="id"
+              placeholder="Select a Fin. Statement"
+              styleClass="h-9 w-full items-center"
+              panelStyleClass="block w-full border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 p-1"
+            />
+            <label for="filter-statement" class="">Filter Category:</label>
+          </p-floatLabel>
+      </div>
+    
+      <div class="ml-4 mb-5">
+        <p-button size="small" label="search" styleClass="h-9"/>
+      </div>
+    </form>
   </div>
 
-  <div class="w-56 ml-4">
-    <p-floatLabel>
-      <p-calendar 
-        inputId="end_date" 
-        formControlName="end_date"
-        [showButtonBar]="true" 
-        styleClass="h-9"
-        dateFormat="yy-mm-dd"
-        [showIcon]="true"
-        [iconDisplay]="'input'"
-      />
-      <label for="end_date">End Date:</label>
-    </p-floatLabel>
+  <div class="col-span-10">
+    <p-table 
+      styleClass="p-datatable-gridlines p-datatable-sm ml-4 mt-4"
+      [value]="financialData"
+    >
+      <ng-template pTemplate="header">
+          <tr>
+              <th>Date</th>
+              <th>Category</th>
+              <th>Income</th>
+              <th>OutCome</th>
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-financialData>
+          <tr>
+              <td>{{ financialData.Date }}</td>
+              <td>{{ financialData.Description }}</td>
+              <td>{{ financialData.Income }}</td>
+              <td>{{ financialData.Outcome }}</td>
+          </tr>
+        </ng-template>
+    </p-table>
   </div>
-  <div class="w-56 ml-4">
-    <p-floatLabel>
-        <p-dropdown 
-          id="filter-statement"
-          formControlName="statementSelected" 
-          [options]="statementList"
-          [showClear]="true"
-          optionLabel="name"
-          optionValue="id"
-          placeholder="Select a Fin. Statement"
-          styleClass="h-9 w-full items-center"
-          panelStyleClass="block w-full border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 p-1"
-        />
-        <label for="filter-statement" class="">Filter Statement:</label>
-      </p-floatLabel>
-  </div>
-
-  <div class="w-56 ml-4">
-    <p-floatLabel>
-        <p-dropdown 
-          id="filter-statement"
-          formControlName="categorySelected" 
-          [options]="categoryList"
-          [showClear]="true"
-          optionLabel="name"
-          optionValue="id"
-          placeholder="Select a Fin. Statement"
-          styleClass="h-9 w-full items-center"
-          panelStyleClass="block w-full border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 p-1"
-        />
-        <label for="filter-statement" class="">Filter Category:</label>
-      </p-floatLabel>
-  </div>
-
-  <div class="ml-4">
-    <p-button size="small" label="search" styleClass="h-9"/>
-  </div>
-</form>
-
-<div class="grid">
-    <div class="md:col-10 lg:col-8 col-offset-2">
-        <p-table 
-          styleClass="p-datatable-gridlines p-datatable-sm"
-          [value]="financialData" 
-        >
-            <ng-template pTemplate="header">
-                <tr>
-                    <th>Date</th>
-                    <th>Category</th>
-                    <th>Income</th>
-                    <th>OutCome</th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-financialData>
-                <tr>
-                    <td>{{ financialData.Date }}</td>
-                    <td>{{ financialData.Description }}</td>
-                    <td>{{ financialData.Income }}</td>
-                    <td>{{ financialData.Outcome }}</td>
-                </tr>
-            </ng-template>
-        </p-table>
-    </div>
 </div>
