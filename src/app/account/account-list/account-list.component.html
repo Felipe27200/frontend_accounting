@@ -1,9 +1,11 @@
-<div class="grid grid-cols-12">
-  <div class="col-span-2">
-    <p class="ml-4 mt-5 mb-11">Filter Accounts</p>
+<!-- The exclamation marks in the attribute class works as a modifier
+     that indicates we will use a tailwind class instead others. -->
+<div class="!grid grid-cols-12">
+  <div class="col-span-2 pl-3">
+    <p class="mt-5 mb-11">Filter Accounts</p>
 
     <form [formGroup]="filterForm" class="">
-      <div class="w-56 ml-4 mb-5">
+      <div class="w-full mb-5">
         <p-floatLabel>
           <p-calendar 
             inputId="init_date" 
@@ -18,7 +20,7 @@
         </p-floatLabel>
       </div>
     
-      <div class="w-56 ml-4 mb-5">
+      <div class="w-full mb-5">
         <p-floatLabel>
           <p-calendar 
             inputId="end_date" 
@@ -32,13 +34,14 @@
           <label for="end_date">End Date:</label>
         </p-floatLabel>
       </div>
-      <div class="w-56 ml-4 mb-5">
+      <div class="w-full mb-5">
         <p-floatLabel>
             <p-dropdown 
               id="filter-statement"
               formControlName="statementSelected" 
               [options]="statementList"
               [showClear]="true"
+              [checkmark]="true"
               optionLabel="name"
               optionValue="id"
               placeholder="Select a Fin. Statement"
@@ -49,7 +52,7 @@
           </p-floatLabel>
       </div>
     
-      <div class="w-56 ml-4 mb-5">
+      <div class="w-full mb-5">
         <p-floatLabel>
             <p-dropdown 
               id="filter-statement"
@@ -66,31 +69,111 @@
           </p-floatLabel>
       </div>
     
-      <div class="ml-4 mb-5">
-        <p-button size="small" label="search" styleClass="h-9"/>
+      <div class="mb-5">
+        <p-button size="small" label="Search" styleClass="h-9 w-full"/>
       </div>
     </form>
   </div>
 
-  <div class="col-span-10">
+  <div class="col-span-10 pr-4">
+    <p class="ml-4 !mt-8 !mb-6">
+      Add Account:
+    </p>
+
+    <div class="!flex !flex-row mb-9">
+      <div class="basis-1/4 ml-4 pr-4">
+        <p-floatLabel>
+          <p-calendar 
+            inputId="init_date" 
+            formControlName="init_date"
+            [showButtonBar]="true" 
+            styleClass="h-9 w-full"
+            dateFormat="yy-mm-dd"
+            [showIcon]="true"
+            [iconDisplay]="'input'"
+          />
+          <label for="init_date">Date:</label>
+        </p-floatLabel>
+      </div>
+
+      <div class="basis-1/4 pr-4">
+        <p-floatLabel>
+          <p-dropdown 
+            id="filter-statement"
+            formControlName="categorySelected" 
+            [options]="categoryList"
+            [showClear]="true"
+            optionLabel="name"
+            optionValue="id"
+            placeholder="Select a Fin. Statement"
+            styleClass="h-9 w-full items-center"
+            panelStyleClass="block w-full border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 p-1"
+          />
+          <label for="filter-statement" class="">Category:</label>
+        </p-floatLabel>
+      </div>
+
+      <div class="basis-1/4 pr-4">
+        <p-floatLabel>
+          <input pInputText id="amount" formControlName="name" type="number" class="text-base h-9 text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+          <label for="amount">Amount:</label>
+        </p-floatLabel>
+      </div>
+
+      <div class="mb-5">
+        <p-button size="small" icon="pi pi-check" styleClass="h-9"/>
+      </div>
+    </div>
+
     <p-table 
       styleClass="p-datatable-gridlines p-datatable-sm ml-4 mt-4"
       [value]="financialData"
+      [scrollable]="true" 
+      scrollHeight="700px"
+      [paginator]="true"
+      [rows]="10"
+      [rowsPerPageOptions]="[5, 10, 20]"
+      sortMode="multiple"
     >
+      <ng-template pTemplate="caption">
+        <div class="flex align-items-center justify-content-between">
+            <p>Financial Statement</p>
+            <p>YYYY-MM-DD to YYYY-MM-DD</p>
+            
+        </div>
+      </ng-template>
       <ng-template pTemplate="header">
           <tr>
               <th>Date</th>
               <th>Category</th>
               <th>Income</th>
               <th>OutCome</th>
+              <th>Total</th>
+              <th>Actions</th>
           </tr>
       </ng-template>
       <ng-template pTemplate="body" let-financialData>
-          <tr>
+          <tr class="text-base">
               <td>{{ financialData.Date }}</td>
               <td>{{ financialData.Description }}</td>
               <td>{{ financialData.Income }}</td>
               <td>{{ financialData.Outcome }}</td>
+              <td></td>
+              <td class="text-center">
+                <span class="p-buttonset">
+                  <p-button 
+                    styleClass="h-7 !w-1"
+                    size="small" 
+                    icon="pi pi-file-edit" 
+                  />
+                  <p-button
+                    styleClass="h-7 !w-1"
+                    size="small"
+                    severity="danger" 
+                    icon="pi pi-trash" 
+                  />
+              </span>
+              </td>
           </tr>
         </ng-template>
     </p-table>
