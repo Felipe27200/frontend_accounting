@@ -1,4 +1,6 @@
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -17,6 +19,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { CalendarModule } from 'primeng/calendar';
+import { CardModule } from 'primeng/card';
+import { PanelModule } from 'primeng/panel';
 
 @NgModule({
   declarations: [
@@ -25,9 +29,13 @@ import { CalendarModule } from 'primeng/calendar';
   ],
   imports: [
     CommonModule,
+    BrowserModule,
+    BrowserAnimationsModule,
     ReactiveFormsModule,
     HttpClientModule,
     CalendarModule,
+    PanelModule,
+    CardModule,
     InputTextModule,
     FloatLabelModule,
     DropdownModule,

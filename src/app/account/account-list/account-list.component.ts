@@ -17,15 +17,15 @@ export class AccountListComponent implements OnInit {
     amount: ['', Validators.required],
     date: [Date, Validators.required],
     is_recurring: [''],
-    category_id: ['', Validators.required],
+    category_id: [null, Validators.required],
     financial_statement: ['', Validators.required]
   });
 
   filterForm = this.fb.group({
-    statementSelected: [''],
+    categoryFilter: [null],
     init_date: [Date],
     end_date: [Date],
-    categorySelected: [''],
+    statementFilter: [null],
   });
 
   constructor(

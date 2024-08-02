@@ -38,25 +38,24 @@
         <p-floatLabel>
             <p-dropdown 
               id="filter-statement"
-              formControlName="statementSelected" 
+              formControlName="statementFilter" 
               [options]="statementList"
               [showClear]="true"
-              [checkmark]="true"
               optionLabel="name"
               optionValue="id"
               placeholder="Select a Fin. Statement"
               styleClass="h-9 w-full items-center"
               panelStyleClass="block w-full border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 p-1"
             />
-            <label for="filter-statement" class="">Filter Statement:</label>
+            <label for="filter-statement" class="">Statement Filter:</label>
           </p-floatLabel>
       </div>
     
       <div class="w-full mb-5">
         <p-floatLabel>
             <p-dropdown 
-              id="filter-statement"
-              formControlName="categorySelected" 
+              id="category-statement"
+              formControlName="categoryFilter" 
               [options]="categoryList"
               [showClear]="true"
               optionLabel="name"
@@ -65,7 +64,7 @@
               styleClass="h-9 w-full items-center"
               panelStyleClass="block w-full border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 p-1"
             />
-            <label for="filter-statement" class="">Filter Category:</label>
+            <label for="category-statement" class="">Category Filter:</label>
           </p-floatLabel>
       </div>
     
@@ -75,32 +74,32 @@
     </form>
   </div>
 
-  <div class="col-span-10 pr-4">
-    <p class="ml-4 !mt-8 !mb-6">
+  <div class="col-span-10 pr-4 !ml-10">
+    <p class="!mt-8 !mb-6">
       Add Account:
     </p>
 
-    <div class="!flex !flex-row mb-9">
-      <div class="basis-1/4 ml-4 pr-4">
+    <form [formGroup]="accountForm" class="!flex !flex-row !mb-2">
+      <div class="basis-1/4 pr-4">
         <p-floatLabel>
           <p-calendar 
-            inputId="init_date" 
-            formControlName="init_date"
+            inputId="date" 
+            formControlName="date"
             [showButtonBar]="true" 
             styleClass="h-9 w-full"
             dateFormat="yy-mm-dd"
             [showIcon]="true"
             [iconDisplay]="'input'"
           />
-          <label for="init_date">Date:</label>
+          <label for="date">Date:</label>
         </p-floatLabel>
       </div>
 
       <div class="basis-1/4 pr-4">
         <p-floatLabel>
           <p-dropdown 
-            id="filter-statement"
-            formControlName="categorySelected" 
+            id="category"
+            formControlName="category_id" 
             [options]="categoryList"
             [showClear]="true"
             optionLabel="name"
@@ -109,24 +108,24 @@
             styleClass="h-9 w-full items-center"
             panelStyleClass="block w-full border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 p-1"
           />
-          <label for="filter-statement" class="">Category:</label>
+          <label for="category" class="">Category:</label>
         </p-floatLabel>
       </div>
 
       <div class="basis-1/4 pr-4">
         <p-floatLabel>
-          <input pInputText id="amount" formControlName="name" type="number" class="text-base h-9 text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+          <input pInputText id="amount" formControlName="amount" type="number" class="text-base h-9 text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
           <label for="amount">Amount:</label>
         </p-floatLabel>
       </div>
 
-      <div class="mb-5">
+      <div class="">
         <p-button size="small" icon="pi pi-check" styleClass="h-9"/>
       </div>
-    </div>
+    </form>
 
     <p-table 
-      styleClass="p-datatable-gridlines p-datatable-sm ml-4 mt-4"
+      styleClass="p-datatable-gridlines p-datatable-sm mt-4"
       [value]="financialData"
       [scrollable]="true" 
       scrollHeight="700px"
