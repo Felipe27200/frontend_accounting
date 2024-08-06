@@ -2,9 +2,12 @@
      that indicates we will use a tailwind class instead others. -->
 <div class="!grid grid-cols-12">
   <div class="col-span-2 pl-3">
-    <p class="mt-5 mb-11">Filter Accounts</p>
+    <p class="mt-5 !mb-12 text-lg font-semibold">
+      <span class="pi pi-filter"></span>
+      Filter Accounts
+    </p>
 
-    <form [formGroup]="filterForm" class="">
+    <form [formGroup]="filterForm">
       <div class="w-full mb-5">
         <p-floatLabel>
           <p-calendar 
@@ -75,53 +78,91 @@
   </div>
 
   <div class="col-span-10 pr-4 !ml-10">
-    <p class="!mt-8 !mb-6">
-      Add Account:
-    </p>
+    <form [formGroup]="accountForm" (ngSubmit)="onSubmit()">
+      <p-panel 
+        header="Add Account" 
+        [toggleable]="true" 
+        [(collapsed)]="toggle"
+        styleClass="!mt-4 !mb-6"
+      >
+        <div class="!flex !flex-row !mb-2 !mt-3">
+          <div class="basis-1/4 pr-4">
+            <p-floatLabel>
+              <p-calendar 
+                inputId="date" 
+                formControlName="date"
+                [showButtonBar]="true" 
+                styleClass="h-9 w-full"
+                dateFormat="yy-mm-dd"
+                [showIcon]="true"
+                [iconDisplay]="'input'"
+                (onSelect)="getAllStatementByDate()"
+                (onInput)="getAllStatementByDate()"
+              />
+              <label for="date">Date:</label>
+            </p-floatLabel>
 
-    <form [formGroup]="accountForm" class="!flex !flex-row !mb-2">
-      <div class="basis-1/4 pr-4">
-        <p-floatLabel>
-          <p-calendar 
-            inputId="date" 
-            formControlName="date"
-            [showButtonBar]="true" 
-            styleClass="h-9 w-full"
-            dateFormat="yy-mm-dd"
-            [showIcon]="true"
-            [iconDisplay]="'input'"
-          />
-          <label for="date">Date:</label>
-        </p-floatLabel>
-      </div>
+            <div *ngIf="date?.invalid && (date?.dirty || date?.touched)">
+              <div *ngIf="date?.hasError('required')">
+                <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Date is required!</span></p>
+              </div>
+            </div>
+          </div>
+    
+          <div class="basis-1/4 pr-4">
+            <p-floatLabel>
+              <p-dropdown 
+                id="statement-by-date"
+                formControlName="financial_statement" 
+                [options]="statementsByDate"
+                [showClear]="true"
+                optionLabel="name"
+                optionValue="id"
+                styleClass="h-9 w-full items-center"
+                panelStyleClass="block w-full border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 p-1"
+              />
+              <label for="statement-by-date">Fin. statement:</label>
+            </p-floatLabel>
 
-      <div class="basis-1/4 pr-4">
-        <p-floatLabel>
-          <p-dropdown 
-            id="category"
-            formControlName="category_id" 
-            [options]="categoryList"
-            [showClear]="true"
-            optionLabel="name"
-            optionValue="id"
-            placeholder="Select a Fin. Statement"
-            styleClass="h-9 w-full items-center"
-            panelStyleClass="block w-full border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 p-1"
-          />
-          <label for="category" class="">Category:</label>
-        </p-floatLabel>
-      </div>
+            <div *ngIf="financial_statement?.invalid && (financial_statement?.dirty || financial_statement?.touched)">
+              <div *ngIf="financial_statement?.hasError('required')">
+                <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Fin. statement is required!</span></p>
+              </div>
+            </div>
+          </div>
 
-      <div class="basis-1/4 pr-4">
-        <p-floatLabel>
-          <input pInputText id="amount" formControlName="amount" type="number" class="text-base h-9 text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
-          <label for="amount">Amount:</label>
-        </p-floatLabel>
-      </div>
-
-      <div class="">
-        <p-button size="small" icon="pi pi-check" styleClass="h-9"/>
-      </div>
+          <div class="basis-1/4 pr-4">
+            <p-floatLabel>
+              <p-dropdown 
+                id="category"
+                formControlName="category_id" 
+                [options]="categoryList"
+                [showClear]="true"
+                optionLabel="name"
+                optionValue="id"
+                placeholder="Select a Fin. Statement"
+                styleClass="h-9 w-full items-center"
+                panelStyleClass="block w-full border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 p-1"
+              />
+              <label for="category" class="">Category:</label>
+            </p-floatLabel>
+          </div>
+    
+          <div class="basis-1/4 pr-4">
+            <p-floatLabel>
+              <input pInputText id="amount" formControlName="amount" type="number" class="text-base h-9 text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+              <label for="amount">Amount:</label>
+            </p-floatLabel>
+          </div>
+        </div>
+      
+        <ng-template pTemplate="footer">
+          <div class="flex flex-wrap align-items-center gap-3 justify-end">
+            <p-button size="small" severity="secondary" styleClass="h-9" label="Cancel" (onClick)="togglePanel()"/>
+            <p-button type="submit" size="small" icon="pi pi-plus-circle" styleClass="h-9" label="Add" [disabled]="!accountForm.valid"/>
+          </div>
+        </ng-template>
+      </p-panel>
     </form>
 
     <p-table 

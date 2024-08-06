@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 
 import { FinancialStatementService } from '@services/financial-statement.service';
 import { CategoryService } from '@services/category.service';
+import { DateFormatterService } from '@services/date-formatter.service';
 
 @Component({
   selector: 'app-account-list',
@@ -10,15 +11,19 @@ import { CategoryService } from '@services/category.service';
   styleUrl: './account-list.component.css'
 })
 export class AccountListComponent implements OnInit {
+  toggle = true;
+
+  categoryList  = [];
+  financialData = [];
   statementList = [];
-  categoryList = [];
+  statementsByDate: any[] = [];
 
   accountForm = this.fb.group({
-    amount: ['', Validators.required],
+    amount: ["", Validators.required],
     date: [Date, Validators.required],
     is_recurring: [''],
     category_id: [null, Validators.required],
-    financial_statement: ['', Validators.required]
+    financial_statement: [null, Validators.required]
   });
 
   filterForm = this.fb.group({
@@ -32,6 +37,7 @@ export class AccountListComponent implements OnInit {
     private fb: FormBuilder,
     private statementService: FinancialStatementService,
     private categoryService: CategoryService,
+    private dateFormatter: DateFormatterService,
   ) { }
 
   ngOnInit(): void 
@@ -57,72 +63,56 @@ export class AccountListComponent implements OnInit {
       });
   }
 
-  financialData = [
+  onSubmit()
+  {
+    this.accountForm.markAllAsTouched();
+
+    if (!this.accountForm.valid)
+      return;
+
+    console.log("submit");
+  }
+
+  getAllStatementByDate()
+  {
+    console.log(this.accountForm.controls.date.value);
+
+    if (this.accountForm.controls.date.value === null)
     {
-        Date: '2024-01-15',
-        Description: 'Freelance project payment',
-        Income: 1200,
-        Outcome: 0
-    },
-    {
-        Date: '2024-02-02',
-        Description: 'Grocery shopping',
-        Income: 0,
-        Outcome: 150
-    },
-    {
-        Date: '2024-02-10',
-        Description: 'Rent payment',
-        Income: 0,
-        Outcome: 800
-    },
-    {
-        Date: '2024-03-05',
-        Description: 'Selling old furniture',
-        Income: 300,
-        Outcome: 0
-    },
-    {
-        Date: '2024-03-15',
-        Description: 'Electricity bill',
-        Income: 0,
-        Outcome: 100
-    },
-    {
-        Date: '2024-04-01',
-        Description: 'Part-time job earnings',
-        Income: 600,
-        Outcome: 0
-    },
-    {
-        Date: '2024-04-20',
-        Description: 'Dining out with friends',
-        Income: 0,
-        Outcome: 80
-    },
-    {
-        Date: '2024-05-10',
-        Description: 'Online course refund',
-        Income: 200,
-        Outcome: 0
-    },
-    {
-        Date: '2024-05-25',
-        Description: 'Gas station expenses',
-        Income: 0,
-        Outcome: 60
-    },
-    {
-        Date: '2024-06-10',
-        Description: 'Dividend from stocks',
-        Income: 150,
-        Outcome: 0
-    },
-    {
-        Date: '2024-06-15',
-        Description: 'Clothing purchase',
-        Income: 0,
-        Outcome: 120
+      this.statementsByDate = [];
+      return;
     }
-];
+
+    if (!(this.accountForm.controls.date.value instanceof Date))
+    {
+      this.statementsByDate = [];
+      return;
+    }
+  
+    let date = this.accountForm.controls.date.value;
+    let dateFormat = this.dateFormatter.formatDate(date);
+
+    console.log(dateFormat);
+
+    this.statementService.findAllByDate(dateFormat)
+      .subscribe({
+        next: (response) => {
+          this.statementsByDate = response;
+        },
+        error: (error) => {
+          console.error(error);
+        }
+      });
+  }
+
+  togglePanel()
+  {
+    this.toggle = true;
+  }
+
+  get amount() { return this.accountForm.get('amount') }
+  get date() { return this.accountForm.get('date') }
+  get is_recurring() { return this.accountForm.get('is_recurring') }
+  get category_id() { return this.accountForm.get('category_id') }
+  get financial_statement() { return this.accountForm.get('financial_statement') }
 }
