@@ -31,4 +31,15 @@ export class DateFormatterService {
     else
       return true;
   }
+
+  validateFieldDate(date: Date | string | DateConstructor): boolean
+  {
+    if (!(date instanceof Date) && !(typeof date == 'string'))
+        return false;
+  
+      if (typeof date === 'string' && !this.isDate(date))
+        return false;
+
+      return true;
+  }
 }

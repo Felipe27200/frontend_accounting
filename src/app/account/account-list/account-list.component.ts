@@ -4,6 +4,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { FinancialStatementService } from '@services/financial-statement.service';
 import { CategoryService } from '@services/category.service';
 import { DateFormatterService } from '@services/date-formatter.service';
+import { AccountService } from '@services/account.service';
 
 @Component({
   selector: 'app-account-list',
@@ -11,7 +12,8 @@ import { DateFormatterService } from '@services/date-formatter.service';
   styleUrl: './account-list.component.css'
 })
 export class AccountListComponent implements OnInit {
-  toggle = true;
+  toggle: boolean = true;
+  validationError: any[] = [];
 
   categoryList  = [];
   financialData = [];
@@ -35,6 +37,7 @@ export class AccountListComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private accountService: AccountService,
     private statementService: FinancialStatementService,
     private categoryService: CategoryService,
     private dateFormatter: DateFormatterService,
@@ -61,16 +64,69 @@ export class AccountListComponent implements OnInit {
           console.log(error);
         }
       });
+
+    this.accountService.getAccounts()
+      .subscribe({
+        next: (response) => {
+          this.financialData = response;
+          console.log(response);
+        },
+        error: (error) => {
+          console.error(error)
+        }
+      });
   }
 
   onSubmit()
   {
-    this.accountForm.markAllAsTouched();
+    this.validationError = [];
+    let date = '';
 
     if (!this.accountForm.valid)
       return;
 
-    console.log("submit");
+    if ((this.amount?.value === null || this.amount?.value === undefined || this.amount.value == ''))
+      this.validationError.push("The amount is required");
+    else if (isNaN(Number(this.amount?.value)))
+      this.validationError.push('The amount must be a number');
+    else if (Number(this.amount?.value) <= 0)
+      this.validationError.push('The amount must be greater than zero');
+
+    if ((this.date?.value === null || this.date?.value === undefined) || (!(this.date.value instanceof Date) && typeof this.date.value != 'string'))
+      this.validationError.push("The date is required");
+    else if (!this.dateFormatter.validateFieldDate(this.date.value))
+      this.validationError.push('The field date must be date with format YYYY-mm-dd');
+    else
+      date = this.dateFormatter.formatDate(this.date.value);
+
+    if ((this.category_id?.value === null || this.category_id?.value === undefined))
+      this.validationError.push("The category is required");
+    if ((this.financial_statement?.value === null || this.financial_statement?.value === undefined))
+      this.validationError.push("The financial statement is required");
+
+    if (this.validationError.length > 0)
+      return;
+
+    if (this.validationError.length > 0)
+      return;
+
+    let formData = {
+      amount: this.amount?.value,
+      date: date,
+      categoryId: this.category_id?.value,
+      financialStatementId: this.financial_statement?.value,
+      isRecurring: false,
+    };
+
+    this.accountService.createAccount(formData)
+      .subscribe({
+        next: (response) => {
+          this.ngOnInit();
+        },
+        error: (error) => {
+          console.error(error)
+        }
+      });
   }
 
   getAllStatementByDate()

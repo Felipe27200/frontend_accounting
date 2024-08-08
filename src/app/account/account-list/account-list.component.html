@@ -1,5 +1,7 @@
-<!-- The exclamation marks in the attribute class works as a modifier
-     that indicates we will use a tailwind class instead others. -->
+<!-- 
+  The exclamation marks in the attribute class works as a modifier
+  that indicates we will use a tailwind class instead others. 
+-->
 <div class="!grid grid-cols-12">
   <div class="col-span-2 pl-3">
     <p class="mt-5 !mb-12 text-lg font-semibold">
@@ -146,6 +148,12 @@
               />
               <label for="category" class="">Category:</label>
             </p-floatLabel>
+
+            <div *ngIf="category_id?.invalid && (category_id?.dirty || category_id?.touched)">
+              <div *ngIf="category_id?.hasError('required')">
+                <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Category is required!</span></p>
+              </div>
+            </div>
           </div>
     
           <div class="basis-1/4 pr-4">
@@ -153,6 +161,21 @@
               <input pInputText id="amount" formControlName="amount" type="number" class="text-base h-9 text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
               <label for="amount">Amount:</label>
             </p-floatLabel>
+
+            <div *ngIf="amount!.invalid && (amount!.dirty || amount!.touched)">
+              <div *ngIf="amount!.hasError('required')">
+                <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Amount is required!</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="!flex !flex-row !mb-2 !mt-3">
+          <div class="flex-auto" *ngIf="(validationError !== null && validationError !== undefined) && validationError.length > 0">
+            @for(error of validationError; track error)
+            {
+              <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">*{{ error }}</span></p>
+            }
           </div>
         </div>
       
@@ -194,11 +217,20 @@
       </ng-template>
       <ng-template pTemplate="body" let-financialData>
           <tr class="text-base">
-              <td>{{ financialData.Date }}</td>
-              <td>{{ financialData.Description }}</td>
-              <td>{{ financialData.Income }}</td>
-              <td>{{ financialData.Outcome }}</td>
-              <td></td>
+              <td>{{ financialData.date }}</td>
+              <td>{{ financialData.categoryDTO.name }}</td>
+              @if (financialData.categoryDTO.accountCatalogue.typeAccount == 1)
+              {
+                <td>${{ financialData.amount }}</td>
+                <td></td>
+              }
+              @else
+              {
+                <td></td>
+                <td>${{ financialData.amount }}</td>
+              }
+              <td>x + x</td>
+
               <td class="text-center">
                 <span class="p-buttonset">
                   <p-button 
