@@ -14,7 +14,7 @@
           [paginator]="true"
           [rows]="5"
           [rowsPerPageOptions]="[5, 10, 20]"
-          styleClass="w-full"
+          styleClass="w-full p-datatable-sm"
           sortMode="multiple"
           [tableStyle]="{'min-width': '50rem'}"
         >
@@ -41,8 +41,13 @@
                     <td [classList]="(statement.endDate != null ? '' : 'text-center')" >{{ (statement.endDate ?? '•••') }}</td>
                     <td>
                         <span class="p-buttonset">
-                            <p-button icon="pi pi-file-edit" (onClick)="editStatement(statement.id)" />
                             <p-button 
+                              size="small" 
+                              icon="pi pi-file-edit" 
+                              (onClick)="editStatement(statement.id)" 
+                            />
+                            <p-button
+                              size="small"
                               severity="danger" 
                               icon="pi pi-trash" 
                               (onClick)="dialogDeleteStatement(statement, $event)" 

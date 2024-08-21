@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { FormStatement } from '../FormStatement';
+import { DateFormatterService } from '@services/date-formatter.service';
 
 @Component({
   selector: 'app-financial-statement-form',
@@ -27,8 +28,9 @@ export class FinancialStatementFormComponent implements OnChanges {
 
   constructor (
     private fb: FormBuilder,
+    private dateFormatter: DateFormatterService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -91,16 +93,6 @@ export class FinancialStatementFormComponent implements OnChanges {
     this.onSubmit.emit(formData);
   }
 
-  isDate(checkDate: string)
-  {
-    let date = Date.parse(checkDate);
-
-    if (isNaN(date))
-      return false;
-    else
-      return true;
-  }
-
   validateFieldDate(date: Date | string | DateConstructor, message: string): boolean
   {
     if (!(date instanceof Date) && !(typeof date == 'string'))
@@ -109,7 +101,7 @@ export class FinancialStatementFormComponent implements OnChanges {
         return false;
       }
   
-      if (typeof date === 'string' && !this.isDate(date))
+      if (typeof date === 'string' && !this.dateFormatter.isDate(date))
       {
         this.errors.push(`The ${message} must be a DATE`);
         return false;

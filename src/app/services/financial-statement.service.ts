@@ -74,6 +74,14 @@ export class FinancialStatementService {
       .pipe(catchError(this.handleError));
   }
 
+  findAllByDate(date: string)
+  {
+    let httpOptions = this.getHeader();
+
+    return this.http.get<any>(`${this.apiUrl}/search/${date}/date`, httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
   deleteFinancialStatement(id: number)
   {
     let httpOptions = this.getHeader();
