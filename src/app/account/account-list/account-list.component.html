@@ -221,13 +221,13 @@
               <td>{{ financialData.categoryDTO.name }}</td>
               @if (financialData.categoryDTO.accountCatalogue.typeAccount == 1)
               {
-                <td>${{ financialData.amount }}</td>
+                <td>{{ financialData.amount | currency }}</td>
                 <td></td>
               }
               @else
               {
                 <td></td>
-                <td>${{ financialData.amount }}</td>
+                <td>{{ financialData.amount | currency }}</td>
               }
               <td>x + x</td>
 
