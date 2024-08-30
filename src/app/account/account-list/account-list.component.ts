@@ -129,6 +129,28 @@ export class AccountListComponent implements OnInit {
       });
   }
 
+  filterAccounts()
+  {
+    let formData = {
+      categoryId: this.filterForm.get('categoryFilter')?.value,
+      init_date: this.filterForm.get('init_date')?.value,
+      end_date: this.filterForm.get('end_date')?.value,
+      statementFilter: this.filterForm.get('statementFilter')?.value,
+    }
+
+    console.dir(formData);
+
+    this.accountService.filterAccounts(formData)
+      .subscribe({
+        next: (response) => {
+          console.dir(response);
+        },
+        error: (error) => {
+          console.warn(error);
+        }
+      });
+  }
+
   getAllStatementByDate()
   {
     console.log(this.accountForm.controls.date.value);
