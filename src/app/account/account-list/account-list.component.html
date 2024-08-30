@@ -9,7 +9,7 @@
       Filter Accounts
     </p>
 
-    <form [formGroup]="filterForm">
+    <form [formGroup]="filterForm" (ngSubmit)="filterAccounts()">
       <div class="w-full mb-5">
         <p-floatLabel>
           <p-calendar 
@@ -74,7 +74,7 @@
       </div>
     
       <div class="mb-5">
-        <p-button size="small" label="Search" styleClass="h-9 w-full"/>
+        <p-button size="small" type="submit" label="Search" styleClass="h-9 w-full"/>
       </div>
     </form>
   </div>
@@ -210,7 +210,7 @@
               <th>Date</th>
               <th>Category</th>
               <th>Income</th>
-              <th>OutCome</th>
+              <th>Outlay</th>
               <th>Total</th>
               <th>Actions</th>
           </tr>
@@ -221,13 +221,13 @@
               <td>{{ financialData.categoryDTO.name }}</td>
               @if (financialData.categoryDTO.accountCatalogue.typeAccount == 1)
               {
-                <td>${{ financialData.amount }}</td>
+                <td>{{ financialData.amount | currency }}</td>
                 <td></td>
               }
               @else
               {
                 <td></td>
-                <td>${{ financialData.amount }}</td>
+                <td>{{ financialData.amount | currency }}</td>
               }
               <td>x + x</td>
 

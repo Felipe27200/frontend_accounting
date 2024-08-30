@@ -69,7 +69,6 @@ export class AccountListComponent implements OnInit {
       .subscribe({
         next: (response) => {
           this.financialData = response;
-          console.log(response);
         },
         error: (error) => {
           console.error(error)
@@ -122,9 +121,32 @@ export class AccountListComponent implements OnInit {
       .subscribe({
         next: (response) => {
           this.ngOnInit();
+          this.accountForm.reset();
         },
         error: (error) => {
           console.error(error)
+        }
+      });
+  }
+
+  filterAccounts()
+  {
+    let formData = {
+      categoryId: this.filterForm.get('categoryFilter')?.value,
+      init_date: this.filterForm.get('init_date')?.value,
+      end_date: this.filterForm.get('end_date')?.value,
+      statementFilter: this.filterForm.get('statementFilter')?.value,
+    }
+
+    console.dir(formData);
+
+    this.accountService.filterAccounts(formData)
+      .subscribe({
+        next: (response) => {
+          console.dir(response);
+        },
+        error: (error) => {
+          console.warn(error);
         }
       });
   }
@@ -171,4 +193,6 @@ export class AccountListComponent implements OnInit {
   get is_recurring() { return this.accountForm.get('is_recurring') }
   get category_id() { return this.accountForm.get('category_id') }
   get financial_statement() { return this.accountForm.get('financial_statement') }
+
+  get statementFilter() { return this.filterForm.get('statementFilter') }
 }

@@ -32,6 +32,14 @@ export class AccountService {
       .pipe(catchError(this.handleError));
   }
 
+  filterAccounts(formData: any)
+  {
+    let httpOptions = this.getHeader();
+
+    return this.http.post<any>(`${this.apiPrefix}/filter-account`, formData, httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
   getHeader()
   {
     let token = this.localStorageService.getItem('Bearer token');
