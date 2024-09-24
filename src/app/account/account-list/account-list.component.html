@@ -219,7 +219,8 @@
           <tr class="text-base">
               <td>{{ financialData.date }}</td>
               <td>{{ financialData.categoryDTO.name }}</td>
-              @if (financialData.categoryDTO.accountCatalogue.typeAccount == 1)
+
+              @if (getTypeCatalogue(financialData.categoryDTO) == 1)
               {
                 <td>{{ financialData.amount | currency }}</td>
                 <td></td>

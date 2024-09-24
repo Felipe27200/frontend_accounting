@@ -131,18 +131,31 @@ export class AccountListComponent implements OnInit {
 
   filterAccounts()
   {
-    let formData = {
-      categoryId: this.filterForm.get('categoryFilter')?.value,
-      init_date: this.filterForm.get('init_date')?.value,
-      end_date: this.filterForm.get('end_date')?.value,
-      statementFilter: this.filterForm.get('statementFilter')?.value,
+    let dateInit:  Date | null | DateConstructor | undefined | string = this.filterForm.get('init_date')?.value;
+    let dateEnd:  Date | null | DateConstructor | undefined | string = this.filterForm.get('end_date')?.value;
+
+    if ((dateInit !== null && dateInit !== undefined) && 
+        (dateInit instanceof Date))
+    {
+      dateInit = this.dateFormatter.formatDate(dateInit)
+    }
+    if ((dateEnd !== null && dateEnd !== undefined) && 
+        (dateEnd instanceof Date))
+    {
+      dateEnd = this.dateFormatter.formatDate(dateEnd)
     }
 
-    console.dir(formData);
+    let formData = {
+      categoryId: this.filterForm.get('categoryFilter')?.value,
+      initDate: dateInit,
+      endDate: dateEnd,
+      statementId: this.filterForm.get('statementFilter')?.value,
+    }
 
     this.accountService.filterAccounts(formData)
       .subscribe({
         next: (response) => {
+          this.financialData = response;
           console.dir(response);
         },
         error: (error) => {
@@ -151,10 +164,8 @@ export class AccountListComponent implements OnInit {
       });
   }
 
-  getAllStatementByDate()
+  getAllStatementByDate(isFilter?: boolean)
   {
-    console.log(this.accountForm.controls.date.value);
-
     if (this.accountForm.controls.date.value === null)
     {
       this.statementsByDate = [];
@@ -170,17 +181,24 @@ export class AccountListComponent implements OnInit {
     let date = this.accountForm.controls.date.value;
     let dateFormat = this.dateFormatter.formatDate(date);
 
-    console.log(dateFormat);
-
     this.statementService.findAllByDate(dateFormat)
       .subscribe({
         next: (response) => {
-          this.statementsByDate = response;
+            this.statementsByDate = response;
         },
         error: (error) => {
           console.error(error);
         }
       });
+  }
+
+  getTypeCatalogue(category: any)
+  {
+
+    if (category.hasOwnProperty("accountCatalogue") && (category.accountCatalogue !== null && category.accountCatalogue !== undefined))
+      return category.accountCatalogue.typeAccount;
+    else
+      return category.typeAccount;
   }
 
   togglePanel()
