@@ -82,6 +82,14 @@ export class FinancialStatementService {
       .pipe(catchError(this.handleError));
   }
 
+  findAllByDateRange(dateInit: string, dateEnd: string)
+  {
+    let httpOptions = this.getHeader();
+
+    return this.http.get<any>(`${this.apiUrl}/search-range/${dateInit}/to/${dateEnd}`, httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
   deleteFinancialStatement(id: number)
   {
     let httpOptions = this.getHeader();
