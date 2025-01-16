@@ -188,68 +188,6 @@
       </p-panel>
     </form>
 
-    <p-table 
-      styleClass="p-datatable-gridlines p-datatable-sm mt-4"
-      [value]="financialData"
-      [scrollable]="true" 
-      scrollHeight="700px"
-      [paginator]="true"
-      [rows]="10"
-      [rowsPerPageOptions]="[5, 10, 20]"
-      sortMode="multiple"
-    >
-      <ng-template pTemplate="caption">
-        <div class="flex align-items-center justify-content-between">
-            <p>Financial Statement</p>
-            <p>YYYY-MM-DD to YYYY-MM-DD</p>
-            
-        </div>
-      </ng-template>
-      <ng-template pTemplate="header">
-          <tr>
-              <th>Date</th>
-              <th>Category</th>
-              <th>Income</th>
-              <th>Outlay</th>
-              <th>Total</th>
-              <th>Actions</th>
-          </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-financialData>
-          <tr class="text-base">
-              <td>{{ financialData.date }}</td>
-              <td>{{ financialData.categoryDTO.name }}</td>
-
-              @if (getTypeCatalogue(financialData.categoryDTO) == 1)
-              {
-                <td>{{ financialData.amount | currency }}</td>
-                <td></td>
-              }
-              @else
-              {
-                <td></td>
-                <td>{{ financialData.amount | currency }}</td>
-              }
-
-              <td>{{ financialData.total | currency }}</td>
-
-              <td class="text-center">
-                <span class="p-buttonset">
-                  <p-button 
-                    styleClass="h-7 !w-1"
-                    size="small" 
-                    icon="pi pi-file-edit" 
-                  />
-                  <p-button
-                    styleClass="h-7 !w-1"
-                    size="small"
-                    severity="danger" 
-                    icon="pi pi-trash" 
-                  />
-              </span>
-              </td>
-          </tr>
-        </ng-template>
-    </p-table>
+    <app-account-table [financialData]="financialData"></app-account-table>
   </div>
 </div>

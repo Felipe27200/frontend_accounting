@@ -25,19 +25,9 @@ export class NavBarComponent implements OnInit {
       {
           label: 'Account',
           icon: 'pi pi-wallet',
-          items: [
-              {
-                  label: 'Register',
-                  icon: 'pi pi-plus-circle'
-              },
-              {
-                  label: 'List',
-                  icon: 'pi pi-list',
-                  command: () => {
-                    this.router.navigate(["/accounts"]);
-                  }
-              }
-          ]
+          command: () => {
+            this.router.navigate(["/accounts"]);
+          }
       },
       {
           label: 'Category',

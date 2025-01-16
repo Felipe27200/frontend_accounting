@@ -192,15 +192,6 @@ export class AccountListComponent implements OnInit {
       });
   }
 
-  getTypeCatalogue(category: any)
-  {
-
-    if (category.hasOwnProperty("accountCatalogue") && (category.accountCatalogue !== null && category.accountCatalogue !== undefined))
-      return category.accountCatalogue.typeAccount;
-    else
-      return category.typeAccount;
-  }
-
   togglePanel()
   {
     this.toggle = true;

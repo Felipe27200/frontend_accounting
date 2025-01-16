@@ -10,6 +10,7 @@ import { SharedComponentModule } from 'app/common_components/shared-component.mo
 
 import { AccountListComponent } from './account-list/account-list.component';
 import { AccountCenterComponent } from './account-center/account-center.component';
+import { AccountTableComponent } from './account-table/account-table.component';
 
 import { JwtInterceptor } from '../interceptors/jwt-interceptor.interceptor';
 
@@ -26,6 +27,7 @@ import { PanelModule } from 'primeng/panel';
   declarations: [
     AccountListComponent,
     AccountCenterComponent,
+    AccountTableComponent
   ],
   imports: [
     CommonModule,
