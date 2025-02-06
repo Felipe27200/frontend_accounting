@@ -17,11 +17,12 @@ import { JwtInterceptor } from '../interceptors/jwt-interceptor.interceptor';
 // Primeng Modules
 import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
-import { DropdownModule } from 'primeng/dropdown';
+import { Select } from 'primeng/select';
 import { FloatLabelModule } from 'primeng/floatlabel';
-import { CalendarModule } from 'primeng/calendar';
+import { DatePicker } from 'primeng/datepicker';
 import { CardModule } from 'primeng/card';
 import { PanelModule } from 'primeng/panel';
+import { ButtonModule } from 'primeng/button';
 
 @NgModule({ 
     declarations: [
@@ -34,12 +35,13 @@ import { PanelModule } from 'primeng/panel';
         BrowserModule,
         BrowserAnimationsModule,
         ReactiveFormsModule,
-        CalendarModule,
+        ButtonModule,
+        DatePicker,
         PanelModule,
         CardModule,
         InputTextModule,
         FloatLabelModule,
-        DropdownModule,
+        Select,
         TableModule,
         SharedComponentModule,
         AccountRoutingModule

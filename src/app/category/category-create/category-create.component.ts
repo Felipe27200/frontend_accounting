@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 
 import { CategoryService } from '@services/category.service';
 
-import { Message, MessageService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 
 
 @Component({
@@ -32,7 +32,7 @@ export class CategoryCreateComponent {
         this.router.navigate(["/categories"]);
       },
       error: (error) => {
-        let listErrors: Message[] = [];
+        let listErrors = [];
 
         if (error.hasOwnProperty("error") && error.error.hasOwnProperty("message"))
           listErrors.push({ severity: 'error', summary: 'Error', detail: error.error.message });

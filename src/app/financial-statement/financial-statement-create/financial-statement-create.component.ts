@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { FinancialStatementService } from '@services/financial-statement.service';
-import { Message, MessageService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-financial-statement-create',
@@ -31,7 +31,7 @@ export class FinancialStatementCreateComponent {
           this.router.navigate(['/financial-statement']);
         },
         error: (error) =>{
-          let listErrors: Message[] = [];
+          let listErrors = [];
 
           if (error.hasOwnProperty("error") && error.error.hasOwnProperty("message"))
             listErrors.push({ severity: 'error', summary: 'Error', detail: error.error.message });

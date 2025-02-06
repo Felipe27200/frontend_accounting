@@ -3,6 +3,10 @@ import { ReactiveFormsModule, FormsModule  } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser'; 
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { providePrimeNG } from 'primeng/config';
+import Lara from '@primeng/themes/lara';
+
 // Components
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -27,7 +31,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         AppComponent,
         LoginComponent,
     ],
-    bootstrap: [AppComponent], imports: [BrowserModule,
+    bootstrap: [AppComponent], 
+    imports: [
+        BrowserModule,
         BrowserAnimationsModule,
         CardModule,
         ButtonModule,
@@ -39,8 +45,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         AccountModule,
         CategoryModule,
         FinancialStatementModule,
-        AppRoutingModule], providers: [
+        AppRoutingModule
+    ], 
+    providers: [
         provideHttpClient(),
         provideHttpClient(withInterceptorsFromDi()),
-    ] })
+        provideAnimationsAsync(),
+        providePrimeNG({ 
+            theme: {
+                preset: Lara
+            }
+        })
+    ] 
+})
 export class AppModule { }

@@ -12,7 +12,7 @@
       <form [formGroup]="categoryForm" (ngSubmit)="validateForm()">
           <div class="field">
               <label for="account-catalogue">Account Type:</label>
-              <p-dropdown 
+              <p-select 
                 id="account-catalogue"
                 formControlName="accountCatalogueId"
                 [options]="accountsCatalogue"
@@ -27,7 +27,7 @@
           </div>
           <div class="field">
               <label for="parent-category">Parent Category:</label>
-              <p-dropdown 
+              <p-select 
                 id="parent-category"
                 formControlName="parentCategory"
                 [showClear]="true"

@@ -2,8 +2,8 @@
   The exclamation marks in the attribute class works as a modifier
   that indicates we will use a tailwind class instead others. 
 -->
-<div class="!grid grid-cols-12">
-  <div class="col-span-2 pl-3">
+<div class="!grid !grid-cols-12">
+  <div class="!col-span-2 pl-3">
     <p class="mt-5 !mb-12 text-lg font-semibold">
       <span class="pi pi-filter"></span>
       Filter Accounts
@@ -12,7 +12,7 @@
     <form [formGroup]="filterForm" (ngSubmit)="filterAccounts()">
       <div class="w-full mb-5">
         <p-floatLabel>
-          <p-calendar 
+          <p-datepicker 
             inputId="init_date" 
             formControlName="init_date"
             [showButtonBar]="true" 
@@ -27,7 +27,7 @@
     
       <div class="w-full mb-5">
         <p-floatLabel>
-          <p-calendar 
+          <p-datepicker 
             inputId="end_date" 
             formControlName="end_date"
             [showButtonBar]="true" 
@@ -41,7 +41,7 @@
       </div>
       <div class="w-full mb-5">
         <p-floatLabel>
-            <p-dropdown 
+            <p-select 
               id="filter-statement"
               formControlName="statementFilter" 
               [options]="statementList"
@@ -58,7 +58,7 @@
     
       <div class="w-full mb-5">
         <p-floatLabel>
-            <p-dropdown 
+            <p-select 
               id="category-statement"
               formControlName="categoryFilter" 
               [options]="categoryList"
@@ -90,7 +90,7 @@
         <div class="!flex !flex-row !mb-2 !mt-3">
           <div class="basis-1/4 pr-4">
             <p-floatLabel>
-              <p-calendar 
+              <p-datepicker 
                 inputId="date" 
                 formControlName="date"
                 [showButtonBar]="true" 
@@ -113,7 +113,7 @@
     
           <div class="basis-1/4 pr-4">
             <p-floatLabel>
-              <p-dropdown 
+              <p-select 
                 id="statement-by-date"
                 formControlName="financial_statement" 
                 [options]="statementsByDate"
@@ -135,7 +135,7 @@
 
           <div class="basis-1/4 pr-4">
             <p-floatLabel>
-              <p-dropdown 
+              <p-select 
                 id="category"
                 formControlName="category_id" 
                 [options]="categoryList"
