@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule  } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser'; 
-import { HttpClientModule, provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 // Components
 import { AppComponent } from './app.component';
@@ -23,30 +23,24 @@ import { MenubarModule } from 'primeng/menubar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-  ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    CardModule,
-    ButtonModule,
-    InputTextModule,
-    MenubarModule,
-    FormsModule,
-    ReactiveFormsModule,
-    SharedComponentModule,
-    AccountModule,
-    CategoryModule,
-    FinancialStatementModule,
-    AppRoutingModule,
-    HttpClientModule
-  ],
-  providers: [
-    provideHttpClient(),
-  ],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        LoginComponent,
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        BrowserAnimationsModule,
+        CardModule,
+        ButtonModule,
+        InputTextModule,
+        MenubarModule,
+        FormsModule,
+        ReactiveFormsModule,
+        SharedComponentModule,
+        AccountModule,
+        CategoryModule,
+        FinancialStatementModule,
+        AppRoutingModule], providers: [
+        provideHttpClient(),
+        provideHttpClient(withInterceptorsFromDi()),
+    ] })
 export class AppModule { }
