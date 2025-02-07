@@ -18,7 +18,7 @@ import { JwtInterceptor } from '../interceptors/jwt-interceptor.interceptor';
 import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
 import { Select } from 'primeng/select';
-import { FloatLabelModule } from 'primeng/floatlabel';
+import { FloatLabel  } from 'primeng/floatlabel';
 import { DatePicker } from 'primeng/datepicker';
 import { CardModule } from 'primeng/card';
 import { PanelModule } from 'primeng/panel';
@@ -40,7 +40,7 @@ import { ButtonModule } from 'primeng/button';
         PanelModule,
         CardModule,
         InputTextModule,
-        FloatLabelModule,
+        FloatLabel,
         Select,
         TableModule,
         SharedComponentModule,

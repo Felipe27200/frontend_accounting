@@ -40,7 +40,7 @@
         </p-floatLabel>
       </div>
       <div class="w-full mb-5">
-        <p-floatLabel>
+        <p-floatlabel>
             <p-select 
               id="filter-statement"
               formControlName="statementFilter" 
@@ -48,12 +48,11 @@
               [showClear]="true"
               optionLabel="name"
               optionValue="id"
-              placeholder="Select a Fin. Statement"
               styleClass="h-9 w-full items-center"
               panelStyleClass="block w-full border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 p-1"
             />
             <label for="filter-statement" class="">Statement Filter:</label>
-          </p-floatLabel>
+          </p-floatlabel>
       </div>
     
       <div class="w-full mb-5">
@@ -65,7 +64,6 @@
               [showClear]="true"
               optionLabel="name"
               optionValue="id"
-              placeholder="Select a Fin. Statement"
               styleClass="h-9 w-full items-center"
               panelStyleClass="block w-full border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 p-1"
             />
@@ -142,7 +140,6 @@
                 [showClear]="true"
                 optionLabel="name"
                 optionValue="id"
-                placeholder="Select a Fin. Statement"
                 styleClass="h-9 w-full items-center"
                 panelStyleClass="block w-full border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 p-1"
               />
@@ -158,7 +155,7 @@
     
           <div class="basis-1/4 pr-4">
             <p-floatLabel>
-              <input pInputText id="amount" formControlName="amount" type="number" class="text-base h-9 text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+              <input pInputText id="amount" formControlName="amount" type="number" class="text-base h-9 text-color surface-overlay p-2 border-1 border-solid surface-border rounded-sm appearance-none outline-none focus:border-primary w-full">
               <label for="amount">Amount:</label>
             </p-floatLabel>
 
