@@ -15,14 +15,15 @@ import { AccountTableComponent } from './account-table/account-table.component';
 import { JwtInterceptor } from '../interceptors/jwt-interceptor.interceptor';
 
 // Primeng Modules
-import { TableModule } from 'primeng/table';
-import { InputTextModule } from 'primeng/inputtext';
-import { Select } from 'primeng/select';
-import { FloatLabel  } from 'primeng/floatlabel';
-import { DatePicker } from 'primeng/datepicker';
-import { CardModule } from 'primeng/card';
-import { PanelModule } from 'primeng/panel';
 import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import { DatePicker } from 'primeng/datepicker';
+import { FloatLabel  } from 'primeng/floatlabel';
+import { InputTextModule } from 'primeng/inputtext';
+import { PanelModule } from 'primeng/panel';
+import { Select } from 'primeng/select';
+import { TableModule } from 'primeng/table';
+
 
 @NgModule({ 
     declarations: [
@@ -36,11 +37,11 @@ import { ButtonModule } from 'primeng/button';
         BrowserAnimationsModule,
         ReactiveFormsModule,
         ButtonModule,
-        DatePicker,
-        PanelModule,
         CardModule,
-        InputTextModule,
+        DatePicker,
         FloatLabel,
+        InputTextModule,
+        PanelModule,
         Select,
         TableModule,
         SharedComponentModule,
