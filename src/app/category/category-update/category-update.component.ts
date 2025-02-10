@@ -8,14 +8,15 @@ import { ErrorResponse } from 'app/response/error-response';
 import { MessageService } from 'primeng/api';
 
 @Component({
-  selector: 'app-category-update',
-  templateUrl: './category-update.component.html',
-  styleUrl: './category-update.component.css',
-  /**
-   * Angular used it to make available the dependency
-   * injection inside this component.
-   */
-  providers: [MessageService],
+    selector: 'app-category-update',
+    templateUrl: './category-update.component.html',
+    styleUrl: './category-update.component.css',
+    /**
+     * Angular used it to make available the dependency
+     * injection inside this component.
+     */
+    providers: [MessageService],
+    standalone: false
 })
 export class CategoryUpdateComponent implements OnInit {
   category!: any;

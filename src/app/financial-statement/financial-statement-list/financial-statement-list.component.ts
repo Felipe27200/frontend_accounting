@@ -3,13 +3,14 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { FinancialStatementService } from '@services/financial-statement.service';
 
-import { ConfirmationService, Message, MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
-  selector: 'app-financial-statement-list',
-  templateUrl: './financial-statement-list.component.html',
-  styleUrl: './financial-statement-list.component.css',
-  providers: [ConfirmationService, MessageService],
+    selector: 'app-financial-statement-list',
+    templateUrl: './financial-statement-list.component.html',
+    styleUrl: './financial-statement-list.component.css',
+    providers: [ConfirmationService, MessageService],
+    standalone: false
 })
 export class FinancialStatementListComponent implements OnInit {
   listStatement: any[] = [];
@@ -30,7 +31,7 @@ export class FinancialStatementListComponent implements OnInit {
           this.listStatement = response;
         },
         error: (error) => {
-          let listErrors: Message[] = [];
+          let listErrors = [];
 
           if (error.hasOwnProperty("error") && error.error.hasOwnProperty("message"))
             listErrors.push({ severity: 'error', summary: 'Error', detail: error.error.message });

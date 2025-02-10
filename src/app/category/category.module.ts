@@ -13,14 +13,14 @@ import { CategoryListComponent } from './category-list/category-list.component';
 import { CategoryFormComponent } from './category-form/category-form.component';
 
 // Primeng Modules
-import { DropdownModule } from 'primeng/dropdown';
+import { Select } from 'primeng/select';
 import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { CategoryUpdateComponent } from './category-update/category-update.component';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { CardModule } from 'primeng/card';
-import { ToastModule } from 'primeng/toast';
+import { Toast  } from 'primeng/toast';
 import { RippleModule } from 'primeng/ripple';
 
 @NgModule({
@@ -38,11 +38,11 @@ import { RippleModule } from 'primeng/ripple';
     BrowserAnimationsModule,
     TableModule,
     CardModule,
-    ToastModule,
+    Toast ,
     RippleModule,
     ConfirmDialogModule,
     InputTextModule,
-    DropdownModule,
+    Select,
     ButtonModule,
     SharedComponentModule,
     CategoryRoutingModule

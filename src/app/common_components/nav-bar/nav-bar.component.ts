@@ -7,9 +7,10 @@ import { LocalStorageService } from '@services/local-storage.service';
 import { MenuItem } from 'primeng/api';
 
 @Component({
-  selector: 'app-nav-bar',
-  templateUrl: './nav-bar.component.html',
-  styleUrl: './nav-bar.component.css'
+    selector: 'app-nav-bar',
+    templateUrl: './nav-bar.component.html',
+    styleUrl: './nav-bar.component.css',
+    standalone: false
 })
 export class NavBarComponent implements OnInit {
   items: MenuItem[] | undefined;
@@ -25,19 +26,9 @@ export class NavBarComponent implements OnInit {
       {
           label: 'Account',
           icon: 'pi pi-wallet',
-          items: [
-              {
-                  label: 'Register',
-                  icon: 'pi pi-plus-circle'
-              },
-              {
-                  label: 'List',
-                  icon: 'pi pi-list',
-                  command: () => {
-                    this.router.navigate(["/accounts"]);
-                  }
-              }
-          ]
+          command: () => {
+            this.router.navigate(["/accounts"]);
+          }
       },
       {
           label: 'Category',

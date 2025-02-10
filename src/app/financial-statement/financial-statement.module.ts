@@ -18,9 +18,9 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { CardModule } from 'primeng/card';
-import { ToastModule } from 'primeng/toast';
+import { Toast } from 'primeng/toast';
 import { RippleModule } from 'primeng/ripple';
-import { CalendarModule } from 'primeng/calendar';
+import { DatePicker } from 'primeng/datepicker';
 import { TableModule } from 'primeng/table';
 
 
@@ -38,11 +38,11 @@ import { TableModule } from 'primeng/table';
     BrowserAnimationsModule,
     InputTextModule,
     ButtonModule,
-    CalendarModule,
+    DatePicker,
     TableModule,
     ConfirmDialogModule,
     CardModule,
-    ToastModule,
+    Toast,
     RippleModule,
     ReactiveFormsModule,
     SharedComponentModule,

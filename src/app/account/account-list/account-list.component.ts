@@ -7,9 +7,10 @@ import { DateFormatterService } from '@services/date-formatter.service';
 import { AccountService } from '@services/account.service';
 
 @Component({
-  selector: 'app-account-list',
-  templateUrl: './account-list.component.html',
-  styleUrl: './account-list.component.css'
+    selector: 'app-account-list',
+    templateUrl: './account-list.component.html',
+    styleUrl: './account-list.component.css',
+    standalone: false
 })
 export class AccountListComponent implements OnInit {
   toggle: boolean = true;
@@ -190,15 +191,6 @@ export class AccountListComponent implements OnInit {
           console.error(error);
         }
       });
-  }
-
-  getTypeCatalogue(category: any)
-  {
-
-    if (category.hasOwnProperty("accountCatalogue") && (category.accountCatalogue !== null && category.accountCatalogue !== undefined))
-      return category.accountCatalogue.typeAccount;
-    else
-      return category.typeAccount;
   }
 
   togglePanel()

@@ -2,8 +2,8 @@
   The exclamation marks in the attribute class works as a modifier
   that indicates we will use a tailwind class instead others. 
 -->
-<div class="!grid grid-cols-12">
-  <div class="col-span-2 pl-3">
+<div class="!grid !grid-cols-12">
+  <div class="!col-span-2 pl-3">
     <p class="mt-5 !mb-12 text-lg font-semibold">
       <span class="pi pi-filter"></span>
       Filter Accounts
@@ -12,7 +12,7 @@
     <form [formGroup]="filterForm" (ngSubmit)="filterAccounts()">
       <div class="w-full mb-5">
         <p-floatLabel>
-          <p-calendar 
+          <p-datepicker 
             inputId="init_date" 
             formControlName="init_date"
             [showButtonBar]="true" 
@@ -27,7 +27,7 @@
     
       <div class="w-full mb-5">
         <p-floatLabel>
-          <p-calendar 
+          <p-datepicker 
             inputId="end_date" 
             formControlName="end_date"
             [showButtonBar]="true" 
@@ -40,32 +40,30 @@
         </p-floatLabel>
       </div>
       <div class="w-full mb-5">
-        <p-floatLabel>
-            <p-dropdown 
+        <p-floatlabel>
+            <p-select 
               id="filter-statement"
               formControlName="statementFilter" 
               [options]="statementList"
               [showClear]="true"
               optionLabel="name"
               optionValue="id"
-              placeholder="Select a Fin. Statement"
               styleClass="h-9 w-full items-center"
               panelStyleClass="block w-full border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 p-1"
             />
             <label for="filter-statement" class="">Statement Filter:</label>
-          </p-floatLabel>
+          </p-floatlabel>
       </div>
     
       <div class="w-full mb-5">
         <p-floatLabel>
-            <p-dropdown 
+            <p-select 
               id="category-statement"
               formControlName="categoryFilter" 
               [options]="categoryList"
               [showClear]="true"
               optionLabel="name"
               optionValue="id"
-              placeholder="Select a Fin. Statement"
               styleClass="h-9 w-full items-center"
               panelStyleClass="block w-full border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 p-1"
             />
@@ -90,7 +88,7 @@
         <div class="!flex !flex-row !mb-2 !mt-3">
           <div class="basis-1/4 pr-4">
             <p-floatLabel>
-              <p-calendar 
+              <p-datepicker 
                 inputId="date" 
                 formControlName="date"
                 [showButtonBar]="true" 
@@ -113,7 +111,7 @@
     
           <div class="basis-1/4 pr-4">
             <p-floatLabel>
-              <p-dropdown 
+              <p-select 
                 id="statement-by-date"
                 formControlName="financial_statement" 
                 [options]="statementsByDate"
@@ -135,14 +133,13 @@
 
           <div class="basis-1/4 pr-4">
             <p-floatLabel>
-              <p-dropdown 
+              <p-select 
                 id="category"
                 formControlName="category_id" 
                 [options]="categoryList"
                 [showClear]="true"
                 optionLabel="name"
                 optionValue="id"
-                placeholder="Select a Fin. Statement"
                 styleClass="h-9 w-full items-center"
                 panelStyleClass="block w-full border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 p-1"
               />
@@ -158,7 +155,7 @@
     
           <div class="basis-1/4 pr-4">
             <p-floatLabel>
-              <input pInputText id="amount" formControlName="amount" type="number" class="text-base h-9 text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+              <input pInputText id="amount" formControlName="amount" type="number" class="text-base h-9 text-color surface-overlay p-2 border-1 border-solid surface-border rounded-sm appearance-none outline-none focus:border-primary w-full">
               <label for="amount">Amount:</label>
             </p-floatLabel>
 
@@ -188,68 +185,6 @@
       </p-panel>
     </form>
 
-    <p-table 
-      styleClass="p-datatable-gridlines p-datatable-sm mt-4"
-      [value]="financialData"
-      [scrollable]="true" 
-      scrollHeight="700px"
-      [paginator]="true"
-      [rows]="10"
-      [rowsPerPageOptions]="[5, 10, 20]"
-      sortMode="multiple"
-    >
-      <ng-template pTemplate="caption">
-        <div class="flex align-items-center justify-content-between">
-            <p>Financial Statement</p>
-            <p>YYYY-MM-DD to YYYY-MM-DD</p>
-            
-        </div>
-      </ng-template>
-      <ng-template pTemplate="header">
-          <tr>
-              <th>Date</th>
-              <th>Category</th>
-              <th>Income</th>
-              <th>Outlay</th>
-              <th>Total</th>
-              <th>Actions</th>
-          </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-financialData>
-          <tr class="text-base">
-              <td>{{ financialData.date }}</td>
-              <td>{{ financialData.categoryDTO.name }}</td>
-
-              @if (getTypeCatalogue(financialData.categoryDTO) == 1)
-              {
-                <td>{{ financialData.amount | currency }}</td>
-                <td></td>
-              }
-              @else
-              {
-                <td></td>
-                <td>{{ financialData.amount | currency }}</td>
-              }
-
-              <td>{{ financialData.total | currency }}</td>
-
-              <td class="text-center">
-                <span class="p-buttonset">
-                  <p-button 
-                    styleClass="h-7 !w-1"
-                    size="small" 
-                    icon="pi pi-file-edit" 
-                  />
-                  <p-button
-                    styleClass="h-7 !w-1"
-                    size="small"
-                    severity="danger" 
-                    icon="pi pi-trash" 
-                  />
-              </span>
-              </td>
-          </tr>
-        </ng-template>
-    </p-table>
+    <app-account-table [financialData]="financialData"></app-account-table>
   </div>
 </div>

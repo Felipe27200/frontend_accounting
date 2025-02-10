@@ -7,13 +7,13 @@ import { FormStatement } from '../FormStatement';
 
 import { MessageService } from 'primeng/api';
 // import { ConfirmDialog } from 'primeng/confirmdialog';
-import { Message } from 'primeng/api';
 
 @Component({
-  selector: 'app-financial-statement-update',
-  templateUrl: './financial-statement-update.component.html',
-  styleUrl: './financial-statement-update.component.css',
-  providers: [MessageService]
+    selector: 'app-financial-statement-update',
+    templateUrl: './financial-statement-update.component.html',
+    styleUrl: './financial-statement-update.component.css',
+    providers: [MessageService],
+    standalone: false
 })
 export class FinancialStatementUpdateComponent implements OnInit 
 {
@@ -67,7 +67,7 @@ export class FinancialStatementUpdateComponent implements OnInit
           this.router.navigate(['/financial-statement']);
         },
         error: (error: any) => {
-          let listErrors: Message[] = [];
+          let listErrors = [];
 
           if (error.hasOwnProperty("error") && error.error.hasOwnProperty("message"))
             listErrors.push({ severity: 'error', summary: 'Error', detail: error.error.message });

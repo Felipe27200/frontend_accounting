@@ -6,9 +6,10 @@ import { FormStatement } from '../FormStatement';
 import { DateFormatterService } from '@services/date-formatter.service';
 
 @Component({
-  selector: 'app-financial-statement-form',
-  templateUrl: './financial-statement-form.component.html',
-  styleUrl: './financial-statement-form.component.css'
+    selector: 'app-financial-statement-form',
+    templateUrl: './financial-statement-form.component.html',
+    styleUrl: './financial-statement-form.component.css',
+    standalone: false
 })
 export class FinancialStatementFormComponent implements OnChanges {
   @Input() title?: string;

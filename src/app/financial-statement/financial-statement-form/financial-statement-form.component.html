@@ -15,12 +15,12 @@
         <form [formGroup]="statementForm" (ngSubmit)="validateForm()">
             <div class="field">
                 <label for="name">Name:</label>
-                <input pInputText id="name" formControlName="name" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                <input pInputText id="name" formControlName="name" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border rounded-sm appearance-none outline-none focus:border-primary w-full">
             </div>
     
             <div class="field">
                 <label for="init_date">Init Date:</label>
-                <p-calendar
+                <p-datepicker
                   [showIcon]="true" 
                   formControlName="init_date" 
                   inputId="init_date"
@@ -28,12 +28,12 @@
                   [style]="{ 'height': '40px' }"
                   [iconDisplay]="'input'"
                   [dateFormat]="dateFormat"
-                  ></p-calendar>
+                  ></p-datepicker>
             </div>
     
             <div class="field">
                 <label for="end_date">End Date:</label>
-                <p-calendar
+                <p-datepicker
                 [showIcon]="true" 
                 formControlName="end_date"
                 [iconDisplay]="'input'"
@@ -41,7 +41,7 @@
                 styleClass="w-full"
                 [style]="{ 'height': '40px' }"
                 [dateFormat]="dateFormat"
-                ></p-calendar>
+                ></p-datepicker>
             </div>
 
             @for (error of errors; track error) {
