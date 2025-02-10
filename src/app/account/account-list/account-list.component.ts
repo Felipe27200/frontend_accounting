@@ -7,9 +7,10 @@ import { DateFormatterService } from '@services/date-formatter.service';
 import { AccountService } from '@services/account.service';
 
 @Component({
-  selector: 'app-account-list',
-  templateUrl: './account-list.component.html',
-  styleUrl: './account-list.component.css'
+    selector: 'app-account-list',
+    templateUrl: './account-list.component.html',
+    styleUrl: './account-list.component.css',
+    standalone: false
 })
 export class AccountListComponent implements OnInit {
   toggle: boolean = true;

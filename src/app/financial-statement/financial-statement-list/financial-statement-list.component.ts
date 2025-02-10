@@ -6,10 +6,11 @@ import { FinancialStatementService } from '@services/financial-statement.service
 import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
-  selector: 'app-financial-statement-list',
-  templateUrl: './financial-statement-list.component.html',
-  styleUrl: './financial-statement-list.component.css',
-  providers: [ConfirmationService, MessageService],
+    selector: 'app-financial-statement-list',
+    templateUrl: './financial-statement-list.component.html',
+    styleUrl: './financial-statement-list.component.css',
+    providers: [ConfirmationService, MessageService],
+    standalone: false
 })
 export class FinancialStatementListComponent implements OnInit {
   listStatement: any[] = [];

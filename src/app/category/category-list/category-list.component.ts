@@ -7,10 +7,11 @@ import { CategoryService } from '@services/category.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
-  selector: 'app-category-list',
-  templateUrl: './category-list.component.html',
-  styleUrl: './category-list.component.css',
-  providers: [ConfirmationService, MessageService]
+    selector: 'app-category-list',
+    templateUrl: './category-list.component.html',
+    styleUrl: './category-list.component.css',
+    providers: [ConfirmationService, MessageService],
+    standalone: false
 })
 export class CategoryListComponent implements OnInit {
   categories!: any[];

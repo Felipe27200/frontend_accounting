@@ -5,9 +5,10 @@ import { AccountCatalogueService } from '@services/account-catalogue.service';
 import { CategoryService } from '@services/category.service';
 
 @Component({
-  selector: 'app-category-form',
-  templateUrl: './category-form.component.html',
-  styleUrl: './category-form.component.css'
+    selector: 'app-category-form',
+    templateUrl: './category-form.component.html',
+    styleUrl: './category-form.component.css',
+    standalone: false
 })
 export class CategoryFormComponent implements OnInit, OnChanges {
   @Input() title = "";

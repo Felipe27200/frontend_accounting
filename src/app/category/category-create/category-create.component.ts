@@ -8,10 +8,11 @@ import { MessageService } from 'primeng/api';
 
 
 @Component({
-  selector: 'app-category-create',
-  templateUrl: './category-create.component.html',
-  styleUrl: './category-create.component.css',
-  providers: [MessageService],
+    selector: 'app-category-create',
+    templateUrl: './category-create.component.html',
+    styleUrl: './category-create.component.css',
+    providers: [MessageService],
+    standalone: false
 })
 export class CategoryCreateComponent {
   enableButton: boolean = true;

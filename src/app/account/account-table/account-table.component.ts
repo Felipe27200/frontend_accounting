@@ -1,9 +1,10 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-account-table',
-  templateUrl: './account-table.component.html',
-  styleUrl: './account-table.component.css'
+    selector: 'app-account-table',
+    templateUrl: './account-table.component.html',
+    styleUrl: './account-table.component.css',
+    standalone: false
 })
 export class AccountTableComponent 
 {

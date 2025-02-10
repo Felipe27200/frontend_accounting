@@ -7,9 +7,10 @@ import { LocalStorageService } from '@services/local-storage.service';
 import { MenuItem } from 'primeng/api';
 
 @Component({
-  selector: 'app-nav-bar',
-  templateUrl: './nav-bar.component.html',
-  styleUrl: './nav-bar.component.css'
+    selector: 'app-nav-bar',
+    templateUrl: './nav-bar.component.html',
+    styleUrl: './nav-bar.component.css',
+    standalone: false
 })
 export class NavBarComponent implements OnInit {
   items: MenuItem[] | undefined;

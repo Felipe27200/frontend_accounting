@@ -6,10 +6,11 @@ import { FinancialStatementService } from '@services/financial-statement.service
 import { MessageService } from 'primeng/api';
 
 @Component({
-  selector: 'app-financial-statement-create',
-  templateUrl: './financial-statement-create.component.html',
-  styleUrl: './financial-statement-create.component.css',
-  providers: [MessageService],
+    selector: 'app-financial-statement-create',
+    templateUrl: './financial-statement-create.component.html',
+    styleUrl: './financial-statement-create.component.css',
+    providers: [MessageService],
+    standalone: false
 })
 export class FinancialStatementCreateComponent {
   enableButton: boolean = true;
