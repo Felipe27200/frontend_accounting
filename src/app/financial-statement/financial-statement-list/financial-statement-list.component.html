@@ -40,19 +40,18 @@
                     <td>{{ statement.initDate }}</td>
                     <td [classList]="(statement.endDate != null ? '' : 'text-center')" >{{ (statement.endDate ?? '•••') }}</td>
                     <td>
-                        <span class="p-buttonset">
-                            <p-button 
-                              size="small" 
-                              icon="pi pi-file-edit" 
-                              (onClick)="editStatement(statement.id)" 
-                            />
-                            <p-button
-                              size="small"
-                              severity="danger" 
-                              icon="pi pi-trash" 
-                              (onClick)="dialogDeleteStatement(statement, $event)" 
-                            />
-                        </span>
+                    <p-button 
+                        size="small" 
+                        icon="pi pi-file-edit" 
+                        styleClass="!mr-1"
+                        (onClick)="editStatement(statement.id)" 
+                    />
+                    <p-button
+                        size="small"
+                        severity="danger" 
+                        icon="pi pi-trash" 
+                        (onClick)="dialogDeleteStatement(statement, $event)" 
+                    />
                     </td>
                 </tr>
             </ng-template>

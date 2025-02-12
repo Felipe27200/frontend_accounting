@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import { provideHttpClient, withInterceptors, withInterceptorsFromDi } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AccountRoutingModule } from './account-routing.module';
 import { SharedComponentModule } from 'app/common_components/shared-component.module';
@@ -40,6 +40,7 @@ import { TableModule } from 'primeng/table';
         CardModule,
         DatePicker,
         FloatLabel,
+        FormsModule,
         InputTextModule,
         PanelModule,
         Select,

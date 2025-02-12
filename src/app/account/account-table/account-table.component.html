@@ -1,21 +1,25 @@
 <p-table 
-  styleClass="p-datatable-gridlines p-datatable-sm mt-4"
-  [value]="financialData"
+  styleClass="p-datatable-sm mt-4"
+  showGridlines
+  stripedRows
+  [value]="financialDataList"
   [scrollable]="true" 
   scrollHeight="700px"
   [paginator]="true"
   [rows]="10"
   [rowsPerPageOptions]="[5, 10, 20]"
   sortMode="multiple"
+  editMode="row"
+  dataKey="id"
 >
-  <ng-template pTemplate="caption">
+  <ng-template #caption>
     <div class="flex align-items-center justify-content-between">
         <p>Financial Statement</p>
         <p>YYYY-MM-DD to YYYY-MM-DD</p>
         
     </div>
   </ng-template>
-  <ng-template pTemplate="header">
+  <ng-template #header>
       <tr>
           <th>Date</th>
           <th>Category</th>
@@ -25,37 +29,123 @@
           <th>Actions</th>
       </tr>
   </ng-template>
-  <ng-template pTemplate="body" let-financialData>
-      <tr class="text-base">
-        <td>{{ financialData.date }}</td>
-        <td>{{ financialData.categoryDTO.name }}</td>
+  <ng-template #body let-financialData let-editing="editing" let-ri="rowIndex">
+      <tr [pEditableRow]="financialData" class="text-base">
+        <td>
+          <p-cellEditor>
+            <ng-template #input>
+              <p-datepicker 
+                [showButtonBar]="true" 
+                styleClass="h-9"
+                dateFormat="yy-mm-dd"
+                [showIcon]="true"
+                [iconDisplay]="'input'"
+                [(ngModel)]="financialData.date"
+              />
+            </ng-template>
+
+            <ng-template #output>
+              {{ financialData.date }}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <td>
+          <p-cellEditor>
+            <ng-template #input>
+              <p-select
+                [options]="categoryList"
+                optionLabel="name"
+                optionValue="id"
+                [(ngModel)]="financialData.categoryDTO"
+              ></p-select>
+            </ng-template>
+            <ng-template #output>
+              {{ financialData.categoryDTO.name }}
+            </ng-template>
+          </p-cellEditor>
+        </td>
 
         @if (getTypeCatalogue(financialData.categoryDTO) == 1)
         {
-          <td>{{ financialData.amount | currency }}</td>
+          <td>
+            <p-cellEditor>
+              <ng-template #input>
+                <input
+                  pInputText
+                  type="number"
+                  [(ngModel)]="financialData.amount"
+                >
+              </ng-template>
+              <ng-template #output>
+                {{ financialData.amount | currency }}
+              </ng-template>
+            </p-cellEditor>
+          </td>
           <td></td>
         }
         @else
         {
           <td></td>
-          <td>{{ financialData.amount | currency }}</td>
+          <td>
+            <p-cellEditor>
+              <ng-template #input>
+                <input
+                  pInputText
+                  type="number"
+                  [(ngModel)]="financialData.amount"
+                >
+              </ng-template>
+              <ng-template #output>
+                {{ financialData.amount | currency }}
+              </ng-template>
+            </p-cellEditor>
+          </td>
         }
 
         <td>{{ financialData.total | currency }}</td>
 
         <td class="text-center">
             <p-button 
+              *ngIf="!editing"
               styleClass="h-7 !w-9 !mr-1"
               size="small" 
               severity="info"
-              icon="pi pi-file-edit" 
+              icon="pi pi-file-edit"
+              pInitEditableRow
+              (click)="onRowEditInit(financialData)"
             />
             <p-button
+              *ngIf="!editing"
               styleClass="h-7 !w-9"
               size="small"
               severity="danger" 
               icon="pi pi-trash" 
             />
+
+            <!-- Editing Buttons -->
+            <button
+              *ngIf="editing"
+              pButton
+              pRipple
+              type="button"
+              pSaveEditableRow
+              icon="pi pi-check"
+              text
+              rounded
+              severity="secondary"
+            ></button>
+            <button
+              *ngIf="editing"
+              pButton
+              pRipple
+              type="button"
+              pCancelEditableRow
+              icon="pi pi-times"
+              (click)="onRowEditCancel(financialData, ri)"
+              text
+              rounded
+              severity="secondary"
+            ></button>
         </td>
     </tr>
   </ng-template>

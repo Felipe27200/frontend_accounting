@@ -17,7 +17,7 @@ export class AccountListComponent implements OnInit {
   validationError: any[] = [];
 
   categoryList  = [];
-  financialData = [];
+  financialDataList = [];
   statementList = [];
   statementsByDate: any[] = [];
 
@@ -69,7 +69,7 @@ export class AccountListComponent implements OnInit {
     this.accountService.getAccounts()
       .subscribe({
         next: (response) => {
-          this.financialData = response;
+          this.financialDataList = response;
         },
         error: (error) => {
           console.error(error)
@@ -156,7 +156,7 @@ export class AccountListComponent implements OnInit {
     this.accountService.filterAccounts(formData)
       .subscribe({
         next: (response) => {
-          this.financialData = response;
+          this.financialDataList = response;
           console.dir(response);
         },
         error: (error) => {
