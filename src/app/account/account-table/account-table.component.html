@@ -16,7 +16,6 @@
     <div class="flex align-items-center justify-content-between">
         <p>Financial Statement</p>
         <p>YYYY-MM-DD to YYYY-MM-DD</p>
-        
     </div>
   </ng-template>
   <ng-template #header>
@@ -41,6 +40,8 @@
                 [showIcon]="true"
                 [iconDisplay]="'input'"
                 [(ngModel)]="financialData.date"
+                appendTo="body"
+                required="true"
               />
             </ng-template>
 
@@ -56,8 +57,9 @@
                 [options]="categoryList"
                 optionLabel="name"
                 optionValue="id"
-                [(ngModel)]="financialData.categoryDTO"
+                [(ngModel)]="financialData.categoryDTO.id"
                 styleClass="h-9 !w-40 items-center"
+                appendTo="body"
               ></p-select>
             </ng-template>
             <ng-template #output>
@@ -76,6 +78,8 @@
                   type="number"
                   [(ngModel)]="financialData.amount"
                   class="h-9 !w-40"
+                  required="true"
+                  min="0"
                 >
               </ng-template>
               <ng-template #output>
@@ -122,7 +126,7 @@
               styleClass="h-7 !w-9"
               size="small"
               severity="danger" 
-              icon="pi pi-trash" 
+              icon="pi pi-trash"
             />
 
             <!-- Editing Buttons -->
@@ -132,6 +136,7 @@
               pRipple
               type="button"
               pSaveEditableRow
+              (click)="onRowEditSave(financialData)" 
               icon="pi pi-check"
               text
               rounded
