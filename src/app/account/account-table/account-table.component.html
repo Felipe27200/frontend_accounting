@@ -36,7 +36,7 @@
             <ng-template #input>
               <p-datepicker 
                 [showButtonBar]="true" 
-                styleClass="h-9"
+                styleClass="h-9 !w-40"
                 dateFormat="yy-mm-dd"
                 [showIcon]="true"
                 [iconDisplay]="'input'"
@@ -57,6 +57,7 @@
                 optionLabel="name"
                 optionValue="id"
                 [(ngModel)]="financialData.categoryDTO"
+                styleClass="h-9 !w-40 items-center"
               ></p-select>
             </ng-template>
             <ng-template #output>
@@ -74,6 +75,7 @@
                   pInputText
                   type="number"
                   [(ngModel)]="financialData.amount"
+                  class="h-9 !w-40"
                 >
               </ng-template>
               <ng-template #output>
@@ -93,6 +95,7 @@
                   pInputText
                   type="number"
                   [(ngModel)]="financialData.amount"
+                  class="h-9 !w-40"
                 >
               </ng-template>
               <ng-template #output>
