@@ -12,6 +12,7 @@ import { AccountService } from '@services/account.service';
 export class AccountTableComponent 
 {
   @Input() financialDataList: any;
+  @Input() statementList!: any;
   @Input() categoryList!: any;
 
   clonedFinancialData: { [s: string]: any } = {};

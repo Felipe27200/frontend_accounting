@@ -8,8 +8,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AccountRoutingModule } from './account-routing.module';
 import { SharedComponentModule } from 'app/common_components/shared-component.module';
 
-import { AccountListComponent } from './account-list/account-list.component';
 import { AccountCenterComponent } from './account-center/account-center.component';
+import { AccountCreateComponent } from './account-create/account-create.component';
+import { AccountListComponent } from './account-list/account-list.component';
 import { AccountTableComponent } from './account-table/account-table.component';
 
 import { JwtInterceptor } from '../interceptors/jwt-interceptor.interceptor';
@@ -20,15 +21,16 @@ import { CardModule } from 'primeng/card';
 import { DatePicker } from 'primeng/datepicker';
 import { FloatLabel  } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
+import { MessageModule } from 'primeng/message';
 import { PanelModule } from 'primeng/panel';
 import { Select } from 'primeng/select';
 import { TableModule } from 'primeng/table';
 
-
 @NgModule({ 
     declarations: [
-        AccountListComponent,
         AccountCenterComponent,
+        AccountCreateComponent,
+        AccountListComponent,
         AccountTableComponent
     ], 
     imports: [
@@ -42,6 +44,7 @@ import { TableModule } from 'primeng/table';
         FloatLabel,
         FormsModule,
         InputTextModule,
+        MessageModule,
         PanelModule,
         Select,
         TableModule,
