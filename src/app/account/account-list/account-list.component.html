@@ -1,3 +1,7 @@
+<div class="card flex justify-center">
+  <p-toast />
+</div>
+
 <!-- 
   The exclamation marks in the attribute class works as a modifier
   that indicates we will use a tailwind class instead others. 
@@ -81,6 +85,7 @@
     <app-account-create
       [categoryList]="categoryList"
       (onSubmitEvent)="onSubmit($event)"
+      (errorRequestEvent)="errorRequestToast($event)"
     ></app-account-create>
 
     <app-account-table 

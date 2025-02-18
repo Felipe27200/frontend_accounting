@@ -1,15 +1,19 @@
 import { Component, OnInit  } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 
-import { FinancialStatementService } from '@services/financial-statement.service';
-import { CategoryService } from '@services/category.service';
-import { DateFormatterService } from '@services/date-formatter.service';
 import { AccountService } from '@services/account.service';
+import { CategoryService } from '@services/category.service';
+import { CommonResponseService } from '@services/common-response.service';
+import { DateFormatterService } from '@services/date-formatter.service';
+import { FinancialStatementService } from '@services/financial-statement.service';
+
+import { MessageService } from 'primeng/api';
 
 @Component({
     selector: 'app-account-list',
     templateUrl: './account-list.component.html',
     styleUrl: './account-list.component.css',
+    providers: [MessageService],
     standalone: false
 })
 export class AccountListComponent implements OnInit {
@@ -31,9 +35,11 @@ export class AccountListComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private accountService: AccountService,
-    private statementService: FinancialStatementService,
     private categoryService: CategoryService,
+    private commonResponseService: CommonResponseService,
     private dateFormatter: DateFormatterService,
+    private messageService: MessageService,
+    private statementService: FinancialStatementService,
   ) { }
 
   ngOnInit(): void 
@@ -49,7 +55,7 @@ export class AccountListComponent implements OnInit {
           });
         },
         error: (error) => {
-          console.log(error);
+          this.errorRequestToast(error);
         }
       });
 
@@ -59,15 +65,31 @@ export class AccountListComponent implements OnInit {
           this.categoryList = response;
         },
         error: (error) => {
-          console.log(error);
+          this.errorRequestToast(error);
         }
       });
   }
 
   onSubmit(response: any)
   {
-    console.log(response);
+    if (response.hasOwnProperty("title") && response.title.toUpperCase().includes("ERROR"))
+      this.errorRequestToast(response.error);
+    else
+    {
+      this.messageService.add({ 
+        severity: "success", 
+        summary: response.title, 
+        detail: response.message, 
+        life: 3000 
+      });
+    }
+
     this.filterAccounts();
+  }
+
+  errorRequestToast(error: any)
+  {
+    this.messageService.addAll(this.commonResponseService.setToastErrorMessage(error));
   }
 
   filterAccounts()
@@ -99,7 +121,7 @@ export class AccountListComponent implements OnInit {
           this.financialDataList = response;
         },
         error: (error) => {
-          console.warn(error);
+          this.errorRequestToast(error);
         }
       });
   }

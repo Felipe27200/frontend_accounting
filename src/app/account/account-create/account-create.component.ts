@@ -1,10 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 
-import { FinancialStatementService } from '@services/financial-statement.service';
-import { CategoryService } from '@services/category.service';
-import { DateFormatterService } from '@services/date-formatter.service';
 import { AccountService } from '@services/account.service';
+import { DateFormatterService } from '@services/date-formatter.service';
+import { FinancialStatementService } from '@services/financial-statement.service';
 
 @Component({
   selector: 'app-account-create',
@@ -18,6 +17,7 @@ export class AccountCreateComponent {
 
   @Input() categoryList = [];
   @Output() onSubmitEvent = new EventEmitter<any>();
+  @Output() errorRequestEvent = new EventEmitter<any>();
 
   financialDataList = [];
   statementList = [];
@@ -35,7 +35,6 @@ export class AccountCreateComponent {
     private fb: FormBuilder,
     private accountService: AccountService,
     private statementService: FinancialStatementService,
-    private categoryService: CategoryService,
     private dateFormatter: DateFormatterService,
   ){ }
 
@@ -84,10 +83,15 @@ export class AccountCreateComponent {
       .subscribe({
         next: (response) => {
           this.accountForm.reset();
-          this.onSubmitEvent.emit(response);
+          
+          this.onSubmitEvent.emit({
+            response, 
+            message: "Account created successfully.",
+            title: "Account created",
+          });
         },
         error: (error) => {
-          console.error(error)
+          this.errorRequestEvent.emit(error);
         }
       });
   }
@@ -115,7 +119,7 @@ export class AccountCreateComponent {
             this.statementsByDate = response;
         },
         error: (error) => {
-          console.error(error);
+          this.errorRequestEvent.emit(error);
         }
       });
   }

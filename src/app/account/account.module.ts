@@ -25,6 +25,7 @@ import { MessageModule } from 'primeng/message';
 import { PanelModule } from 'primeng/panel';
 import { Select } from 'primeng/select';
 import { TableModule } from 'primeng/table';
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({ 
     declarations: [
@@ -48,6 +49,7 @@ import { TableModule } from 'primeng/table';
         PanelModule,
         Select,
         TableModule,
+        ToastModule,
         SharedComponentModule,
         AccountRoutingModule
     ], 
