@@ -1,7 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { DateFormatterService } from '@services/date-formatter.service';
 import { AccountService } from '@services/account.service';
+import { DateFormatterService } from '@services/date-formatter.service';
+import { FinancialStatementService } from '@services/financial-statement.service';
 
 @Component({
     selector: 'app-account-table',
@@ -12,14 +13,18 @@ import { AccountService } from '@services/account.service';
 export class AccountTableComponent 
 {
   @Input() financialDataList: any;
-  @Input() statementList!: any;
   @Input() categoryList!: any;
 
+  @Output() errorRequestEvent = new EventEmitter<any>();
+  @Output() onSubmitEvent = new EventEmitter<any>();
+
+  statementsByDate!: any;
   clonedFinancialData: { [s: string]: any } = {};
 
   constructor(
+    private accountService: AccountService,
     private dateFormatter: DateFormatterService,
-    private accountService: AccountService
+    private statementService: FinancialStatementService,
   ) {}
 
   getTypeCatalogue(category: any)
@@ -30,7 +35,7 @@ export class AccountTableComponent
       return category.typeAccount;
   }
 
-  onRowEditSave(financialData: any)
+  onRowEditSave(financialData: any, index: string | number)
   {
     for (let category of this.categoryList)
     {
@@ -65,10 +70,15 @@ export class AccountTableComponent
       .editAccount(formatData, financialData.id)
       .subscribe({
         next: (response) => {
-          console.log(response);
+          this.onSubmitEvent.emit({
+            response, 
+            message: "Account updated successfully.",
+            title: "Account updated",
+          });
         },
         error: (error) => {
-          console.error(error);
+          this.onRowEditCancel(financialData, index);
+          this.errorRequestEvent.emit(error);
         }
       });
   }
@@ -76,9 +86,42 @@ export class AccountTableComponent
   onRowEditInit(financialData: any)
   {
     this.clonedFinancialData[financialData.id as string] = { ...financialData }
+
+    this.getAllStatementByDate(financialData.date);
   }
 
-  onRowEditCancel(financialData: any, index: number)
+  getAllStatementByDate(dateSelected: any)
+  {
+    if (dateSelected === null)
+    {
+      this.statementsByDate = [];
+      return;
+    }
+
+    if (typeof dateSelected == 'string')
+      dateSelected = this.dateFormatter.convertToAccordDate(dateSelected);
+
+    if (!(dateSelected instanceof Date))
+    {
+      this.statementsByDate = [];
+      return;
+    }
+  
+    let date = dateSelected;
+    let dateFormat = this.dateFormatter.formatDate(date);
+
+    this.statementService.findAllByDate(dateFormat)
+      .subscribe({
+        next: (response) => {
+            this.statementsByDate = response;
+        },
+        error: (error) => {
+          this.errorRequestEvent.emit(error);
+        }
+      });
+  }
+
+  onRowEditCancel(financialData: any, index: string | number)
   {
     this.financialDataList[index] = this.clonedFinancialData[financialData.id as string];
 

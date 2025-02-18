@@ -96,7 +96,7 @@ export class AccountCreateComponent {
       });
   }
 
-  getAllStatementByDate(isFilter?: boolean)
+  getAllStatementByDate()
   {
     if (this.accountForm.controls.date.value === null)
     {

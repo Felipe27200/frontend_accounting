@@ -1,16 +1,16 @@
 <p-table 
   styleClass="p-datatable-sm mt-4"
+  scrollHeight="700px"
   showGridlines
   stripedRows
-  [value]="financialDataList"
-  [scrollable]="true" 
-  scrollHeight="700px"
+  sortMode="multiple"
+  dataKey="id"
+  editMode="row"
   [paginator]="true"
   [rows]="10"
-  [rowsPerPageOptions]="[5, 10, 20]"
-  sortMode="multiple"
-  editMode="row"
-  dataKey="id"
+  [rowsPerPageOptions]="[5, 10, 25, 50, 100]"
+  [scrollable]="true" 
+  [value]="financialDataList"
 >
   <ng-template #caption>
     <div class="flex align-items-center justify-content-between">
@@ -35,14 +35,16 @@
           <p-cellEditor>
             <ng-template #input>
               <p-datepicker 
+                [iconDisplay]="'input'"
                 [showButtonBar]="true" 
+                [showIcon]="true"
+                [(ngModel)]="financialData.date"
                 styleClass="h-9 !w-40"
                 dateFormat="yy-mm-dd"
-                [showIcon]="true"
-                [iconDisplay]="'input'"
-                [(ngModel)]="financialData.date"
                 appendTo="body"
-                required="true"
+                
+                (onSelect)="getAllStatementByDate(financialData.date)"
+                (onInput)="getAllStatementByDate(financialData.date)"
               />
             </ng-template>
 
@@ -55,7 +57,7 @@
           <p-cellEditor>
             <ng-template #input>
               <p-select
-                [options]="statementList"
+                [options]="statementsByDate"
                 optionLabel="name"
                 optionValue="id"
                 [(ngModel)]="financialData.financialStatement.id"
@@ -154,7 +156,7 @@
               pRipple
               type="button"
               pSaveEditableRow
-              (click)="onRowEditSave(financialData)" 
+              (click)="onRowEditSave(financialData, ri)" 
               icon="pi pi-check"
               text
               rounded

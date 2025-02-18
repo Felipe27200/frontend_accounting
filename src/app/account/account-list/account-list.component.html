@@ -91,7 +91,8 @@
     <app-account-table 
       [financialDataList]="financialDataList"
       [categoryList]="categoryList"
-      [statementList]="statementList"
+      (onSubmitEvent)="onSubmit($event)"
+      (errorRequestEvent)="errorRequestToast($event)"
     ></app-account-table>
   </div>
 </div>
