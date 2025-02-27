@@ -6,7 +6,6 @@ import { ErrorResponse } from 'app/response/error-response';
 import { FormStatement } from '../FormStatement';
 
 import { MessageService } from 'primeng/api';
-// import { ConfirmDialog } from 'primeng/confirmdialog';
 
 @Component({
     selector: 'app-financial-statement-update',
@@ -26,7 +25,6 @@ export class FinancialStatementUpdateComponent implements OnInit
     private route: ActivatedRoute,
     private statementService: FinancialStatementService,
     private messageService: MessageService,
-    // private confirmDialog: ConfirmDialog
   ) { }
 
   ngOnInit(): void {
@@ -58,8 +56,6 @@ export class FinancialStatementUpdateComponent implements OnInit
   onSubmit(formData: FormStatement)
   {
     this.enableButton = false;
-
-    console.dir(formData);
 
     this.statementService.updateFinancialStatement(formData, this.statement.id)
       .subscribe({

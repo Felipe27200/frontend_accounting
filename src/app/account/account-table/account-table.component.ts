@@ -21,6 +21,10 @@ export class AccountTableComponent
   statementsByDate!: any;
   clonedFinancialData: { [s: string]: any } = {};
 
+  editingRowKeys: {
+    [s: string]: boolean;
+  } = {};
+
   constructor(
     private accountService: AccountService,
     private dateFormatter: DateFormatterService,
@@ -47,7 +51,11 @@ export class AccountTableComponent
     }
 
     if (financialData.date == null)
+    {
+      this.editingRowKeys[financialData.id as string] = true;
+
       return;
+    }
 
     let date = '';
 
@@ -81,11 +89,15 @@ export class AccountTableComponent
           this.errorRequestEvent.emit(error);
         }
       });
+
+    this.editingRowKeys[financialData.id as string] = false;
+    delete this.editingRowKeys[financialData.id as string];
   }
 
   onRowEditInit(financialData: any)
   {
     this.clonedFinancialData[financialData.id as string] = { ...financialData }
+    this.editingRowKeys[financialData.id as string] = true;
 
     this.getAllStatementByDate(financialData.date);
   }
@@ -124,7 +136,8 @@ export class AccountTableComponent
   onRowEditCancel(financialData: any, index: string | number)
   {
     this.financialDataList[index] = this.clonedFinancialData[financialData.id as string];
-
     delete this.clonedFinancialData[financialData.id as string];
-  }
+    
+    this.editingRowKeys[financialData.id as string] = false;
+    delete this.editingRowKeys[financialData.id as string];  }
 }

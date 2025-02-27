@@ -11,6 +11,7 @@
   [rowsPerPageOptions]="[5, 10, 25, 50, 100]"
   [scrollable]="true" 
   [value]="financialDataList"
+  [editingRowKeys]="editingRowKeys"
 >
   <ng-template #caption>
     <div class="flex align-items-center justify-content-between">
@@ -42,7 +43,7 @@
                 styleClass="h-9 !w-40"
                 dateFormat="yy-mm-dd"
                 appendTo="body"
-                
+                size="small"
                 (onSelect)="getAllStatementByDate(financialData.date)"
                 (onInput)="getAllStatementByDate(financialData.date)"
               />
@@ -156,7 +157,7 @@
               pRipple
               type="button"
               pSaveEditableRow
-              (click)="onRowEditSave(financialData, ri)" 
+              (click)="onRowEditSave(financialData, ri)"
               icon="pi pi-check"
               text
               rounded

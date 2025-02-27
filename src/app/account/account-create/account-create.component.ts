@@ -68,9 +68,6 @@ export class AccountCreateComponent {
     if (this.validationError.length > 0)
       return;
 
-    if (this.validationError.length > 0)
-      return;
-
     let formData = {
       amount: this.amount?.value,
       date: date,

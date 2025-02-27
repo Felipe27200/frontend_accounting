@@ -27,7 +27,6 @@ export class FinancialStatementListComponent implements OnInit {
     this.statementService.getFinancialStatements()
       .subscribe({
         next: (response) => {
-          console.dir(response)
           this.listStatement = response;
         },
         error: (error) => {

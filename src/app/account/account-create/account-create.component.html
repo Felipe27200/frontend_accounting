@@ -24,7 +24,7 @@
 
           <div *ngIf="date?.invalid && (date?.dirty || date?.touched)">
             <div *ngIf="date?.hasError('required')">
-              <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Date is required!</span></p>
+              <p class="mt-2 text-sm !text-red-600 !dark:text-red-500"><span class="font-medium">Date is required!</span></p>
             </div>
           </div>
         </div>
@@ -46,7 +46,7 @@
 
           <div *ngIf="financial_statement?.invalid && (financial_statement?.dirty || financial_statement?.touched)">
             <div *ngIf="financial_statement?.hasError('required')">
-              <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Fin. statement is required!</span></p>
+              <p class="mt-2 text-sm !text-red-600 dark:text-red-500"><span class="font-medium">Fin. statement is required!</span></p>
             </div>
           </div>
         </div>
@@ -68,7 +68,7 @@
 
           <div *ngIf="category_id?.invalid && (category_id?.dirty || category_id?.touched)">
             <div *ngIf="category_id?.hasError('required')">
-              <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Category is required!</span></p>
+              <p class="mt-2 text-sm !text-red-600 dark:text-red-500"><span class="font-medium">Category is required!</span></p>
             </div>
           </div>
         </div>
@@ -81,7 +81,7 @@
 
           <div *ngIf="amount!.invalid && (amount!.dirty || amount!.touched)">
             <div *ngIf="amount!.hasError('required')">
-              <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Amount is required!</span></p>
+              <p class="mt-2 text-sm !text-red-600 dark:text-red-500"><span class="font-medium">Amount is required!</span></p>
             </div>
           </div>
         </div>
@@ -91,7 +91,7 @@
         <div class="flex-auto" *ngIf="(validationError !== null && validationError !== undefined) && validationError.length > 0">
           @for(error of validationError; track error)
           {
-            <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">*{{ error }}</span></p>
+            <p class="mt-2 text-sm !text-red-600 dark:text-red-500"><span class="font-medium">*{{ error }}</span></p>
           }
         </div>
       </div>
