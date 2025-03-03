@@ -46,7 +46,16 @@
                 size="small"
                 (onSelect)="getAllStatementByDate(financialData.date)"
                 (onInput)="getAllStatementByDate(financialData.date)"
+                [class]="(
+                  errorList.length > 0 
+                  && errorList[financialData.id] != undefined 
+                  && errorList[financialData.id].date != undefined 
+                  ) ? 'ng-invalid ng-dirty' : ''"
               />
+
+              <div *ngIf="errorList.length > 0 && errorList[financialData.id] != undefined && errorList[financialData.id].date != undefined">
+                <p class="mt-2 text-sm !text-red-600 dark:text-red-500"><span class="font-medium">{{ errorList[financialData.id].date }}</span></p>
+              </div>
             </ng-template>
 
             <ng-template #output>
@@ -64,6 +73,7 @@
                 [(ngModel)]="financialData.financialStatement.id"
                 styleClass="h-9 !w-40 items-center"
                 appendTo="body"
+                required=""
               ></p-select>
             </ng-template>
             <ng-template #output>
@@ -81,6 +91,7 @@
                 [(ngModel)]="financialData.categoryDTO.id"
                 styleClass="h-9 !w-40 items-center"
                 appendTo="body"
+                required=""
               ></p-select>
             </ng-template>
             <ng-template #output>
@@ -101,7 +112,16 @@
                   class="h-9 !w-40"
                   required="true"
                   min="0"
+                  [class]="(
+                    errorList.length > 0 
+                    && errorList[financialData.id] != undefined 
+                    && errorList[financialData.id].amount != undefined 
+                    ) ? 'ng-invalid ng-dirty' : ''"
                 >
+
+                <div *ngIf="errorList.length > 0 && errorList[financialData.id] != undefined && errorList[financialData.id].amount != undefined">
+                  <p class="mt-2 text-sm !text-red-600 dark:text-red-500"><span class="font-medium">{{ errorList[financialData.id].amount }}</span></p>
+                </div>
               </ng-template>
               <ng-template #output>
                 {{ financialData.amount | currency }}
@@ -121,7 +141,16 @@
                   type="number"
                   [(ngModel)]="financialData.amount"
                   class="h-9 !w-40"
+                  [class]="(
+                    errorList.length > 0 
+                    && errorList[financialData.id] != undefined 
+                    && errorList[financialData.id].amount != undefined 
+                    ) ? 'ng-invalid ng-dirty' : ''"
                 >
+
+                <div *ngIf="errorList.length > 0 && errorList[financialData.id] != undefined && errorList[financialData.id].amount != undefined">
+                  <p class="mt-2 text-sm !text-red-600 dark:text-red-500"><span class="font-medium">{{ errorList[financialData.id].amount }}</span></p>
+                </div>
               </ng-template>
               <ng-template #output>
                 {{ financialData.amount | currency }}

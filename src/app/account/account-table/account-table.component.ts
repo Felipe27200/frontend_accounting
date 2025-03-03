@@ -25,6 +25,8 @@ export class AccountTableComponent
     [s: string]: boolean;
   } = {};
 
+  errorList: Array<any> = [];
+
   constructor(
     private accountService: AccountService,
     private dateFormatter: DateFormatterService,
@@ -41,6 +43,13 @@ export class AccountTableComponent
 
   onRowEditSave(financialData: any, index: string | number)
   {
+    let errorValidation: {
+      amount?: any,
+      category?: any,
+      date?: any,
+      statement?: any,
+    } = {};
+
     for (let category of this.categoryList)
     {
       if (category.id == financialData.categoryDTO.id)
@@ -53,7 +62,36 @@ export class AccountTableComponent
     if (financialData.date == null)
     {
       this.editingRowKeys[financialData.id as string] = true;
+      errorValidation.date = "The date can not be empty";
 
+      this.errorList[financialData.id] = errorValidation;
+      return;
+    }
+
+    if (financialData.amount == null)
+    {
+      this.editingRowKeys[financialData.id as string] = true;
+      errorValidation.amount = "The amount is required";
+
+      this.errorList[financialData.id] = errorValidation;
+      return;
+    }
+
+    if (isNaN(financialData.amount))
+    {
+      this.editingRowKeys[financialData.id as string] = true;
+      errorValidation.amount = "The amount must be a number";
+
+      this.errorList[financialData.id] = errorValidation;
+      return;
+    }
+
+    if (financialData.amount < 0)
+    {
+      this.editingRowKeys[financialData.id as string] = true;
+      errorValidation.amount = "The amount must be greater than zero";
+
+      this.errorList[financialData.id] = errorValidation;
       return;
     }
 
@@ -78,6 +116,8 @@ export class AccountTableComponent
       .editAccount(formatData, financialData.id)
       .subscribe({
         next: (response) => {
+          delete this.errorList[financialData.id];
+
           this.onSubmitEvent.emit({
             response, 
             message: "Account updated successfully.",
@@ -139,5 +179,8 @@ export class AccountTableComponent
     delete this.clonedFinancialData[financialData.id as string];
     
     this.editingRowKeys[financialData.id as string] = false;
-    delete this.editingRowKeys[financialData.id as string];  }
+    delete this.editingRowKeys[financialData.id as string]; 
+    
+    delete this.errorList[financialData.id];
+  }
 }
