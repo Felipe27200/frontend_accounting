@@ -44,8 +44,8 @@
                 dateFormat="yy-mm-dd"
                 appendTo="body"
                 size="small"
-                (onSelect)="getAllStatementByDate(financialData.date)"
-                (onInput)="getAllStatementByDate(financialData.date)"
+                (onSelect)="getAllStatementByDate(financialData.date, financialData)"
+                (onInput)="getAllStatementByDate(financialData.date, financialData)"
                 [class]="(
                   errorList.length > 0 
                   && errorList[financialData.id] != undefined 

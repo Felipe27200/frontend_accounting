@@ -43,12 +43,8 @@ export class AccountTableComponent
 
   onRowEditSave(financialData: any, index: string | number)
   {
-    let errorValidation: {
-      amount?: any,
-      category?: any,
-      date?: any,
-      statement?: any,
-    } = {};
+    if (!this.validationUpdate(financialData))
+      return;
 
     for (let category of this.categoryList)
     {
@@ -57,42 +53,6 @@ export class AccountTableComponent
         financialData.categoryDTO.name = category.name;
         break;
       }
-    }
-
-    if (financialData.date == null)
-    {
-      this.editingRowKeys[financialData.id as string] = true;
-      errorValidation.date = "The date can not be empty";
-
-      this.errorList[financialData.id] = errorValidation;
-      return;
-    }
-
-    if (financialData.amount == null)
-    {
-      this.editingRowKeys[financialData.id as string] = true;
-      errorValidation.amount = "The amount is required";
-
-      this.errorList[financialData.id] = errorValidation;
-      return;
-    }
-
-    if (isNaN(financialData.amount))
-    {
-      this.editingRowKeys[financialData.id as string] = true;
-      errorValidation.amount = "The amount must be a number";
-
-      this.errorList[financialData.id] = errorValidation;
-      return;
-    }
-
-    if (financialData.amount < 0)
-    {
-      this.editingRowKeys[financialData.id as string] = true;
-      errorValidation.amount = "The amount must be greater than zero";
-
-      this.errorList[financialData.id] = errorValidation;
-      return;
     }
 
     let date = '';
@@ -139,11 +99,13 @@ export class AccountTableComponent
     this.clonedFinancialData[financialData.id as string] = { ...financialData }
     this.editingRowKeys[financialData.id as string] = true;
 
-    this.getAllStatementByDate(financialData.date);
+    this.getAllStatementByDate(financialData.date, financialData);
   }
 
-  getAllStatementByDate(dateSelected: any)
+  getAllStatementByDate(dateSelected: any, financialData: any)
   {
+    this.validationUpdate(financialData);
+
     if (dateSelected === null)
     {
       this.statementsByDate = [];
@@ -182,5 +144,73 @@ export class AccountTableComponent
     delete this.editingRowKeys[financialData.id as string]; 
     
     delete this.errorList[financialData.id];
+  }
+
+  validationUpdate(financialData: any): boolean
+  {
+    console.log(financialData.date);
+    
+    let errorValidation: {
+      amount?: any,
+      category?: any,
+      date?: any,
+      statement?: any,
+    } = {};
+
+    let isValid = true;
+
+    if (financialData.date === null || financialData.date === undefined)
+    {
+      errorValidation.date = "The date is required";  
+      isValid = false;
+    }
+
+    if (!this.dateFormatter.validateFieldDate(financialData.date))
+    {
+      errorValidation.date = 'The field date must be date with format YYYY-mm-dd';
+      isValid = false;
+    }
+  
+    if (financialData.amount == null)
+    {
+      errorValidation.amount = "The amount is required";
+      isValid = false;
+    }
+
+    if (isNaN(financialData.amount))
+    {
+      errorValidation.amount = "The amount must be a number";  
+      isValid = false;
+    }
+
+    if (financialData.amount < 0)
+    {
+      errorValidation.amount = "The amount must be greater than zero";  
+      isValid = false;
+    }
+
+    console.log(isValid);
+    console.dir(errorValidation);
+
+    if (!isValid)
+    {
+      this.editingRowKeys[financialData.id as string] = true;
+      this.errorList[financialData.id] = errorValidation;
+    }
+
+    return isValid;
+  }
+
+  validationFieldDate(financialData: any)
+  {
+    let errorMessage = '';
+
+    if (financialData.date === null || financialData.date === undefined)
+      errorMessage = "The date is required";  
+
+    if (!this.dateFormatter.validateFieldDate(financialData.date))
+      errorMessage = 'The field date must be date with format YYYY-mm-dd';
+
+    return errorMessage;
   }
 }
