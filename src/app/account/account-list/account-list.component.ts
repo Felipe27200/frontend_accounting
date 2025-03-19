@@ -1,15 +1,19 @@
 import { Component, OnInit  } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 
-import { FinancialStatementService } from '@services/financial-statement.service';
-import { CategoryService } from '@services/category.service';
-import { DateFormatterService } from '@services/date-formatter.service';
 import { AccountService } from '@services/account.service';
+import { CategoryService } from '@services/category.service';
+import { CommonResponseService } from '@services/common-response.service';
+import { DateFormatterService } from '@services/date-formatter.service';
+import { FinancialStatementService } from '@services/financial-statement.service';
+
+import { MessageService } from 'primeng/api';
 
 @Component({
     selector: 'app-account-list',
     templateUrl: './account-list.component.html',
     styleUrl: './account-list.component.css',
+    providers: [MessageService],
     standalone: false
 })
 export class AccountListComponent implements OnInit {
@@ -17,17 +21,9 @@ export class AccountListComponent implements OnInit {
   validationError: any[] = [];
 
   categoryList  = [];
-  financialData = [];
+  financialDataList = [];
   statementList = [];
   statementsByDate: any[] = [];
-
-  accountForm = this.fb.group({
-    amount: ["", Validators.required],
-    date: [Date, Validators.required],
-    is_recurring: [''],
-    category_id: [null, Validators.required],
-    financial_statement: [null, Validators.required]
-  });
 
   filterForm = this.fb.group({
     categoryFilter: [null],
@@ -39,9 +35,11 @@ export class AccountListComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private accountService: AccountService,
-    private statementService: FinancialStatementService,
     private categoryService: CategoryService,
+    private commonResponseService: CommonResponseService,
     private dateFormatter: DateFormatterService,
+    private messageService: MessageService,
+    private statementService: FinancialStatementService,
   ) { }
 
   ngOnInit(): void 
@@ -50,9 +48,14 @@ export class AccountListComponent implements OnInit {
       .subscribe({
         next: (response) => {
           this.statementList = response;
+
+          this.statementList.forEach((statement: any) => {
+            if (statement.hasOwnProperty('name'))
+              statement.name += " - " + (statement.initDate.split("-"))[0];
+          });
         },
         error: (error) => {
-          console.log(error);
+          this.errorRequestToast(error);
         }
       });
 
@@ -62,72 +65,31 @@ export class AccountListComponent implements OnInit {
           this.categoryList = response;
         },
         error: (error) => {
-          console.log(error);
-        }
-      });
-
-    this.accountService.getAccounts()
-      .subscribe({
-        next: (response) => {
-          this.financialData = response;
-        },
-        error: (error) => {
-          console.error(error)
+          this.errorRequestToast(error);
         }
       });
   }
 
-  onSubmit()
+  onSubmit(response: any)
   {
-    this.validationError = [];
-    let date = '';
-
-    if (!this.accountForm.valid)
-      return;
-
-    if ((this.amount?.value === null || this.amount?.value === undefined || this.amount.value == ''))
-      this.validationError.push("The amount is required");
-    else if (isNaN(Number(this.amount?.value)))
-      this.validationError.push('The amount must be a number');
-    else if (Number(this.amount?.value) <= 0)
-      this.validationError.push('The amount must be greater than zero');
-
-    if ((this.date?.value === null || this.date?.value === undefined) || (!(this.date.value instanceof Date) && typeof this.date.value != 'string'))
-      this.validationError.push("The date is required");
-    else if (!this.dateFormatter.validateFieldDate(this.date.value))
-      this.validationError.push('The field date must be date with format YYYY-mm-dd');
+    if (response.hasOwnProperty("title") && response.title.toUpperCase().includes("ERROR"))
+      this.errorRequestToast(response.error);
     else
-      date = this.dateFormatter.formatDate(this.date.value);
-
-    if ((this.category_id?.value === null || this.category_id?.value === undefined))
-      this.validationError.push("The category is required");
-    if ((this.financial_statement?.value === null || this.financial_statement?.value === undefined))
-      this.validationError.push("The financial statement is required");
-
-    if (this.validationError.length > 0)
-      return;
-
-    if (this.validationError.length > 0)
-      return;
-
-    let formData = {
-      amount: this.amount?.value,
-      date: date,
-      categoryId: this.category_id?.value,
-      financialStatementId: this.financial_statement?.value,
-      isRecurring: false,
-    };
-
-    this.accountService.createAccount(formData)
-      .subscribe({
-        next: (response) => {
-          this.ngOnInit();
-          this.accountForm.reset();
-        },
-        error: (error) => {
-          console.error(error)
-        }
+    {
+      this.messageService.add({ 
+        severity: "success", 
+        summary: response.title, 
+        detail: response.message, 
+        life: 3000 
       });
+    }
+
+    this.filterAccounts();
+  }
+
+  errorRequestToast(error: any)
+  {
+    this.messageService.addAll(this.commonResponseService.setToastErrorMessage(error));
   }
 
   filterAccounts()
@@ -156,53 +118,14 @@ export class AccountListComponent implements OnInit {
     this.accountService.filterAccounts(formData)
       .subscribe({
         next: (response) => {
-          this.financialData = response;
-          console.dir(response);
+          this.financialDataList = response;
         },
         error: (error) => {
-          console.warn(error);
+          this.errorRequestToast(error);
         }
       });
   }
 
-  getAllStatementByDate(isFilter?: boolean)
-  {
-    if (this.accountForm.controls.date.value === null)
-    {
-      this.statementsByDate = [];
-      return;
-    }
-
-    if (!(this.accountForm.controls.date.value instanceof Date))
-    {
-      this.statementsByDate = [];
-      return;
-    }
-  
-    let date = this.accountForm.controls.date.value;
-    let dateFormat = this.dateFormatter.formatDate(date);
-
-    this.statementService.findAllByDate(dateFormat)
-      .subscribe({
-        next: (response) => {
-            this.statementsByDate = response;
-        },
-        error: (error) => {
-          console.error(error);
-        }
-      });
-  }
-
-  togglePanel()
-  {
-    this.toggle = true;
-  }
-
-  get amount() { return this.accountForm.get('amount') }
-  get date() { return this.accountForm.get('date') }
-  get is_recurring() { return this.accountForm.get('is_recurring') }
-  get category_id() { return this.accountForm.get('category_id') }
-  get financial_statement() { return this.accountForm.get('financial_statement') }
 
   get statementFilter() { return this.filterForm.get('statementFilter') }
 }

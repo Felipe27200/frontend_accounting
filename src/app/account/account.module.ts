@@ -3,13 +3,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import { provideHttpClient, withInterceptors, withInterceptorsFromDi } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AccountRoutingModule } from './account-routing.module';
 import { SharedComponentModule } from 'app/common_components/shared-component.module';
 
-import { AccountListComponent } from './account-list/account-list.component';
 import { AccountCenterComponent } from './account-center/account-center.component';
+import { AccountCreateComponent } from './account-create/account-create.component';
+import { AccountListComponent } from './account-list/account-list.component';
 import { AccountTableComponent } from './account-table/account-table.component';
 
 import { JwtInterceptor } from '../interceptors/jwt-interceptor.interceptor';
@@ -19,16 +20,19 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DatePicker } from 'primeng/datepicker';
 import { FloatLabel  } from 'primeng/floatlabel';
+import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
+import { MessageModule } from 'primeng/message';
 import { PanelModule } from 'primeng/panel';
 import { Select } from 'primeng/select';
 import { TableModule } from 'primeng/table';
-
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({ 
     declarations: [
-        AccountListComponent,
         AccountCenterComponent,
+        AccountCreateComponent,
+        AccountListComponent,
         AccountTableComponent
     ], 
     imports: [
@@ -40,10 +44,14 @@ import { TableModule } from 'primeng/table';
         CardModule,
         DatePicker,
         FloatLabel,
+        FormsModule,
+        InputNumberModule,
         InputTextModule,
+        MessageModule,
         PanelModule,
         Select,
         TableModule,
+        ToastModule,
         SharedComponentModule,
         AccountRoutingModule
     ], 

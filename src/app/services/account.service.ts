@@ -24,6 +24,14 @@ export class AccountService {
       .pipe(catchError(this.handleError));
   }
 
+  editAccount(formData: any, id: number)
+  {
+    let httpOptions = this.getHeader();
+
+    return this.http.put<any>(`${this.apiPrefix}/${id}`, formData, httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
   getAccounts()
   {
     let httpOptions = this.getHeader();
