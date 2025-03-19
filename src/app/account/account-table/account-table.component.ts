@@ -147,9 +147,7 @@ export class AccountTableComponent
   }
 
   validationUpdate(financialData: any): boolean
-  {
-    console.log(financialData.date);
-    
+  {    
     let errorValidation: {
       amount?: any,
       category?: any,
@@ -183,14 +181,11 @@ export class AccountTableComponent
       isValid = false;
     }
 
-    if (financialData.amount < 0)
+    if (financialData.amount <= 0)
     {
       errorValidation.amount = "The amount must be greater than zero";  
       isValid = false;
     }
-
-    console.log(isValid);
-    console.dir(errorValidation);
 
     if (!isValid)
     {

@@ -102,63 +102,40 @@
 
         @if (getTypeCatalogue(financialData.categoryDTO) == 1)
         {
-          <td>
-            <p-cellEditor>
-              <ng-template #input>
-                <input
-                  pInputText
-                  type="number"
-                  [(ngModel)]="financialData.amount"
-                  class="h-9 !w-40"
-                  required="true"
-                  min="0"
-                  [class]="(
-                    errorList.length > 0 
-                    && errorList[financialData.id] != undefined 
-                    && errorList[financialData.id].amount != undefined 
-                    ) ? 'ng-invalid ng-dirty' : ''"
-                >
-
-                <div *ngIf="errorList.length > 0 && errorList[financialData.id] != undefined && errorList[financialData.id].amount != undefined">
-                  <p class="mt-2 text-sm !text-red-600 dark:text-red-500"><span class="font-medium">{{ errorList[financialData.id].amount }}</span></p>
-                </div>
-              </ng-template>
-              <ng-template #output>
-                {{ financialData.amount | currency }}
-              </ng-template>
-            </p-cellEditor>
-          </td>
           <td></td>
         }
-        @else
+
+        <td>
+          <p-cellEditor>
+            <ng-template #input>
+              <p-inputNumber 
+                size="small"
+                [(ngModel)]="financialData.amount"
+                mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="5"
+                class="w-full h-9"
+                styleClass="text-base text-color surface-overlay p-2 border-1 border-solid surface-border rounded-sm appearance-none outline-none focus:border-primary !w-full"
+                [class]="(
+                  errorList.length > 0 
+                  && errorList[financialData.id] != undefined 
+                  && errorList[financialData.id].amount != undefined 
+                  ) ? 'ng-invalid ng-dirty' : ''"
+              />
+
+              <div *ngIf="errorList.length > 0 && errorList[financialData.id] != undefined && errorList[financialData.id].amount != undefined">
+                <p class="mt-2 text-sm !text-red-600 dark:text-red-500"><span class="font-medium">{{ errorList[financialData.id].amount }}</span></p>
+              </div>
+            </ng-template>
+            <ng-template #output>
+              {{ financialData.amount | currency }}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+
+        @if (getTypeCatalogue(financialData.categoryDTO) != 1)
         {
           <td></td>
-          <td>
-            <p-cellEditor>
-              <ng-template #input>
-                <input
-                  pInputText
-                  type="number"
-                  [(ngModel)]="financialData.amount"
-                  class="h-9 !w-40"
-                  [class]="(
-                    errorList.length > 0 
-                    && errorList[financialData.id] != undefined 
-                    && errorList[financialData.id].amount != undefined 
-                    ) ? 'ng-invalid ng-dirty' : ''"
-                >
-
-                <div *ngIf="errorList.length > 0 && errorList[financialData.id] != undefined && errorList[financialData.id].amount != undefined">
-                  <p class="mt-2 text-sm !text-red-600 dark:text-red-500"><span class="font-medium">{{ errorList[financialData.id].amount }}</span></p>
-                </div>
-              </ng-template>
-              <ng-template #output>
-                {{ financialData.amount | currency }}
-              </ng-template>
-            </p-cellEditor>
-          </td>
         }
-
+        
         <td>{{ financialData.total | currency }}</td>
 
         <td class="text-center">

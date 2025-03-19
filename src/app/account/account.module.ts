@@ -20,6 +20,7 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DatePicker } from 'primeng/datepicker';
 import { FloatLabel  } from 'primeng/floatlabel';
+import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { PanelModule } from 'primeng/panel';
@@ -44,6 +45,7 @@ import { ToastModule } from 'primeng/toast';
         DatePicker,
         FloatLabel,
         FormsModule,
+        InputNumberModule,
         InputTextModule,
         MessageModule,
         PanelModule,
