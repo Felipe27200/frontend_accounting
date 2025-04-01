@@ -4,6 +4,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { AccountService } from '@services/account.service';
 import { DateFormatterService } from '@services/date-formatter.service';
 import { FinancialStatementService } from '@services/financial-statement.service';
+import { Category } from 'app/interface/category';
 
 @Component({
   selector: 'app-account-create',
@@ -15,7 +16,7 @@ export class AccountCreateComponent {
   toggle: boolean = true;
   validationError: any[] = [];
 
-  @Input() categoryList = [];
+  @Input() categoryList: Category[] = [];
   @Output() onSubmitEvent = new EventEmitter<any>();
   @Output() errorRequestEvent = new EventEmitter<any>();
 

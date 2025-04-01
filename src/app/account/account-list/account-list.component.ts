@@ -7,6 +7,9 @@ import { CommonResponseService } from '@services/common-response.service';
 import { DateFormatterService } from '@services/date-formatter.service';
 import { FinancialStatementService } from '@services/financial-statement.service';
 
+import { Category } from 'app/interface/category';
+import { Statement } from 'app/interface/statement';
+
 import { MessageService } from 'primeng/api';
 
 @Component({
@@ -20,13 +23,17 @@ export class AccountListComponent implements OnInit {
   toggle: boolean = true;
   validationError: any[] = [];
 
-  categoryList  = [];
+  categoryList: Category[]  = [];
   financialDataList = [];
-  statementList = [];
+  statementList: Statement[] = [];
   statementsByDate: any[] = [];
 
+  statementName = "";
+  dateStart = "";
+  dateEnd = "";
+
   filterForm = this.fb.group({
-    categoryFilter: [null],
+    categoryFilter: [],
     init_date: [Date],
     end_date: [Date],
     statementFilter: [null],
@@ -46,7 +53,7 @@ export class AccountListComponent implements OnInit {
   {
     this.statementService.getFinancialStatements()
       .subscribe({
-        next: (response) => {
+        next: (response: Statement[]) => {
           this.statementList = response;
 
           this.statementList.forEach((statement: any) => {
@@ -61,7 +68,7 @@ export class AccountListComponent implements OnInit {
 
     this.categoryService.getCategories()
       .subscribe({
-        next: (response) => {
+        next: (response: Category[]) => {
           this.categoryList = response;
         },
         error: (error) => {
@@ -109,16 +116,73 @@ export class AccountListComponent implements OnInit {
     }
 
     let formData = {
-      categoryId: this.filterForm.get('categoryFilter')?.value,
+      categoryList: this.filterForm.get('categoryFilter')?.value,
       initDate: dateInit,
       endDate: dateEnd,
       statementId: this.filterForm.get('statementFilter')?.value,
     }
 
+    this.dateEnd = '';
+    this.dateStart = '';
+    this.statementName = '';
+
     this.accountService.filterAccounts(formData)
       .subscribe({
         next: (response) => {
           this.financialDataList = response;
+
+          if (response == null)
+            return;
+          
+          if (response.length <= 0)
+          {
+            if (formData.statementId !== null && formData.statementId !== undefined)
+            {
+              let nameStatement: any = this.statementList.find((element: any) => element.id == formData.statementId);
+              
+              this.statementName = nameStatement.name;
+
+              this.statementService.getFinancialStatement(nameStatement.id)
+                .subscribe({
+                  next: (response: Statement) => {
+                    this.dateStart = response.initDate as string;
+                    this.dateEnd = response.endDate as string;
+                  }
+                });
+            }
+          }
+
+          if (typeof formData.initDate == "string")
+            this.dateStart = formData.initDate;
+            
+          if (typeof formData.endDate == "string")
+            this.dateEnd = formData.endDate;
+
+          if ((formData.statementId !== null && formData.statementId !== undefined) 
+            && (response !== null && response !== undefined)
+            && (Array.isArray(response) && response.length > 0)
+          )
+          {
+            response.forEach((statement) => {
+              if (statement.financialStatement.id == formData.statementId)
+              {
+                this.statementName = statement.financialStatement.name;
+
+                if (typeof formData.initDate == "function" || typeof formData.initDate == "object")
+                {
+                  this.dateStart = statement.financialStatement.initDate;
+                }
+
+                if (typeof formData.endDate == "function" || typeof formData.endDate == "object")
+                {
+                  this.dateEnd = statement.financialStatement.endDate;
+                }
+
+                return;
+              }
+            });
+          }
+
         },
         error: (error) => {
           this.errorRequestToast(error);

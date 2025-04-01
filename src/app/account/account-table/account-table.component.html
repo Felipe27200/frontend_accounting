@@ -15,8 +15,11 @@
 >
   <ng-template #caption>
     <div class="flex align-items-center justify-content-between">
-        <p>Financial Statement</p>
-        <p>YYYY-MM-DD to YYYY-MM-DD</p>
+        <p>{{ statementName }}</p>
+        <p>
+          {{ dateStart }}
+          {{ ((dateEnd == null || dateEnd == '') ? '' : ' to ' + dateEnd) }}
+        </p>
     </div>
   </ng-template>
   <ng-template #header>

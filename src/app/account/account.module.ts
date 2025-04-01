@@ -23,6 +23,7 @@ import { FloatLabel  } from 'primeng/floatlabel';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
+import { MultiSelectModule } from 'primeng/multiselect';
 import { PanelModule } from 'primeng/panel';
 import { Select } from 'primeng/select';
 import { TableModule } from 'primeng/table';
@@ -48,6 +49,7 @@ import { ToastModule } from 'primeng/toast';
         InputNumberModule,
         InputTextModule,
         MessageModule,
+        MultiSelectModule,
         PanelModule,
         Select,
         TableModule,

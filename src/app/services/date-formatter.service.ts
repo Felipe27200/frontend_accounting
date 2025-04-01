@@ -7,7 +7,7 @@ export class DateFormatterService {
 
   constructor() { }
 
-  formatDate(date: Date)
+  formatDate(date: Date): string
   {
     let format = `${date.getFullYear()}`
 

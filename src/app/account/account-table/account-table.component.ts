@@ -14,9 +14,14 @@ export class AccountTableComponent
 {
   @Input() financialDataList: any;
   @Input() categoryList!: any;
+  
+  @Input() statementName: string = "";
+  @Input() dateStart: string = "";
+  @Input() dateEnd: string = "";
 
   @Output() errorRequestEvent = new EventEmitter<any>();
   @Output() onSubmitEvent = new EventEmitter<any>();
+
 
   statementsByDate!: any;
   clonedFinancialData: { [s: string]: any } = {};
