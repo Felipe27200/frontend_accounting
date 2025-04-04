@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AccountService } from '@services/account.service';
 import { DateFormatterService } from '@services/date-formatter.service';
 import { FinancialStatementService } from '@services/financial-statement.service';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
     selector: 'app-account-table',
@@ -212,5 +213,18 @@ export class AccountTableComponent
       errorMessage = 'The field date must be date with format YYYY-mm-dd';
 
     return errorMessage;
+  }
+
+  deleteAccount(accountId: number)
+  {
+    console.log(accountId);
+
+    this.accountService.deleteAccount(accountId)
+      .subscribe({
+        next: (response) => {
+          console.log(response);
+        },
+        error: (error) => this.errorRequestEvent.emit(error)
+      })
   }
 }
