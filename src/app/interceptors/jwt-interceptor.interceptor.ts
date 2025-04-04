@@ -14,8 +14,6 @@ export function JwtInterceptor (req: HttpRequest<unknown>, next: HttpHandlerFn):
 {
   const LOGIN_URL = "/api/login";
 
-  console.log(req.url);
-
   if (req.url === LOGIN_URL)
     return next(req);
 

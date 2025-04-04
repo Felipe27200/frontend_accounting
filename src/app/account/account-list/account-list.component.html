@@ -25,7 +25,7 @@
             [showIcon]="true"
             [iconDisplay]="'input'"
           />
-          <label for="init_date">Init Date:</label>
+          <label for="init_date">Start Date:</label>
         </p-floatLabel>
       </div>
     
@@ -54,6 +54,8 @@
               optionValue="id"
               styleClass="h-9 w-full items-center"
               panelStyleClass="block w-full border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 p-1"
+              [filter]="true"
+              filterBy="name"
             />
             <label for="filter-statement" class="">Statement Filter:</label>
           </p-floatlabel>
@@ -61,15 +63,16 @@
     
       <div class="w-full mb-5">
         <p-floatLabel>
-            <p-select 
-              id="category-statement"
-              formControlName="categoryFilter" 
+            <p-multiselect
               [options]="categoryList"
-              [showClear]="true"
+              display="chip"
+              formControlName="categoryFilter"
               optionLabel="name"
               optionValue="id"
               styleClass="h-9 w-full items-center"
               panelStyleClass="block w-full border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 p-1"
+              filterBy="name"
+              size="small"
             />
             <label for="category-statement" class="">Category Filter:</label>
           </p-floatLabel>
@@ -93,6 +96,9 @@
       [categoryList]="categoryList"
       (onSubmitEvent)="onSubmit($event)"
       (errorRequestEvent)="errorRequestToast($event)"
+      [statementName]="statementName"
+      [dateStart]="dateStart"
+      [dateEnd]="dateEnd"
     ></app-account-table>
   </div>
 </div>

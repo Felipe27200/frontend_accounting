@@ -15,8 +15,11 @@
 >
   <ng-template #caption>
     <div class="flex align-items-center justify-content-between">
-        <p>Financial Statement</p>
-        <p>YYYY-MM-DD to YYYY-MM-DD</p>
+        <p>{{ statementName }}</p>
+        <p>
+          {{ dateStart }}
+          {{ ((dateEnd == null || dateEnd == '') ? '' : ' to ' + dateEnd) }}
+        </p>
     </div>
   </ng-template>
   <ng-template #header>
@@ -100,7 +103,7 @@
           </p-cellEditor>
         </td>
 
-        @if (getTypeCatalogue(financialData.categoryDTO) == 1)
+        @if (getTypeCatalogue(financialData.categoryDTO) != 1)
         {
           <td></td>
         }
@@ -131,7 +134,7 @@
           </p-cellEditor>
         </td>
 
-        @if (getTypeCatalogue(financialData.categoryDTO) != 1)
+        @if (getTypeCatalogue(financialData.categoryDTO) == 1)
         {
           <td></td>
         }
