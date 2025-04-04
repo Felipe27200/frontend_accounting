@@ -25,7 +25,7 @@ export class AccountCreateComponent {
   statementsByDate: any[] = [];
 
   accountForm = this.fb.group({
-    amount: ["", Validators.required],
+    amount: [null, Validators.required],
     date: [Date, Validators.required],
     is_recurring: [''],
     category_id: [null, Validators.required],

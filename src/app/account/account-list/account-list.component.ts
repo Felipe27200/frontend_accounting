@@ -89,9 +89,18 @@ export class AccountListComponent implements OnInit {
         detail: response.message, 
         life: 3000 
       });
-    }
 
-    this.filterAccounts();
+      if (response.response.hasOwnProperty('financialStatement'))
+      {
+        this.accountService.getAccountsByStatementId(response.response.financialStatement.id)
+          .subscribe({
+            next: (response: any) => {
+              this.financialDataList = response;
+            },
+            error: (error) => this.errorRequestToast(error),
+          });
+      }
+    }
   }
 
   errorRequestToast(error: any)

@@ -103,7 +103,7 @@
           </p-cellEditor>
         </td>
 
-        @if (getTypeCatalogue(financialData.categoryDTO) == 1)
+        @if (getTypeCatalogue(financialData.categoryDTO) != 1)
         {
           <td></td>
         }
@@ -134,7 +134,7 @@
           </p-cellEditor>
         </td>
 
-        @if (getTypeCatalogue(financialData.categoryDTO) != 1)
+        @if (getTypeCatalogue(financialData.categoryDTO) == 1)
         {
           <td></td>
         }

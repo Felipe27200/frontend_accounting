@@ -40,6 +40,15 @@ export class AccountService {
       .pipe(catchError(this.handleError));
   }
 
+  getAccountsByStatementId(statementId: number | string)
+  {
+    let httpOptions = this.getHeader();
+    let url = `${this.apiPrefix}/search-statement-id/`
+
+    return this.http.get<any>(`${url}/${+statementId}`, httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
   filterAccounts(formData: any)
   {
     let httpOptions = this.getHeader();
