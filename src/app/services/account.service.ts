@@ -51,7 +51,7 @@ export class AccountService {
   getAccountsByStatementId(statementId: number | string)
   {
     let httpOptions = this.getHeader();
-    let url = `${this.apiPrefix}/search-statement-id/`
+    let url = `${this.apiPrefix}/search-statement-id`
 
     return this.http.get<any>(`${url}/${+statementId}`, httpOptions)
       .pipe(catchError(this.handleError));

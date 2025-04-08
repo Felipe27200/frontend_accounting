@@ -157,7 +157,7 @@
               size="small"
               severity="danger" 
               icon="pi pi-trash"
-              (onClick)="deleteAccount(financialData.id)"
+              (onClick)="deleteAccount(financialData.id, financialData.financialStatement.id)"
             />
 
             <!-- Editing Buttons -->
@@ -204,3 +204,4 @@
 </p-table>
 
 <p-confirmdialog />
+<p-toast />

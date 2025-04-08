@@ -91,21 +91,49 @@ export class AccountListComponent implements OnInit {
       });
 
       if (response.response.hasOwnProperty('financialStatement'))
-      {
-        this.accountService.getAccountsByStatementId(response.response.financialStatement.id)
-          .subscribe({
-            next: (response: any) => {
-              this.financialDataList = response;
-            },
-            error: (error) => this.errorRequestToast(error),
+        this.getAccountByStatementId(response.response.financialStatement.id);
+    }
+  }
+
+  onDelete(deleteAccount: any)
+  {
+    console.log(deleteAccount);
+
+    if (deleteAccount.hasOwnProperty('accountId'))
+    {
+      this.accountService
+      .deleteAccount(deleteAccount.accountId)
+      .subscribe({
+        next: (response) => {  
+          this.messageService.add({ 
+            severity: 'info', 
+            summary: 'Confirmed', 
+            detail: 'Record deleted' 
           });
-      }
+          
+          this.getAccountByStatementId(deleteAccount.statementId);
+        },
+        error: (error) => this.errorRequestToast(error)
+      })
+
     }
   }
 
   errorRequestToast(error: any)
   {
     this.messageService.addAll(this.commonResponseService.setToastErrorMessage(error));
+  }
+
+  getAccountByStatementId(statementId: number)
+  {
+    this.accountService
+      .getAccountsByStatementId(statementId)
+      .subscribe({
+        next: (response: any) => {
+          this.financialDataList = response;
+        },
+        error: (error) => this.errorRequestToast(error),
+      });
   }
 
   filterAccounts()
