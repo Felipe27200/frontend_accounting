@@ -6,21 +6,21 @@
   The exclamation marks in the attribute class works as a modifier
   that indicates we will use a tailwind class instead others. 
 -->
-<div class="!grid !grid-cols-12">
-  <div class="!col-span-2 pl-3">
+<div class="!grid !grid-cols-12 !gap-4 !ml-4">
+  <div class="col-span-full md:col-span-3 lg:col-span-2 !pr-2">
     <p class="mt-5 !mb-12 text-lg font-semibold">
       <span class="pi pi-filter"></span>
       Filter Accounts
     </p>
 
-    <form [formGroup]="filterForm" (ngSubmit)="filterAccounts()">
-      <div class="w-full mb-5">
+    <form [formGroup]="filterForm" (ngSubmit)="filterAccounts()" class="flex flex-wrap">
+      <div class="sm:w-1/2 md:w-full mb-5 !pr-2">
         <p-floatLabel>
           <p-datepicker 
             inputId="init_date" 
             formControlName="init_date"
             [showButtonBar]="true" 
-            styleClass="h-9"
+            styleClass="h-9 w-full"
             dateFormat="yy-mm-dd"
             [showIcon]="true"
             [iconDisplay]="'input'"
@@ -29,13 +29,13 @@
         </p-floatLabel>
       </div>
     
-      <div class="w-full mb-5">
+      <div class="sm:w-1/2 md:w-full mb-5">
         <p-floatLabel>
           <p-datepicker 
             inputId="end_date" 
             formControlName="end_date"
             [showButtonBar]="true" 
-            styleClass="h-9"
+            styleClass="h-9 w-full"
             dateFormat="yy-mm-dd"
             [showIcon]="true"
             [iconDisplay]="'input'"
@@ -43,7 +43,7 @@
           <label for="end_date">End Date:</label>
         </p-floatLabel>
       </div>
-      <div class="w-full mb-5">
+      <div class="sm:w-1/2 md:w-full mb-5 !pr-2">
         <p-floatlabel>
             <p-select 
               id="filter-statement"
@@ -61,7 +61,7 @@
           </p-floatlabel>
       </div>
     
-      <div class="w-full mb-5">
+      <div class="sm:w-1/2 md:w-full mb-5">
         <p-floatLabel>
             <p-multiselect
               [options]="categoryList"
@@ -84,7 +84,7 @@
     </form>
   </div>
 
-  <div class="col-span-10 pr-4 !ml-10">
+  <div class="col-span-full md:col-span-9 lg:col-span-10 pr-4">
     <app-account-create
       [categoryList]="categoryList"
       (onSubmitEvent)="onSubmit($event)"
