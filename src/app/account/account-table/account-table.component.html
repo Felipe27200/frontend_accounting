@@ -24,9 +24,9 @@
   </ng-template>
   <ng-template #header>
       <tr>
-          <th>Date</th>
-          <th>Statement</th>
-          <th>Category</th>
+          <th pSortableColumn="date">Date <p-sortIcon field="date" /></th>
+          <th pSortableColumn="financialStatement.name">Statement <p-sortIcon field="financialStatement.name" /></th>
+          <th pSortableColumn="categoryDTO.name">Category <p-sortIcon field="financialStatement.name" /></th>
           <th>Income</th>
           <th>Outlay</th>
           <th>Total</th>
@@ -157,6 +157,7 @@
               size="small"
               severity="danger" 
               icon="pi pi-trash"
+              (onClick)="deleteAccount(financialData.id, financialData.financialStatement.id)"
             />
 
             <!-- Editing Buttons -->
@@ -201,3 +202,6 @@
     </tr>
   </ng-template>
 </p-table>
+
+<p-confirmdialog />
+<p-toast />

@@ -31,6 +31,14 @@ export class AccountService {
     return this.http.put<any>(`${this.apiPrefix}/${id}`, formData, httpOptions)
       .pipe(catchError(this.handleError));
   }
+  
+  deleteAccount(id: number)
+  {
+    let httpOptions = this.getHeader();
+
+    return this.http.delete<any>(`${this.apiPrefix}/${id}`, httpOptions)
+      .pipe(catchError(this.handleError));
+  }
 
   getAccounts()
   {
@@ -43,7 +51,7 @@ export class AccountService {
   getAccountsByStatementId(statementId: number | string)
   {
     let httpOptions = this.getHeader();
-    let url = `${this.apiPrefix}/search-statement-id/`
+    let url = `${this.apiPrefix}/search-statement-id`
 
     return this.http.get<any>(`${url}/${+statementId}`, httpOptions)
       .pipe(catchError(this.handleError));

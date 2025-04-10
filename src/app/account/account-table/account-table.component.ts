@@ -3,12 +3,16 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AccountService } from '@services/account.service';
 import { DateFormatterService } from '@services/date-formatter.service';
 import { FinancialStatementService } from '@services/financial-statement.service';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
     selector: 'app-account-table',
     templateUrl: './account-table.component.html',
     styleUrl: './account-table.component.css',
-    standalone: false
+    standalone: false,
+    providers: [
+      ConfirmationService,
+    ]
 })
 export class AccountTableComponent 
 {
@@ -21,6 +25,7 @@ export class AccountTableComponent
 
   @Output() errorRequestEvent = new EventEmitter<any>();
   @Output() onSubmitEvent = new EventEmitter<any>();
+  @Output() onDeleteEvent = new EventEmitter<any>();
 
 
   statementsByDate!: any;
@@ -34,6 +39,7 @@ export class AccountTableComponent
 
   constructor(
     private accountService: AccountService,
+    private confirmationService: ConfirmationService,
     private dateFormatter: DateFormatterService,
     private statementService: FinancialStatementService,
   ) {}
@@ -213,4 +219,31 @@ export class AccountTableComponent
 
     return errorMessage;
   }
+
+  deleteAccount(accountId: number, statementId: number) 
+  {
+    this.confirmationService.confirm({
+        message: 'Do you want to delete this record?',
+        header: 'Delete Account',
+        icon: 'pi pi-info-circle',
+        rejectLabel: 'Cancel',
+        rejectButtonProps: {
+            label: 'Cancel',
+            severity: 'secondary',
+            outlined: true,
+        },
+        acceptButtonProps: {
+            label: 'Delete',
+            severity: 'danger',
+        },
+
+        accept: () => {
+          this.onDeleteEvent.emit({
+            accountId: +accountId,
+            statementId: +statementId
+          });
+        },
+        reject: () => { },
+    });
+}
 }

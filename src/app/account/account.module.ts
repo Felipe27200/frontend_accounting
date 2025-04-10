@@ -18,6 +18,7 @@ import { JwtInterceptor } from '../interceptors/jwt-interceptor.interceptor';
 // Primeng Modules
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DatePicker } from 'primeng/datepicker';
 import { FloatLabel  } from 'primeng/floatlabel';
 import { InputNumberModule } from 'primeng/inputnumber';
@@ -43,6 +44,7 @@ import { ToastModule } from 'primeng/toast';
         ReactiveFormsModule,
         ButtonModule,
         CardModule,
+        ConfirmDialogModule,
         DatePicker,
         FloatLabel,
         FormsModule,
