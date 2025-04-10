@@ -84,10 +84,19 @@ export class AccountService {
     {
       console.error(error);
 
-      console.error("The Backend returned the code: " 
-        + error.status + "\nBody: \n\t" 
-        + (error.error.hasOwnProperty('message') ? error.error.message : 'something was wrong.')
-      );
+      let errorMessage ="The Backend returned the code: " 
+        + error.status + "\nBody: \n\t";
+
+      if (error.hasOwnProperty('error')
+        && (error.error !== null && error.error !== undefined) 
+        && error.error.hasOwnProperty('message') )
+      {
+        errorMessage += error.error.message;
+      }
+      else
+        errorMessage += 'something was wrong.';
+
+      console.error(errorMessage);
     }
 
     return throwError(() => error);

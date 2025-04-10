@@ -14,7 +14,7 @@
     </p>
 
     <form [formGroup]="filterForm" (ngSubmit)="filterAccounts()" class="flex flex-wrap">
-      <div class="sm:w-1/2 md:w-full mb-5 !pr-2">
+      <div class="basis-full sm:basis-1/2 md:basis-full mb-5 sm:pr-2 md:pr-0">
         <p-floatLabel>
           <p-datepicker 
             inputId="init_date" 
@@ -29,7 +29,7 @@
         </p-floatLabel>
       </div>
     
-      <div class="sm:w-1/2 md:w-full mb-5">
+      <div class="basis-full sm:basis-1/2 md:basis-full mb-5 sm:pr-2 lg:pr-0">
         <p-floatLabel>
           <p-datepicker 
             inputId="end_date" 
@@ -43,7 +43,7 @@
           <label for="end_date">End Date:</label>
         </p-floatLabel>
       </div>
-      <div class="sm:w-1/2 md:w-full mb-5 !pr-2">
+      <div class="basis-full sm:basis-1/2 md:basis-full mb-5 sm:pr-2 md:pr-0">
         <p-floatlabel>
             <p-select 
               id="filter-statement"
@@ -61,7 +61,7 @@
           </p-floatlabel>
       </div>
     
-      <div class="sm:w-1/2 md:w-full mb-5">
+      <div class="basis-full sm:basis-1/2 md:basis-full mb-5 sm:pr-2 md:pr-0">
         <p-floatLabel>
             <p-multiselect
               [options]="categoryList"
@@ -78,8 +78,10 @@
           </p-floatLabel>
       </div>
     
-      <div class="mb-5">
-        <p-button size="small" type="submit" label="Search" styleClass="h-9 w-full"/>
+      <div class="flex justify-center mb-5 w-full">
+        <div class="max-sm:w-full sm:w-1/2 md:w-full">
+          <p-button size="small" type="submit" label="Search" styleClass="h-9 w-full"/>
+        </div>
       </div>
     </form>
   </div>
