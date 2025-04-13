@@ -1,12 +1,15 @@
 <form [formGroup]="accountForm" (ngSubmit)="onSubmit()">
-    <p-panel 
-      header="Add Account" 
+    <p-panel      
       [toggleable]="true" 
       [(collapsed)]="toggle"
       styleClass="!mt-4 !mb-6"
     >
-      <div class="!flex !flex-row !mb-2 !mt-3">
-        <div class="basis-1/4 pr-4">
+    <ng-template #header>
+      <span class="font-bold">Add Account</span>
+    </ng-template>
+
+    <div class="!grid !grid-cols-4 !gap-8 lg:gap-4 md:mb-1 lg:mb-2 !mt-3">
+        <div class="col-span-full sm:col-span-2 lg:col-span-1 md:mt-0">
           <p-floatLabel>
             <p-datepicker 
               inputId="date" 
@@ -29,7 +32,7 @@
           </div>
         </div>
   
-        <div class="basis-1/4 pr-4">
+        <div class="col-span-full sm:col-span-2 lg:col-span-1 md:mt-0">
           <p-floatLabel>
             <p-select 
               id="statement-by-date"
@@ -51,7 +54,7 @@
           </div>
         </div>
 
-        <div class="basis-1/4 pr-4">
+        <div class="col-span-full sm:col-span-2 lg:col-span-1 md:mt-0">
           <p-floatLabel>
             <p-select 
               id="category"
@@ -75,7 +78,7 @@
           </div>
         </div>
   
-        <div class="basis-1/4 pr-4">
+        <div class="col-span-full sm:col-span-2 lg:col-span-1 md:mt-0">
           <p-floatLabel>
              <p-inputNumber 
                 inputId="amout"
@@ -97,8 +100,8 @@
         </div>
       </div>
 
-      <div class="!flex !flex-row !mb-2 !mt-3">
-        <div class="flex-auto" *ngIf="(validationError !== null && validationError !== undefined) && validationError.length > 0">
+      <div class="!flex !flex-row !mb-2 !mt-3" *ngIf="(validationError !== null && validationError !== undefined) && validationError.length > 0">
+        <div class="flex-auto">
           @for(error of validationError; track error)
           {
             <p class="mt-2 text-sm !text-red-600 dark:text-red-500"><span class="font-medium">*{{ error }}</span></p>

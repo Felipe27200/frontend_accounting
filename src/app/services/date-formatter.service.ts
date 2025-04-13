@@ -12,7 +12,7 @@ export class DateFormatterService {
     let format = `${date.getFullYear()}`
 
     format += `-${(date.getMonth() + 1 < 10 ? 0 : '')}` + `${date.getMonth() + 1}`;
-    format += `-${(date.getDate() + 1 < 10 ? 0 : '')}` + `${date.getDate()}`;
+    format += `-${(date.getDate() < 10 ? 0 : '')}` + `${date.getDate()}`;
 
     return format;
   }
