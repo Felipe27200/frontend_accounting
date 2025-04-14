@@ -8,6 +8,24 @@
 -->
 <div class="!grid !grid-cols-12 !gap-4 !ml-4">
   <div class="col-span-full md:col-span-3 lg:col-span-2 !pr-2">
+
+    <div class="basis-full sm:basis-1/2 md:basis-full mb-5 sm:pr-2 md:pr-0">
+      <p-button 
+        size="small" 
+        label="Add Category" 
+        icon="pi pi-plus-circle"
+        styleClass="w-full !mt-4 !mb-2"
+        severity="info"
+        (onClick)="showDialogCategory()"
+      />
+      <p-button 
+      size="small" 
+      label="Add F. Statement" 
+      icon="pi pi-plus-circle"
+      styleClass="w-full"
+    />
+    </div>
+
     <p class="mt-5 !mb-12 text-lg font-semibold">
       <span class="pi pi-filter"></span>
       Filter Accounts
@@ -80,7 +98,7 @@
     
       <div class="flex justify-center mb-5 w-full">
         <div class="max-sm:w-full sm:w-1/2 md:w-full">
-          <p-button size="small" type="submit" label="Search" styleClass="h-9 w-full"/>
+          <p-button size="small" type="submit" label="Search" styleClass="h-9 w-full" icon="pi pi-search"/>
         </div>
       </div>
     </form>
@@ -105,3 +123,12 @@
     ></app-account-table>
   </div>
 </div>
+
+<p-dialog
+  [modal]="true"
+  [(visible)]="visibleCategory"
+  showHeader="false"
+>
+
+  <app-category-form [title]="'Create'"/>
+</p-dialog>

@@ -21,6 +21,7 @@ import { MessageService } from 'primeng/api';
 })
 export class AccountListComponent implements OnInit {
   toggle: boolean = true;
+  visibleCategory: boolean = false;
   validationError: any[] = [];
 
   categoryList: Category[]  = [];
@@ -227,6 +228,9 @@ export class AccountListComponent implements OnInit {
       });
   }
 
+  showDialogCategory() {
+    this.visibleCategory = true;
+  }
 
   get statementFilter() { return this.filterForm.get('statementFilter') }
 }

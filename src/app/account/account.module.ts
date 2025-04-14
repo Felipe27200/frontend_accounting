@@ -13,6 +13,8 @@ import { AccountCreateComponent } from './account-create/account-create.componen
 import { AccountListComponent } from './account-list/account-list.component';
 import { AccountTableComponent } from './account-table/account-table.component';
 
+import { CategoryModule } from 'app/category/category.module';
+
 import { JwtInterceptor } from '../interceptors/jwt-interceptor.interceptor';
 
 // Primeng Modules
@@ -20,6 +22,7 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DatePicker } from 'primeng/datepicker';
+import { DialogModule } from 'primeng/dialog';
 import { FloatLabel  } from 'primeng/floatlabel';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
@@ -44,8 +47,10 @@ import { ToastModule } from 'primeng/toast';
         ReactiveFormsModule,
         ButtonModule,
         CardModule,
+        CategoryModule,
         ConfirmDialogModule,
         DatePicker,
+        DialogModule,
         FloatLabel,
         FormsModule,
         InputNumberModule,

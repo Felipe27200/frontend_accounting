@@ -46,6 +46,10 @@ import { RippleModule } from 'primeng/ripple';
     ButtonModule,
     SharedComponentModule,
     CategoryRoutingModule
+  ],
+  // Export so other components/modules can use it
+  exports: [
+    CategoryFormComponent
   ]
 })
 export class CategoryModule { }
