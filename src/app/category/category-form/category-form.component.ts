@@ -11,7 +11,7 @@ import { CategoryService } from '@services/category.service';
     standalone: false
 })
 export class CategoryFormComponent implements OnInit, OnChanges {
-  @Input() title = "";
+  @Input() titleCard = "";
   @Input() category: any;
   @Input() enableButton: boolean = false;
 

@@ -9,7 +9,8 @@
 
 <div class="flex justify-content-center mt-4">
     <p-card>
-        <p-table 
+        <p-table
+          #dt2
           [value]="categories"
           [paginator]="true"
           [rows]="5"
@@ -17,11 +18,32 @@
           styleClass="w-full"
           sortMode="multiple"
           [tableStyle]="{'min-width': '50rem'}"
+          [globalFilterFields]="['name']"
+          [scrollable]="true"
+          size="small"
         >
+          <ng-template #caption>
+            <div class="flex">
+                <p-iconfield iconPosition="left" class="ml-auto">
+                    <p-inputicon>
+                        <i class="pi pi-search"></i>
+                    </p-inputicon>
+                    <input
+                        pInputText
+                        size="small"
+                        #searchInput
+                        type="text"
+                        (input)="dt2.filterGlobal(searchInput.value, 'contains')"
+                        placeholder="Search keyword"
+                    />
+                </p-iconfield>
+            </div>
+          </ng-template>
             <ng-template pTemplate="header">
                 <tr>
                     <th pSortableColumn="name">
-                        Name <p-sortIcon field="name" />
+                      <p-columnFilter field="name" display="menu"/>
+                        Name <p-sortIcon field="name"/>
                     </th>
                     <th pSortableColumn="accountCatalogue.name">
                         Code <p-sortIcon field="accountCatalogue.name" />
@@ -35,17 +57,19 @@
                 <tr>
                     <td>{{ category.name }}</td>
                     <td>{{ category.accountCatalogue.name }}</td>
-                    <td>
-                    <p-button 
-                      icon="pi pi-file-edit" 
-                      (onClick)="editCategory(category.id)"
-                      styleClass="!mr-1"
-                    />
-                    <p-button 
-                        severity="danger" 
-                        icon="pi pi-trash" 
-                        (onClick)="dialogDeleteCategory(category.id, category.name, $event)" 
-                    />
+                    <td class="text-center">
+                      <p-button 
+                        icon="pi pi-file-edit" 
+                        (onClick)="editCategory(category.id)"
+                        styleClass="!mr-1"
+                        size="small"
+                      />
+                      <p-button 
+                          severity="danger" 
+                          icon="pi pi-trash"
+                          size="small"
+                          (onClick)="dialogDeleteCategory(category.id, category.name, $event)" 
+                      />
                     </td>
                 </tr>
             </ng-template>

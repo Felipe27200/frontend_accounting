@@ -18,12 +18,6 @@
         severity="info"
         (onClick)="showDialogCategory()"
       />
-      <p-button 
-      size="small" 
-      label="Add F. Statement" 
-      icon="pi pi-plus-circle"
-      styleClass="w-full"
-    />
     </div>
 
     <p class="mt-5 !mb-12 text-lg font-semibold">
@@ -127,8 +121,24 @@
 <p-dialog
   [modal]="true"
   [(visible)]="visibleCategory"
-  showHeader="false"
->
+  [closable]="false"
+  >
+  <ng-template #headless>
+    <div class="flex justify-end !mt-1">
+      <p-button 
+        size="small"
+        icon="pi pi-times"
+        severity="secondary"
+        [rounded]="true" 
+        [text]="true"
+        (onClick)="closeDialogCategory()"
+      ></p-button>
+    </div>
 
-  <app-category-form [title]="'Create'"/>
+    <app-category-form 
+      [titleCard]="'Create'"
+      (onSubmit)="onCreateCategory($event)"
+      [enableButton]="true"
+    />
+  </ng-template>
 </p-dialog>
