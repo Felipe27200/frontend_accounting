@@ -21,6 +21,7 @@ import { MessageService } from 'primeng/api';
 })
 export class AccountListComponent implements OnInit {
   toggle: boolean = true;
+  visibleCategory: boolean = false;
   validationError: any[] = [];
 
   categoryList: Category[]  = [];
@@ -93,6 +94,28 @@ export class AccountListComponent implements OnInit {
       if (response.response.hasOwnProperty('financialStatement'))
         this.getAccountByStatementId(response.response.financialStatement.id);
     }
+  }
+
+  onCreateCategory(formData: any)
+  {
+    this.categoryService.createCategory(formData)
+      .subscribe({
+        next: (response: any) => {
+          console.log(response);
+          this.messageService.add({ 
+            severity: "success", 
+            summary: "Category Created", 
+            detail: "The category '" + response.name + "' was created successfully", 
+            life: 3000 
+          });
+
+          this.getCategories();
+          this.closeDialogCategory();
+        },
+        error: (error) => {
+          this.messageService.addAll(this.commonResponseService.setToastErrorMessage(error));
+        }
+      });
   }
 
   onDelete(deleteAccount: any)
@@ -227,6 +250,27 @@ export class AccountListComponent implements OnInit {
       });
   }
 
+  getCategories()
+  {
+    this.categoryService.getCategories()
+    .subscribe({
+      next: (response: Category[]) => {
+        this.categoryList = response;
+      },
+      error: (error) => {
+        this.errorRequestToast(error);
+      }
+    });
+  }
+
+  showDialogCategory() {
+    this.visibleCategory = true;
+  }
+
+  closeDialogCategory() 
+  {
+    this.visibleCategory = false;
+  }
 
   get statementFilter() { return this.filterForm.get('statementFilter') }
 }

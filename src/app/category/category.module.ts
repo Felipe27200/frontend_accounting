@@ -22,6 +22,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { CardModule } from 'primeng/card';
 import { Toast  } from 'primeng/toast';
 import { RippleModule } from 'primeng/ripple';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
 
 @NgModule({
   declarations: [
@@ -44,8 +46,14 @@ import { RippleModule } from 'primeng/ripple';
     InputTextModule,
     Select,
     ButtonModule,
+    IconFieldModule,
+    InputIconModule,
     SharedComponentModule,
     CategoryRoutingModule
+  ],
+  // Export so other components/modules can use it
+  exports: [
+    CategoryFormComponent
   ]
 })
 export class CategoryModule { }

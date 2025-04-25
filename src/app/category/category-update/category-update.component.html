@@ -35,12 +35,28 @@
         (submit) send to the onSubmit method
         in CategoryUpdateComponent
     -->
-    <app-category-form 
-      [title]="'Update'" 
-      [category]="category" 
-      (onSubmit)="onSubmit($event)"
-      [enableButton]="enableButton"
-    ></app-category-form>
+    <div class="flex justify-content-center mt-7">
+        <div class="md:w-5 lg:w-4">
+          <app-category-form 
+            [titleCard]="'Update'" 
+            [category]="category" 
+            (onSubmit)="onSubmit($event)"
+            [enableButton]="enableButton"
+          ></app-category-form>
+      
+          <p-button 
+            type="button" 
+            label="Go to Categories" 
+            severity="info"
+            variant="outlined"
+            styleClass="w-full !mt-5" 
+            icon="pi pi-chevron-left"
+            routerLink="/categories"
+            size="small"
+          ></p-button>
+        </div>
+      </div>
+      <p-toast></p-toast>
 }
 
 <p-toast></p-toast>
