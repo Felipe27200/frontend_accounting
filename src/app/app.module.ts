@@ -18,6 +18,7 @@ import { AccountModule } from './account/account.module';
 import { CategoryModule } from './category/category.module';
 import { FinancialStatementModule } from './financial-statement/financial-statement.module';
 import { SharedComponentModule } from './common_components/shared-component.module';
+import { UserModule } from './user/user.module';
 
 // PrimeNg Components
 import { ButtonModule } from 'primeng/button';
@@ -44,6 +45,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         SharedComponentModule,
         AccountModule,
         CategoryModule,
+        UserModule,
         FinancialStatementModule,
         AppRoutingModule
     ], 
