@@ -7,44 +7,64 @@
         </ng-template>
     
         <ng-template pTemplate="content">
-            <form [formGroup]="signUpForm">
+            <form [formGroup]="signUpForm" (ngSubmit)="onSumbit()">
                 <div class="grid mt-5">
                     <div class="col-8 col-offset-2">
                         <label for="" class="text-white">Name:</label>
                         <input 
-                          formControlName="Name"
+                          formControlName="newName"
                           type="text" 
                           pInputText
-                          size="small" 
-                          class="!text-sm !rounded-lg focus:ring-blue-500 focus:border-blue-500 block !w-full !p-2 !bg-gray-600 !border-gray-600 !placeholder-gray-400 !text-white !focus:ring-blue-500 !focus:border-blue-500 mt-2"
+                          pSize="small" 
+                          class="surface-overlay appearance-none outline-none !focus:border-primary w-full mt-2"
                         >
                     </div>
                     <div class="col-8 col-offset-2">
                         <label for="" class="text-white">Username:</label>
                         <input 
-                          formControlName="username"
+                          formControlName="newUsername"
                           type="text" 
-                          pInputText 
-                          class="p-inputtext-sm surface-overlay p-2 appearance-none outline-none focus:border-primary w-full mt-2"
+                          pInputText
+                          pSize="small"
+                          class="surface-overlay p-2 appearance-none outline-none !focus:border-primary w-full mt-2"
                         >
                     </div>
                 
                     <div class="col-8 col-offset-2 mt-2">
-                        <label for="password" class="text-white">Password:</label>
+                        <label for="newPassword" class="text-white">Password:</label>
                         <input 
-                          formControlName="password"
+                          formControlName="newPassword"
                           type="password" 
                           pInputText 
+                          pSize="small"
                           class="p-inputtext-sm surface-overlay p-2 appearance-none outline-none focus:border-primary w-full mt-2"
                         >
-                        
                     </div>
+
+                    @if(errors.length > 0)
+                    {
+                        <div class="col-8 col-offset-2 mt-2 mb-3" >
+                            @for (error of errors; track error) 
+                            {
+                                <p class="text-sm text-red-500 font-semibold">* {{ error }}</p>
+                            }
+                        </div>
+                    }
                 
                     <div class="col-8 col-offset-2 text-center mb-6">
                         <p-button 
                           type="submit" 
+                          label="Create User" 
+                          styleClass="w-full"
+                          size="small" 
+                        ></p-button>
+
+                        <p-button 
                           label="Login" 
-                          styleClass="w-full" 
+                          styleClass="w-full !mt-4"
+                          size="small"
+                          severity="secondary"
+                          routerLink="/login" 
                         ></p-button>
                     </div>
                 </div>

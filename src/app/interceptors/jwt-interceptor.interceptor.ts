@@ -14,8 +14,9 @@ import { Router } from '@angular/router';
 export function JwtInterceptor (req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>>
 {
   const LOGIN_URL = "/api/login";
+  const SIGNUP = "/api/signup";
 
-  if (req.url === LOGIN_URL)
+  if (req.url === LOGIN_URL || req.url === SIGNUP)
     return next(req);
 
   /**

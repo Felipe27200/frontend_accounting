@@ -14,8 +14,9 @@
                         <input 
                           formControlName="username"
                           type="text" 
-                          pInputText 
-                          class="p-inputtext-sm surface-overlay p-2 appearance-none outline-none focus:border-primary w-full mt-2"
+                          pInputText
+                          pSize="small"
+                          class="surface-overlay p-2 appearance-none outline-none focus:border-primary w-full mt-2"
                         >
                     </div>
                 
@@ -25,10 +26,12 @@
                           formControlName="password"
                           type="password" 
                           pInputText 
-                          class="p-inputtext-sm surface-overlay p-2 appearance-none outline-none focus:border-primary w-full mt-2"
+                          pSize="small"
+                          class="surface-overlay p-2 appearance-none outline-none focus:border-primary w-full mt-2"
                         >
                         
-                        @for (error of errors; track error) {
+                        @for (error of errors; track error) 
+                        {
                             <p class="text-sm text-red-500 font-semibold">* {{ error }}</p>
                         }
                     </div>
@@ -37,9 +40,19 @@
                         <p-button 
                           type="submit" 
                           label="Login" 
-                          styleClass="w-full" 
+                          styleClass="w-full"
+                          size="small"
                           [disabled]="!loginForm.valid"
                         ></p-button>
+
+                        <p-button 
+                          label="Signup" 
+                          styleClass="w-full !mt-4"
+                          size="small"
+                          severity="secondary"
+                          routerLink="/signup" 
+                        ></p-button>
+
                     </div>
                 </div>
             </form>
