@@ -20,6 +20,7 @@ export class LoginComponent implements OnInit {
   });
 
   errors: any[] = [];
+  messageSignup!: string;
 
   constructor(
     private fb: FormBuilder,
@@ -30,7 +31,15 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    
+    this.route.queryParams
+      .subscribe(params => {
+        let message = params['message'];
+
+        if (message === undefined || message === null || message === '' || message.lenght <= 0)
+          return;
+
+        this.messageSignup = message;
+      });
   }
 
   onSubmit()

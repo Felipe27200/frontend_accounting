@@ -1,3 +1,14 @@
+@if (messageSignup !== undefined && messageSignup !== null && messageSignup !== '')
+{
+    <div class="flex justify-content-center flex-wrap">
+        <div class="flex mt-6 w-full sm:w-8 md:w-7 lg:w-5">
+            <div class="card w-full">
+                <p-message severity="success" closable>{{ messageSignup }}</p-message>
+            </div>
+        </div>
+    </div>
+}
+
 <div class="flex justify-content-center flex-wrap">
     <p-card class="flex mt-6 pt-8 w-full sm:w-8 md:w-7 lg:w-5" styleClass="bg-gray-600">
         <ng-template pTemplate="header">

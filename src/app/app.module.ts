@@ -25,6 +25,7 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { CardModule } from 'primeng/card';
 import { MenubarModule } from 'primeng/menubar';
+import { MessageModule } from 'primeng/message';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
@@ -40,6 +41,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         ButtonModule,
         InputTextModule,
         MenubarModule,
+        MessageModule,
         FormsModule,
         ReactiveFormsModule,
         SharedComponentModule,
