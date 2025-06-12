@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 // import { LocalStorageService } from '../../services/local-storage.service';
 import { LocalStorageService } from '@services/local-storage.service';
+import { jwtDecode } from 'jwt-decode';
 
 import { MenuItem } from 'primeng/api';
 
@@ -22,6 +23,18 @@ export class NavBarComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    let item = this.localStorageService.getItem("Bearer-token");
+
+    if (item == null || item == undefined
+       || item == "" || typeof item !== "string")
+    {
+      this.logout();
+      return;
+    }
+
+    let token: string = item;
+    const decoded = jwtDecode(token);
+
     this.items = [
       {
           label: 'Account',
@@ -71,7 +84,7 @@ export class NavBarComponent implements OnInit {
           ]
       },
       {
-        label: 'Users',
+        label: decoded.sub,
         icon: 'pi pi-user',
         items: [
           {
