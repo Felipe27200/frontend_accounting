@@ -22,7 +22,8 @@ import { Toast } from 'primeng/toast';
 import { RippleModule } from 'primeng/ripple';
 import { DatePicker } from 'primeng/datepicker';
 import { TableModule } from 'primeng/table';
-
+import { IconField, IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,8 @@ import { TableModule } from 'primeng/table';
     TableModule,
     ConfirmDialogModule,
     CardModule,
+    IconFieldModule,
+    InputIconModule,
     Toast,
     RippleModule,
     ReactiveFormsModule,
