@@ -17,10 +17,11 @@
           [rowsPerPageOptions]="[5, 10, 20]"
           styleClass="w-full"
           sortMode="multiple"
-          [tableStyle]="{'min-width': '50rem'}"
+          [tableStyle]="{'width': '100%'}"
           [globalFilterFields]="['name']"
           [scrollable]="true"
           size="small"
+          scrollHeight="700px"
         >
           <ng-template #caption>
             <div class="flex">
@@ -61,11 +62,12 @@
                       <p-button 
                         icon="pi pi-file-edit" 
                         (onClick)="editCategory(category.id)"
-                        styleClass="!mr-1"
+                        styleClass="h-7 !w-9 !mr-1 !mb-1"
                         size="small"
                       />
                       <p-button 
                           severity="danger" 
+                          styleClass="h-7 !w-9 !mr-1 !mb-1"
                           icon="pi pi-trash"
                           size="small"
                           (onClick)="dialogDeleteCategory(category.id, category.name, $event)" 
