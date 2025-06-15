@@ -1,3 +1,14 @@
+@if (messageSignup !== undefined && messageSignup !== null && messageSignup !== '')
+{
+    <div class="flex justify-content-center flex-wrap">
+        <div class="flex mt-6 w-full sm:w-8 md:w-7 lg:w-5">
+            <div class="card w-full">
+                <p-message severity="success" closable>{{ messageSignup }}</p-message>
+            </div>
+        </div>
+    </div>
+}
+
 <div class="flex justify-content-center flex-wrap">
     <p-card class="flex mt-6 pt-8 w-full sm:w-8 md:w-7 lg:w-5" styleClass="bg-gray-600">
         <ng-template pTemplate="header">
@@ -14,8 +25,9 @@
                         <input 
                           formControlName="username"
                           type="text" 
-                          pInputText 
-                          class="p-inputtext-sm surface-overlay p-2 appearance-none outline-none focus:border-primary w-full mt-2"
+                          pInputText
+                          pSize="small"
+                          class="surface-overlay p-2 appearance-none outline-none focus:border-primary w-full mt-2"
                         >
                     </div>
                 
@@ -25,10 +37,12 @@
                           formControlName="password"
                           type="password" 
                           pInputText 
-                          class="p-inputtext-sm surface-overlay p-2 appearance-none outline-none focus:border-primary w-full mt-2"
+                          pSize="small"
+                          class="surface-overlay p-2 appearance-none outline-none focus:border-primary w-full mt-2"
                         >
                         
-                        @for (error of errors; track error) {
+                        @for (error of errors; track error) 
+                        {
                             <p class="text-sm text-red-500 font-semibold">* {{ error }}</p>
                         }
                     </div>
@@ -37,9 +51,19 @@
                         <p-button 
                           type="submit" 
                           label="Login" 
-                          styleClass="w-full" 
+                          styleClass="w-full"
+                          size="small"
                           [disabled]="!loginForm.valid"
                         ></p-button>
+
+                        <p-button 
+                          label="Signup" 
+                          styleClass="w-full !mt-4"
+                          size="small"
+                          severity="secondary"
+                          routerLink="/signup" 
+                        ></p-button>
+
                     </div>
                 </div>
             </form>

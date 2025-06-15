@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { catchError, } from "rxjs/operators";
 import { throwError } from 'rxjs';
+import { signup } from 'app/interface/signup';
 
 @Injectable({
   providedIn: 'root'
@@ -27,14 +28,35 @@ export class UserService {
       );
   }
 
+  signup(formData: signup)
+  {
+    let url = `${this.prefix}/signup`;
+
+    return this.http.post<any>(url, formData, this.httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
   public handleError(error: HttpErrorResponse)
   {
     if (error.status === 0)
       console.error("There was an error:\n\t", error.error);
     else
     {
-      console.error("The Backend returned the code: " 
-        + error.status + "\nBody: \n\t" + error.error.errors);
+      console.error(error);
+
+      let errorMessage ="The Backend returned the code: " 
+        + error.status + "\nBody: \n\t";
+
+      if (error.hasOwnProperty('error')
+        && (error.error !== null && error.error !== undefined) 
+        && error.error.hasOwnProperty('message') )
+      {
+        errorMessage += error.error.message;
+      }
+      else
+        errorMessage += 'something was wrong.';
+
+      console.error(errorMessage);
     }
 
     return throwError(() => error);
