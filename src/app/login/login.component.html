@@ -38,12 +38,12 @@
                           type="password" 
                           pInputText 
                           pSize="small"
-                          class="surface-overlay p-2 appearance-none outline-none focus:border-primary w-full mt-2"
+                          class="surface-overlay p-2 appearance-none outline-none focus:border-primary w-full mt-2 mb-2"
                         >
                         
                         @for (error of errors; track error) 
                         {
-                            <p class="text-sm text-red-500 font-semibold">* {{ error }}</p>
+                            <p class="text-sm !text-red-500 font-semibold">* {{ error }}</p>
                         }
                     </div>
                 
