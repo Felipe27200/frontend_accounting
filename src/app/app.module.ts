@@ -15,6 +15,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 // App Modules
 import { AccountModule } from './account/account.module';
+import { AdminModule } from './admin/admin.module';
 import { CategoryModule } from './category/category.module';
 import { FinancialStatementModule } from './financial-statement/financial-statement.module';
 import { SharedComponentModule } from './common_components/shared-component.module';
@@ -46,6 +47,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         ReactiveFormsModule,
         SharedComponentModule,
         AccountModule,
+        AdminModule,
         CategoryModule,
         UserModule,
         FinancialStatementModule,

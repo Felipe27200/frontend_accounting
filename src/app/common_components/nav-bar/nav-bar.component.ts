@@ -6,6 +6,7 @@ import { LocalStorageService } from '@services/local-storage.service';
 import { jwtDecode } from 'jwt-decode';
 
 import { MenuItem } from 'primeng/api';
+import { CustomToken } from 'app/interface/custom-token';
 
 @Component({
     selector: 'app-nav-bar',
@@ -33,7 +34,7 @@ export class NavBarComponent implements OnInit {
     }
 
     let token: string = item;
-    const decoded = jwtDecode(token);
+    const decoded = jwtDecode<CustomToken>(token);
 
     this.items = [
       {
