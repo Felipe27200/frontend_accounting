@@ -1,15 +1,20 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { catchError, } from "rxjs/operators";
 import { throwError } from 'rxjs';
+import { jwtDecode } from 'jwt-decode';
+
 import { signup } from 'app/interface/signup';
+import { LocalStorageService } from '@services/local-storage.service';
+import { CustomToken } from 'app/interface/custom-token';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
   private prefix = "/api";
+  private localStorageService = inject(LocalStorageService);
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -33,6 +38,14 @@ export class UserService {
     let url = `${this.prefix}/signup`;
 
     return this.http.post<any>(url, formData, this.httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
+  getUsers()
+  {
+    let url = `${this.prefix}/users/`;
+
+    return this.http.get<any>(url, this.httpOptions)
       .pipe(catchError(this.handleError));
   }
 
@@ -60,5 +73,34 @@ export class UserService {
     }
 
     return throwError(() => error);
+  }
+
+  public isAdmin(): boolean
+  {
+    let item = this.localStorageService.getItem("Bearer-token");
+    let isAdmin = false;
+
+    if (item == null || item == undefined
+        || item == "" || typeof item !== "string")
+    {
+      return isAdmin;
+    }
+    
+    let token = jwtDecode<CustomToken>(item);
+  
+    if (!token.hasOwnProperty("scope") || token.scope == null || token.scope == undefined)
+      return isAdmin;
+  
+    if (Array.isArray(token.scope))
+    {
+      token.scope.forEach((element: any) => {
+        if (element.toUpperCase().includes("ADMIN"))
+          isAdmin = true;
+      });
+    }
+    else if (typeof token.scope == 'string' && token.scope.toUpperCase().includes("ADMIN"))
+      isAdmin = true;
+      
+    return isAdmin;
   }
 }

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AdminCenterComponent } from './admin-center/admin-center.component';
+import { AdminListComponent } from './admin-list/admin-list.component';
 
 // Guards
 import { adminRoleGuard } from 'app/guards/admin-role.guard';
@@ -11,7 +12,14 @@ const routes: Routes = [
   { 
     path: 'admin',
     component: AdminCenterComponent,
-    canActivate: [ authGuard, adminRoleGuard ]
+    canActivate: [ authGuard, adminRoleGuard ],
+    children: [{ 
+      path: '',
+      canActivateChild: [authGuard, adminRoleGuard],
+      children:[
+        { path: '', component: AdminListComponent }
+      ]
+    }]
   }
 ];
 

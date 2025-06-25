@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-// import { LocalStorageService } from '../../services/local-storage.service';
 import { LocalStorageService } from '@services/local-storage.service';
+import { UserService } from '@services/user.service';
 import { jwtDecode } from 'jwt-decode';
 
 import { MenuItem } from 'primeng/api';
@@ -19,21 +19,21 @@ export class NavBarComponent implements OnInit {
 
   constructor (
     private router: Router,
-    private route: ActivatedRoute,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
-    let item = this.localStorageService.getItem("Bearer-token");
+    let tokenStorage = this.localStorageService.getItem("Bearer-token");
 
-    if (item == null || item == undefined
-       || item == "" || typeof item !== "string")
+    if (tokenStorage == null || tokenStorage == undefined
+       || tokenStorage == "" || typeof tokenStorage !== "string")
     {
       this.logout();
       return;
     }
 
-    let token: string = item;
+    let token: string = tokenStorage;
     const decoded = jwtDecode<CustomToken>(token);
 
     this.items = [
@@ -83,8 +83,27 @@ export class NavBarComponent implements OnInit {
                   }
               }
           ]
-      },
-      {
+      }
+    ];
+
+    if (this.userService.isAdmin())
+    {
+      this.items.push({
+        label: 'Administration',
+        icon: 'pi pi-cog',
+        items: [
+          {
+            label: 'Users',
+            icon: 'pi pi-users',
+            command: () => {
+              this.router.navigate(["/admin"]);
+            }
+          },
+        ]
+      });
+    }
+
+    this.items.push({
         label: decoded.sub,
         icon: 'pi pi-user',
         items: [
@@ -97,8 +116,7 @@ export class NavBarComponent implements OnInit {
           }
         ],
         style: {'margin-left': 'auto'}
-      }
-    ]
+      });
   }
 
   logout ()
