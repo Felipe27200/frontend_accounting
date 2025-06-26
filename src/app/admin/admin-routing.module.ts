@@ -7,6 +7,7 @@ import { AdminListComponent } from './admin-list/admin-list.component';
 // Guards
 import { adminRoleGuard } from 'app/guards/admin-role.guard';
 import { authGuard } from 'app/guards/auth.guard';
+import { AdminUpdateComponent } from './admin-update/admin-update.component';
 
 const routes: Routes = [
   { 
@@ -17,6 +18,7 @@ const routes: Routes = [
       path: '',
       canActivateChild: [authGuard, adminRoleGuard],
       children:[
+        { path: ':id', component: AdminUpdateComponent },
         { path: '', component: AdminListComponent }
       ]
     }]

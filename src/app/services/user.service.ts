@@ -13,7 +13,9 @@ import { CustomToken } from 'app/interface/custom-token';
   providedIn: 'root'
 })
 export class UserService {
-  private prefix = "/api";
+  private prefixLogin = "/api";
+  private prefixUser = "/api/users";
+
   private localStorageService = inject(LocalStorageService);
 
   httpOptions = {
@@ -25,7 +27,7 @@ export class UserService {
   ) { }
 
   login(formData: any) {
-    let url = `${this.prefix}/login`;
+    let url = `${this.prefixLogin}/login`;
 
     return this.http.post<any>(url, formData, this.httpOptions)
       .pipe(
@@ -35,7 +37,7 @@ export class UserService {
 
   signup(formData: signup)
   {
-    let url = `${this.prefix}/signup`;
+    let url = `${this.prefixLogin}/signup`;
 
     return this.http.post<any>(url, formData, this.httpOptions)
       .pipe(catchError(this.handleError));
@@ -43,7 +45,15 @@ export class UserService {
 
   getUsers()
   {
-    let url = `${this.prefix}/users/`;
+    let url = `${this.prefixUser}/`;
+
+    return this.http.get<any>(url, this.httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
+  getUserById(id: number | string)
+  {
+    let url = `${this.prefixUser}/search/${+id}`;
 
     return this.http.get<any>(url, this.httpOptions)
       .pipe(catchError(this.handleError));

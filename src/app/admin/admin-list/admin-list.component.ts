@@ -1,4 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { UserService } from '@services/user.service';
 
@@ -10,13 +11,24 @@ import { UserService } from '@services/user.service';
 })
 export class AdminListComponent implements OnInit {
   private userService: UserService = inject(UserService);
+  private router: Router = inject(Router);
+
+  userList: any[] = [];
 
   ngOnInit(): void {
     this.userService.getUsers()
       .subscribe({
         next: (response: any) => {
-          console.dir(response);
+          this.userList = response;
         }
       });
+  }
+
+  editUser(id: number)
+  {
+    if (id <= 0)
+      return;
+
+    this.router.navigate(["admin/", id]);
   }
 }
