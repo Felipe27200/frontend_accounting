@@ -115,6 +115,13 @@ export class NavBarComponent implements OnInit {
             }
           },
           {
+            label: "Change Password",
+            icon: "pi pi-key",
+            command: () => {
+              this.router.navigate(["/user-config/change-password"]);
+            }
+          },
+          {
             label: "Logout",
             icon: "pi pi-sign-out",
             command: () => {
