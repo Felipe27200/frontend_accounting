@@ -2,16 +2,21 @@ import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { UserService } from '@services/user.service';
+import { CommonResponseService } from '@services/common-response.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-admin-list',
   standalone: false,
   templateUrl: './admin-list.component.html',
-  styleUrl: './admin-list.component.css'
+  styleUrl: './admin-list.component.css',
+  providers: [MessageService]
 })
 export class AdminListComponent implements OnInit {
   private userService: UserService = inject(UserService);
   private router: Router = inject(Router);
+  private responseService: CommonResponseService = inject(CommonResponseService);
+  private messageService: MessageService = inject(MessageService);
 
   userList: any[] = [];
 
@@ -20,6 +25,9 @@ export class AdminListComponent implements OnInit {
       .subscribe({
         next: (response: any) => {
           this.userList = response;
+        },
+        error: (error) => {
+          this.messageService.addAll(this.responseService.setToastErrorMessage(error));
         }
       });
   }

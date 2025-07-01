@@ -59,6 +59,25 @@ export class UserService {
       .pipe(catchError(this.handleError));
   }
 
+  updateUser(userId: number, user: any)
+  {
+    let url = `${this.prefixUser}/update-user/${+userId}`;
+
+    return this.http.put<any>(url, user, this.getHeader())
+      .pipe(catchError(this.handleError));
+  }
+
+  getHeader()
+  {
+    let token = this.localStorageService.getItem('Bearer token');
+
+    let httpOptions = {
+      headers: new HttpHeaders({ 'Authorization': `Bearer ${token!}` })
+    };
+
+    return httpOptions;
+  }
+
   public handleError(error: HttpErrorResponse)
   {
     if (error.status === 0)
@@ -78,8 +97,6 @@ export class UserService {
       }
       else
         errorMessage += 'something was wrong.';
-
-      console.error(errorMessage);
     }
 
     return throwError(() => error);

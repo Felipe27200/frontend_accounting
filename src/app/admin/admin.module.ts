@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AdminRoutingModule } from './admin-routing.module';
 
@@ -14,7 +15,10 @@ import { CardModule } from 'primeng/card';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
+import { Ripple } from 'primeng/ripple';
+import { SelectModule } from 'primeng/select';
 import { TableModule } from 'primeng/table';
+import { Toast  } from 'primeng/toast';
 import { AdminUpdateComponent } from './admin-update/admin-update.component';
 
 @NgModule({
@@ -27,13 +31,18 @@ import { AdminUpdateComponent } from './admin-update/admin-update.component';
     CommonModule,
     BrowserModule,
     BrowserAnimationsModule,
+    FormsModule,
+    ReactiveFormsModule,
     SharedComponentModule,
     ButtonModule,
     CardModule,
     IconFieldModule,
     InputIconModule,
     InputTextModule,
+    Ripple,
+    SelectModule,
     TableModule,
+    Toast,
     AdminRoutingModule
   ]
 })
