@@ -16,7 +16,7 @@ const routes: Routes = [
       path: "",
       canActivateChild: [authGuard],
       children: [
-        { path: ':id', component: UserUpdateComponent }
+        { path: '', component: UserUpdateComponent }
       ]
     }]
   }

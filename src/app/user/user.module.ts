@@ -14,7 +14,6 @@ import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { Toast  } from 'primeng/toast';
 
-
 import { UserRoutingModule } from './user-routing.module';
 
 @NgModule({
