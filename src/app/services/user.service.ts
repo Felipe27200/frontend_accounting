@@ -1,15 +1,22 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { catchError, } from "rxjs/operators";
 import { throwError } from 'rxjs';
+import { jwtDecode } from 'jwt-decode';
+
 import { signup } from 'app/interface/signup';
+import { LocalStorageService } from '@services/local-storage.service';
+import { CustomToken } from 'app/interface/custom-token';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private prefix = "/api";
+  private prefixLogin = "/api";
+  private prefixUser = "/api/users";
+
+  private localStorageService = inject(LocalStorageService);
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -20,7 +27,7 @@ export class UserService {
   ) { }
 
   login(formData: any) {
-    let url = `${this.prefix}/login`;
+    let url = `${this.prefixLogin}/login`;
 
     return this.http.post<any>(url, formData, this.httpOptions)
       .pipe(
@@ -30,10 +37,45 @@ export class UserService {
 
   signup(formData: signup)
   {
-    let url = `${this.prefix}/signup`;
+    let url = `${this.prefixLogin}/signup`;
 
     return this.http.post<any>(url, formData, this.httpOptions)
       .pipe(catchError(this.handleError));
+  }
+
+  getUsers()
+  {
+    let url = `${this.prefixUser}/`;
+
+    return this.http.get<any>(url, this.httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
+  getUserById(id: number | string)
+  {
+    let url = `${this.prefixUser}/search/${+id}`;
+
+    return this.http.get<any>(url, this.httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
+  updateUser(userId: number, user: any)
+  {
+    let url = `${this.prefixUser}/update-user/${+userId}`;
+
+    return this.http.put<any>(url, user, this.getHeader())
+      .pipe(catchError(this.handleError));
+  }
+
+  getHeader()
+  {
+    let token = this.localStorageService.getItem('Bearer token');
+
+    let httpOptions = {
+      headers: new HttpHeaders({ 'Authorization': `Bearer ${token!}` })
+    };
+
+    return httpOptions;
   }
 
   public handleError(error: HttpErrorResponse)
@@ -55,10 +97,37 @@ export class UserService {
       }
       else
         errorMessage += 'something was wrong.';
-
-      console.error(errorMessage);
     }
 
     return throwError(() => error);
+  }
+
+  public isAdmin(): boolean
+  {
+    let item = this.localStorageService.getItem("Bearer-token");
+    let isAdmin = false;
+
+    if (item == null || item == undefined
+        || item == "" || typeof item !== "string")
+    {
+      return isAdmin;
+    }
+    
+    let token = jwtDecode<CustomToken>(item);
+  
+    if (!token.hasOwnProperty("scope") || token.scope == null || token.scope == undefined)
+      return isAdmin;
+  
+    if (Array.isArray(token.scope))
+    {
+      token.scope.forEach((element: any) => {
+        if (element.toUpperCase().includes("ADMIN"))
+          isAdmin = true;
+      });
+    }
+    else if (typeof token.scope == 'string' && token.scope.toUpperCase().includes("ADMIN"))
+      isAdmin = true;
+      
+    return isAdmin;
   }
 }

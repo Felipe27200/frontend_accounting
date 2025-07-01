@@ -9,6 +9,7 @@ export class CommonResponseService {
 
   setToastErrorMessage(error: any)
   {
+    console.log(error);
     let listErrors = [];
 
     if (error.hasOwnProperty("error") 
