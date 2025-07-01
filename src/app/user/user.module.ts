@@ -4,16 +4,24 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { UserRoutingModule } from './user-routing.module';
+import { SharedComponentModule } from 'app/common_components/shared-component.module';
 import { UserCreateComponent } from './user-create/user-create.component';
+import { UserCenterComponent } from './user-center/user-center.component';
+import { UserUpdateComponent } from './user-update/user-update.component';
 
 import { ButtonModule } from 'primeng/button';
-import { InputTextModule } from 'primeng/inputtext';
 import { CardModule } from 'primeng/card';
+import { InputTextModule } from 'primeng/inputtext';
+import { Toast  } from 'primeng/toast';
+
+
+import { UserRoutingModule } from './user-routing.module';
 
 @NgModule({
   declarations: [
-    UserCreateComponent
+    UserCenterComponent,
+    UserCreateComponent,
+    UserUpdateComponent,
   ],
   imports: [
     CommonModule,
@@ -23,6 +31,8 @@ import { CardModule } from 'primeng/card';
     InputTextModule,
     ButtonModule,
     CardModule,
+    Toast,
+    SharedComponentModule,
     UserRoutingModule
   ]
 })

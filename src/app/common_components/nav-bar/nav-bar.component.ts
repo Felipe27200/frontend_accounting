@@ -108,12 +108,19 @@ export class NavBarComponent implements OnInit {
         icon: 'pi pi-user',
         items: [
           {
+            label: "Settings",
+            icon: "pi pi-cog",
+            command: () => {
+              this.router.navigate(["/user-config"]);
+            }
+          },
+          {
             label: "Logout",
             icon: "pi pi-sign-out",
             command: () => {
               this.logout();
             }
-          }
+          },
         ],
         style: {'margin-left': 'auto'}
       });
