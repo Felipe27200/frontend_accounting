@@ -4,12 +4,13 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { catchError, throwError } from 'rxjs';
 
 import { LocalStorageService } from './local-storage.service';
+import { environment } from 'environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
-  apiPrefix = 'api/accounts';
+  apiPrefix = environment.apiUrl + 'api/accounts';
 
   constructor(
     private http: HttpClient,

@@ -6,11 +6,13 @@ import { catchError } from "rxjs/operators";
 import { LocalStorageService } from './local-storage.service';
 import { throwError } from 'rxjs';
 
+import { environment } from 'environments/environment';
+
 @Injectable({
   providedIn: 'root'
 })
 export class CategoryService {
-  private apiUrl = "api/categories";
+  private apiUrl = environment.apiUrl + "api/categories";
 
   constructor(
     private http: HttpClient,

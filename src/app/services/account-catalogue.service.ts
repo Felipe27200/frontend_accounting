@@ -5,12 +5,13 @@ import { catchError } from "rxjs/operators";
 import { throwError } from 'rxjs';
 
 import { LocalStorageService } from '@services/local-storage.service';
+import { environment } from 'environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountCatalogueService {
-  private apiUrl = "api/account-catalogue";
+  private apiUrl = environment.apiUrl + "api/account-catalogue";
 
   constructor(
     private http: HttpClient,

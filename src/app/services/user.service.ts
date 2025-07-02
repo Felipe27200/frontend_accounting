@@ -10,12 +10,14 @@ import { LocalStorageService } from '@services/local-storage.service';
 import { CustomToken } from 'app/interface/custom-token';
 import { ErrorHandlerService } from '@services/error-handler.service';
 
+import { environment } from 'environments/environment';
+
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private prefixLogin = "/api";
-  private prefixUser = "/api/users";
+  private prefixLogin = environment.apiUrl + "/api";
+  private prefixUser = environment.apiUrl + "/api/users";
 
   private localStorageService = inject(LocalStorageService);
   private errorHandler: ErrorHandlerService = inject(ErrorHandlerService);

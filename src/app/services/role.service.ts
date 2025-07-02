@@ -7,6 +7,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import Role from 'app/interface/role';
 import { catchError } from 'rxjs';
 
+import { environment } from 'environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class RoleService {
   private http: HttpClient = inject(HttpClient);
   private localStorageService: LocalStorageService = inject(LocalStorageService);
 
-  prefix = "api/roles";
+  prefix = environment.apiUrl + "api/roles";
 
   constructor() { }
 
