@@ -129,7 +129,7 @@ export class NavBarComponent implements OnInit {
             }
           },
         ],
-        style: {'margin-left': 'auto'}
+        style: {'margin-left': 'auto', 'margin-right': '60px'}
       });
   }
 

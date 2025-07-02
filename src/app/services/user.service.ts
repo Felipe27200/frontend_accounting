@@ -85,6 +85,14 @@ export class UserService {
       .pipe(catchError(this.errorHandler.handleError));
   }
 
+  updatePassword(formData: any)
+  {
+    let url = `${this.prefixUser}/change-password`;
+
+    return this.http.put<any>(url, formData, this.getHeader())
+      .pipe(catchError(this.errorHandler.handleError));
+  }
+
   getHeader()
   {
     let token = this.localStorageService.getItem('Bearer token');
