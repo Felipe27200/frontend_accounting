@@ -1,5 +1,6 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { CommonResponseService } from '@services/common-response.service';
 import { UserService } from '@services/user.service';
@@ -13,19 +14,39 @@ import { MessageService } from 'primeng/api';
   styleUrl: './change-password.component.css',
   providers: [ MessageService ]
 })
-export class ChangePasswordComponent {
+export class ChangePasswordComponent implements OnInit {
   private fb: FormBuilder = inject(FormBuilder);
   private messageService: MessageService = inject(MessageService);
   private responseService: CommonResponseService = inject(CommonResponseService);
   private userService: UserService = inject(UserService);
 
+  private route: ActivatedRoute = inject(ActivatedRoute);
+  private router: Router = inject(Router);
+
   errors: any[] = [];
+  user: any;
 
   passwordForm = this.fb.group({
     confirmPassword: ["", Validators.required],
-    currentPassword: ["", Validators.required],
     newPassword: ["", Validators.required],
   });
+
+  ngOnInit(): void {
+    let userId = Number(this.route.snapshot.params['id']);
+
+    if (userId === null || userId === undefined || userId <= 0)
+      this.router.navigate(["/admin"]);
+
+    this.userService.getUserById(userId)
+      .subscribe({
+        next: (response: any) => {
+          this.user = response;
+        },
+        error: (error) => {
+          this.messageService.addAll(this.responseService.setToastErrorMessage(error));
+        }
+      });
+  }
 
   onSubmit()
   {
@@ -34,18 +55,17 @@ export class ChangePasswordComponent {
     if (!this.passwordForm.valid)
       return;
 
-    if (this.currentPassword == null || this.currentPassword == undefined)
-      this.errors.push("The current password is required");
+    if (this.user == undefined)
+    {
+      this.messageService.add({ severity: 'error', summary: 'Error!', detail: 'There is no valid user' });
+      return;
+    }
+
     if (this.newPassword == null || this.newPassword == undefined)
       this.errors.push("The new password is required");
     if (this.confirmPassword == null || this.confirmPassword == undefined)
       this.errors.push("The Confirm Password is required");
 
-    if (this.currentPassword?.value == null || this.currentPassword.value == undefined
-      || this.currentPassword.value.trim().length <= 0
-    ) {
-      this.errors.push("The current password is required");
-    }
     if (this.newPassword?.value == null || this.newPassword.value == undefined
       || this.newPassword.value.trim().length <= 0
     ) {
@@ -64,12 +84,11 @@ export class ChangePasswordComponent {
       return;
 
     let formData = {
-      oldPassword: this.currentPassword?.value,
       newPassword: this.newPassword?.value,
       passwordConfirmation: this.confirmPassword?.value,
     }
 
-    this.userService.updatePassword(formData)
+    this.userService.changePasswordUserByAdmin(this.user.id, formData)
       .subscribe({
         next: (response) => {
           this.messageService.add({ severity: 'success', summary: 'Successful!', detail: 'The password was updated' });
@@ -81,6 +100,5 @@ export class ChangePasswordComponent {
   }
 
   get confirmPassword() { return this.passwordForm.get('confirmPassword'); }
-  get currentPassword() { return this.passwordForm.get('currentPassword'); }
   get newPassword() { return this.passwordForm.get('newPassword'); }
 }

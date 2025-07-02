@@ -77,6 +77,14 @@ export class UserService {
       .pipe(catchError(this.handleError));
   }
 
+  changePasswordUserByAdmin(userId: number, password: any)
+  {
+    let url = `${this.prefixUser}/change-password-admin/${+userId}`;
+
+    return this.http.put<any>(url, password, this.getHeader())
+      .pipe(catchError(this.handleError));
+  }
+
   updateUser(formData: any)
   {
     let url = `${this.prefixUser}/update`;

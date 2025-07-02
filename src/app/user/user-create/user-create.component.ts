@@ -58,15 +58,11 @@ export class UserCreateComponent
     this.userService.signup(newUser)
       .subscribe({
         next: (response: any) => {
-          console.log("User was created.", response);
-
           this.router.navigate(["/login"], {
             queryParams: { message: "User was created." }
           });
         },
         error: (e) => {
-          console.log(e);
-          
           if (e.error.hasOwnProperty("errors"))
             this.errors = e.error.errors;
           else

@@ -92,7 +92,6 @@ export class UserUpdateComponent implements OnInit {
     this.userService.updateUser(formData)
       .subscribe({
         next: (response) => {
-          console.dir(response);
           this.name?.setValue(response.name);
           
           this.messageService.add({ 

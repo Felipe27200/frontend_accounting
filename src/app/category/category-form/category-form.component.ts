@@ -4,11 +4,15 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { AccountCatalogueService } from '@services/account-catalogue.service';
 import { CategoryService } from '@services/category.service';
 
+import { CommonResponseService } from '@services/common-response.service';
+import { MessageService } from 'primeng/api';
+
 @Component({
     selector: 'app-category-form',
     templateUrl: './category-form.component.html',
     styleUrl: './category-form.component.css',
-    standalone: false
+    standalone: false,
+    providers: [ MessageService ]
 })
 export class CategoryFormComponent implements OnInit, OnChanges {
   @Input() titleCard = "";
@@ -35,6 +39,8 @@ export class CategoryFormComponent implements OnInit, OnChanges {
     private formBuilder: FormBuilder,
     private accountCatalogueService: AccountCatalogueService,
     private categoryService: CategoryService,
+    private messageService: MessageService,
+    private responseService: CommonResponseService
   ) {}
   
   ngOnChanges(changes: SimpleChanges): void {    
@@ -58,7 +64,7 @@ export class CategoryFormComponent implements OnInit, OnChanges {
           this.accountsCatalogue = response;
         },
         error: (error) => {
-          console.error(error);
+          this.messageService.addAll(this.responseService.setToastErrorMessage(error));
         }
       });
 
@@ -68,7 +74,7 @@ export class CategoryFormComponent implements OnInit, OnChanges {
           this.parentCategoryList = response;
         },
         error: (error) => {
-          console.error(error);
+          this.messageService.addAll(this.responseService.setToastErrorMessage(error));
         }
       });
   }

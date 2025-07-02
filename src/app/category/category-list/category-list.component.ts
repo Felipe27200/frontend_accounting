@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 // Services
 import { CategoryService } from '@services/category.service';
+import { CommonResponseService } from '@services/common-response.service';
 
 import { ConfirmationService, MessageService } from 'primeng/api';
 
@@ -18,10 +19,10 @@ export class CategoryListComponent implements OnInit {
 
   constructor (
     private router: Router,
-    private route: ActivatedRoute,
     private categoryService: CategoryService,
     private confirmationService: ConfirmationService, 
-    private messageService: MessageService
+    private messageService: MessageService,
+    private responseService: CommonResponseService,
   ) { }
 
   ngOnInit(): void {
@@ -31,7 +32,7 @@ export class CategoryListComponent implements OnInit {
           this.categories = response;
         },
         error: (error) => {
-          console.error(error);
+          this.messageService.addAll(this.responseService.setToastErrorMessage(error));
         }
       });
   }
@@ -65,15 +66,11 @@ export class CategoryListComponent implements OnInit {
     this.categoryService.deleteCategory(id)
       .subscribe({
         next: (response) => {
-          console.log(response);
-
           this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: response.body });
           this.ngOnInit();
         },
         error: (error) => {
-          if (error.hasOwnProperty("error") && error.error.hasOwnProperty("message"))
-            this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.message });
-
+          this.messageService.addAll(this.responseService.setToastErrorMessage(error));
         }
       });
   }

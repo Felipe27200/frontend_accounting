@@ -64,16 +64,18 @@
                     <td>{{ user.role.name }}</td>
                     <td class="text-center">
                       <p-button 
-                        icon="pi pi-file-edit" 
+                        icon="pi pi-user-edit" 
                         styleClass="h-7 !w-9 !mr-1 !mb-1"
                         size="small"
                         (onClick)="editUser(user.id)"
                       />
                       <p-button 
-                          severity="danger" 
+                          title="Change Password"
+                          severity="warn" 
                           styleClass="h-7 !w-9 !mr-1 !mb-1"
-                          icon="pi pi-trash"
+                          icon="pi pi-key"
                           size="small"
+                          [routerLink]="'change-password/' + user.id"
                       />
                     </td>
                 </tr>
