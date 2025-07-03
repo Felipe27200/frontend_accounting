@@ -10,7 +10,7 @@ import { environment } from 'environments/environment';
   providedIn: 'root'
 })
 export class AccountService {
-  apiPrefix = environment.apiUrl + 'api/accounts';
+  apiPrefix = environment.apiUrl + '/api/accounts';
 
   constructor(
     private http: HttpClient,

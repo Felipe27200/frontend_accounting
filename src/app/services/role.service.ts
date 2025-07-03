@@ -17,7 +17,7 @@ export class RoleService {
   private http: HttpClient = inject(HttpClient);
   private localStorageService: LocalStorageService = inject(LocalStorageService);
 
-  prefix = environment.apiUrl + "api/roles";
+  prefix = environment.apiUrl + "/api/roles";
 
   constructor() { }
 

@@ -13,7 +13,7 @@ import { environment } from 'environments/environment';
 })
 export class FinancialStatementService {
 
-  apiUrl = environment.apiUrl + 'api/financial-statement';
+  apiUrl = environment.apiUrl + '/api/financial-statement';
 
   constructor(
     private http: HttpClient,

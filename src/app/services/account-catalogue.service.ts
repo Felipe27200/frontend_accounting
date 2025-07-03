@@ -11,7 +11,7 @@ import { environment } from 'environments/environment';
   providedIn: 'root'
 })
 export class AccountCatalogueService {
-  private apiUrl = environment.apiUrl + "api/account-catalogue";
+  private apiUrl = environment.apiUrl + "/api/account-catalogue";
 
   constructor(
     private http: HttpClient,

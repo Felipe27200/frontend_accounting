@@ -4,6 +4,8 @@ import { LocalStorageService } from '../services/local-storage.service';
 import { Observable, tap } from 'rxjs';
 import { Router } from '@angular/router';
 
+import { environment } from 'environments/environment';
+
 /**
  * INTERCEPTORS
  * 
@@ -13,8 +15,8 @@ import { Router } from '@angular/router';
  */
 export function JwtInterceptor (req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>>
 {
-  const LOGIN_URL = "/api/login";
-  const SIGNUP = "/api/signup";
+  const LOGIN_URL = environment.apiUrl + "/api/login";
+  const SIGNUP = environment.apiUrl + "/api/signup";
 
   if (req.url === LOGIN_URL || req.url === SIGNUP)
     return next(req);
