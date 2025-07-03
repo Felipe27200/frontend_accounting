@@ -59,7 +59,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         provideAnimationsAsync(),
         providePrimeNG({ 
             theme: {
-                preset: Lara
+                preset: Lara,
+                options: {
+                    cssLayer: {
+                        name: 'primeng',
+                        order: 'tailwind-base, primeng, tailwind-utilities'
+                    }
+                }
             }
         })
     ] 
