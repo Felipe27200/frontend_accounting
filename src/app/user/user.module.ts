@@ -14,14 +14,15 @@ import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { Toast  } from 'primeng/toast';
 
-
 import { UserRoutingModule } from './user-routing.module';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 @NgModule({
   declarations: [
     UserCenterComponent,
     UserCreateComponent,
     UserUpdateComponent,
+    ChangePasswordComponent,
   ],
   imports: [
     CommonModule,

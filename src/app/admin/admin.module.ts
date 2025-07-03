@@ -20,12 +20,14 @@ import { SelectModule } from 'primeng/select';
 import { TableModule } from 'primeng/table';
 import { Toast  } from 'primeng/toast';
 import { AdminUpdateComponent } from './admin-update/admin-update.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 @NgModule({
   declarations: [
     AdminCenterComponent,
     AdminListComponent,
-    AdminUpdateComponent
+    AdminUpdateComponent,
+    ChangePasswordComponent,
   ],
   imports: [
     CommonModule,

@@ -78,10 +78,16 @@ export class AdminUpdateComponent implements OnInit {
       idRole: this.role?.value,
     }
 
-    this.userService.updateUser(this.user.id, userToUpdate)
+    if (this.user == undefined)
+    {
+      this.messageService.add({ severity: 'error', summary: 'Error!', detail: 'There is no valid user' });
+      return;
+    }
+
+    this.userService.updateUserByAdmin(this.user.id, userToUpdate)
       .subscribe({
         next: (response) => {
-          this.router.navigate(["/admin"]);
+          this.messageService.add({ severity: 'success', summary: 'Successful!', detail: 'User was updated' });
         },
         error: (error) => {
           this.messageService.addAll(this.responseService.setToastErrorMessage(error));

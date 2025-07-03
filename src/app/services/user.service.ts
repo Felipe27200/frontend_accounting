@@ -8,15 +8,19 @@ import { jwtDecode } from 'jwt-decode';
 import { signup } from 'app/interface/signup';
 import { LocalStorageService } from '@services/local-storage.service';
 import { CustomToken } from 'app/interface/custom-token';
+import { ErrorHandlerService } from '@services/error-handler.service';
+
+import { environment } from 'environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private prefixLogin = "/api";
-  private prefixUser = "/api/users";
+  private prefixLogin = environment.apiUrl + "/api";
+  private prefixUser = environment.apiUrl + "/api/users";
 
   private localStorageService = inject(LocalStorageService);
+  private errorHandler: ErrorHandlerService = inject(ErrorHandlerService);
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -59,12 +63,44 @@ export class UserService {
       .pipe(catchError(this.handleError));
   }
 
-  updateUser(userId: number, user: any)
+  getUserByUsername(username: string)
+  {
+    let url = `${this.prefixUser}/search-username/${username}`;
+
+    return this.http.get<any>(url, this.httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
+  updateUserByAdmin(userId: number, user: any)
   {
     let url = `${this.prefixUser}/update-user/${+userId}`;
 
     return this.http.put<any>(url, user, this.getHeader())
       .pipe(catchError(this.handleError));
+  }
+
+  changePasswordUserByAdmin(userId: number, password: any)
+  {
+    let url = `${this.prefixUser}/change-password-admin/${+userId}`;
+
+    return this.http.put<any>(url, password, this.getHeader())
+      .pipe(catchError(this.handleError));
+  }
+
+  updateUser(formData: any)
+  {
+    let url = `${this.prefixUser}/update`;
+
+    return this.http.put<any>(url, formData, this.getHeader())
+      .pipe(catchError(this.errorHandler.handleError));
+  }
+
+  updatePassword(formData: any)
+  {
+    let url = `${this.prefixUser}/change-password`;
+
+    return this.http.put<any>(url, formData, this.getHeader())
+      .pipe(catchError(this.errorHandler.handleError));
   }
 
   getHeader()

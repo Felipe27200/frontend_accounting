@@ -115,6 +115,13 @@ export class NavBarComponent implements OnInit {
             }
           },
           {
+            label: "Change Password",
+            icon: "pi pi-key",
+            command: () => {
+              this.router.navigate(["/user-config/change-password"]);
+            }
+          },
+          {
             label: "Logout",
             icon: "pi pi-sign-out",
             command: () => {
@@ -122,7 +129,7 @@ export class NavBarComponent implements OnInit {
             }
           },
         ],
-        style: {'margin-left': 'auto'}
+        style: {'margin-left': 'auto', 'margin-right': '60px'}
       });
   }
 

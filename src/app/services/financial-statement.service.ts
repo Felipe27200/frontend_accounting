@@ -6,12 +6,14 @@ import { catchError, Observable, throwError } from 'rxjs';
 import { LocalStorageService } from './local-storage.service';
 import { FormStatement } from 'app/financial-statement/FormStatement';
 
+import { environment } from 'environments/environment';
+
 @Injectable({
   providedIn: 'root'
 })
 export class FinancialStatementService {
 
-  apiUrl = 'api/financial-statement';
+  apiUrl = environment.apiUrl + '/api/financial-statement';
 
   constructor(
     private http: HttpClient,

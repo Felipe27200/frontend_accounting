@@ -101,7 +101,6 @@ export class AccountListComponent implements OnInit {
     this.categoryService.createCategory(formData)
       .subscribe({
         next: (response: any) => {
-          console.log(response);
           this.messageService.add({ 
             severity: "success", 
             summary: "Category Created", 
@@ -120,8 +119,6 @@ export class AccountListComponent implements OnInit {
 
   onDelete(deleteAccount: any)
   {
-    console.log(deleteAccount);
-
     if (deleteAccount.hasOwnProperty('accountId'))
     {
       this.accountService
