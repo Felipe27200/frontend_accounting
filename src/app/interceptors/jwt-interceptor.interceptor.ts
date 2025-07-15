@@ -17,8 +17,9 @@ export function JwtInterceptor (req: HttpRequest<unknown>, next: HttpHandlerFn):
 {
   const LOGIN_URL = environment.apiUrl + "/api/login";
   const SIGNUP = environment.apiUrl + "/api/signup";
+  const OK = environment.apiUrl + "/api/ok_prueba";
 
-  if (req.url === LOGIN_URL || req.url === SIGNUP)
+  if (req.url === LOGIN_URL || req.url === SIGNUP || req.url === OK )
     return next(req);
 
   /**

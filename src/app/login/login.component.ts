@@ -31,6 +31,12 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.userService.ok()
+      .subscribe({
+        next: (response) => {
+          console.log(response)
+        }
+      });
     this.route.queryParams
       .subscribe(params => {
         let message = params['message'];

@@ -39,6 +39,15 @@ export class UserService {
       );
   }
 
+  ok() {
+    let url = `${this.prefixLogin}/ok_prueba`;
+
+    return this.http.get<any>(url, this.httpOptions)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
   signup(formData: signup)
   {
     let url = `${this.prefixLogin}/signup`;
