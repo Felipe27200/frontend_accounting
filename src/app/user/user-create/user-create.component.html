@@ -1,0 +1,78 @@
+<div class="flex justify-content-center flex-wrap !mt-8">
+    <p-card class="flex w-full sm:w-8 md:w-7 lg:w-5" styleClass="!bg-gray-800">
+        <ng-template pTemplate="header">
+            <div class="text-center !mt-8 text-3xl font-bold text-white">
+                <span class="pi pi-user-plus text-2xl"></span> Create User
+            </div>
+        </ng-template>
+    
+        <ng-template pTemplate="content">
+            <form [formGroup]="signUpForm" (ngSubmit)="onSumbit()">
+                <div class="grid !mt-5">
+                    <div class="col-8 col-offset-2">
+                        <label for="" class="text-white">Name:</label>
+                        <input 
+                          formControlName="newName"
+                          type="text" 
+                          pInputText
+                          pSize="small" 
+                          class="!surface-overlay !appearance-none !outline-none !focus:border-primary !w-full mt-2"
+                        >
+                    </div>
+                    <div class="col-8 col-offset-2">
+                        <label for="" class="text-white">Username:</label>
+                        <input 
+                          formControlName="newUsername"
+                          type="text" 
+                          pInputText
+                          pSize="small"
+                          class="!surface-overlay !p-2 !appearance-none !outline-none !focus:border-primary !w-full mt-2"
+                        >
+                    </div>
+                
+                    <div class="col-8 col-offset-2 !mb-6">
+                        <label for="newPassword" class="text-white">Password:</label>
+                        <input 
+                          formControlName="newPassword"
+                          type="password" 
+                          pInputText 
+                          pSize="small"
+                          class="p-inputtext-sm !surface-overlay !p-2 !appearance-none !outline-none !focus:border-primary !w-full mt-2"
+                        >
+                    </div>
+
+                    @if(errors.length > 0)
+                    {
+                        <div class="col-8 col-offset-2 mt-2 mb-3" >
+                            @for (error of errors; track error) 
+                            {
+                                <p class="text-sm !text-red-500 font-semibold">* {{ error }}</p>
+                            }
+                        </div>
+                    }
+                
+                    <div class="col-8 col-offset-2 text-center !mb-6">
+                        <p-button 
+                          type="submit" 
+                          severity="info"
+                          label="Create User" 
+                          styleClass="w-full"
+                          size="small" 
+                        ></p-button>
+
+                        <p-button 
+                          label="Login"
+                          variant="outlined" 
+                          severity="contrast"
+                          styleClass="w-full !mt-4"
+                          size="small"
+                          routerLink="/login" 
+                        ></p-button>
+                    </div>
+                </div>
+            </form>
+        </ng-template>
+    </p-card>
+</div>
+
+

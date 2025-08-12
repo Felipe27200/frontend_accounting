@@ -1,0 +1,42 @@
+<p-toast />
+
+<div class="!flex !justify-center !mt-12">
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+        <p-card class="w-2/6 !mt-12">
+            <ng-template #title> <p class="text-center">Edit User</p></ng-template>
+
+            <div class="field">
+                <label for="name">Name:</label>
+                <input 
+                    pInputText 
+                    pSize="small"
+                    id="name" 
+                    formControlName="name" 
+                    type="text"
+                    class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border rounded-sm appearance-none outline-none focus:border-primary w-full"
+                >
+            </div>
+
+            @if (errors.length > 0)
+            {
+                @for (error of errors; track error) {
+                  <p class="text-sm !text-red-500 font-semibold">* {{ error }}</p>
+                }
+            }
+
+            <ng-template #footer>
+                <div class="flex gap-4 mt-1">
+                    <p-button pSize="small" label="Cancel" severity="secondary" class="w-full" [outlined]="true" styleClass="w-full" routerLink="/admin" />
+                    <p-button 
+                        pSize="small"
+                        type="submit"
+                        label="Save" 
+                        class="w-full" 
+                        styleClass="w-full"
+                        [disabled]="!userForm.valid"
+                    />
+                </div>
+            </ng-template>
+        </p-card>
+    </form>
+</div>

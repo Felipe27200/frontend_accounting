@@ -8,9 +8,10 @@ import { LocalStorageService } from '../services/local-storage.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrl: './login.component.css',
+    standalone: false
 })
 export class LoginComponent implements OnInit {
   loginForm = this.fb.group({
@@ -19,6 +20,7 @@ export class LoginComponent implements OnInit {
   });
 
   errors: any[] = [];
+  messageSignup!: string;
 
   constructor(
     private fb: FormBuilder,
@@ -29,7 +31,21 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    
+    this.userService.ok()
+      .subscribe({
+        next: (response) => {
+          console.log(response)
+        }
+      });
+    this.route.queryParams
+      .subscribe(params => {
+        let message = params['message'];
+
+        if (message === undefined || message === null || message === '' || message.lenght <= 0)
+          return;
+
+        this.messageSignup = message;
+      });
   }
 
   onSubmit()

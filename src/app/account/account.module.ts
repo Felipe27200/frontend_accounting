@@ -1,41 +1,75 @@
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
+import { provideHttpClient, withInterceptors, withInterceptorsFromDi } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AccountRoutingModule } from './account-routing.module';
+import { SharedComponentModule } from 'app/common_components/shared-component.module';
+
+import { AccountCenterComponent } from './account-center/account-center.component';
+import { AccountCreateComponent } from './account-create/account-create.component';
 import { AccountListComponent } from './account-list/account-list.component';
-import { NavBarComponent } from '../common_components/nav-bar/nav-bar.component';
+import { AccountTableComponent } from './account-table/account-table.component';
+
+import { CategoryModule } from 'app/category/category.module';
 
 import { JwtInterceptor } from '../interceptors/jwt-interceptor.interceptor';
 
 // Primeng Modules
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DatePicker } from 'primeng/datepicker';
+import { DialogModule } from 'primeng/dialog';
+import { FloatLabel  } from 'primeng/floatlabel';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { InputTextModule } from 'primeng/inputtext';
+import { MessageModule } from 'primeng/message';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { PanelModule } from 'primeng/panel';
+import { Select } from 'primeng/select';
+import { TableModule } from 'primeng/table';
+import { ToastModule } from 'primeng/toast';
 
-/**
-  Despite that the module in the level path where NavbarComponent
-  is placed, set up MenubarModule, this one is not knowing
-  by the current module, so, we have to import it here.
-*/
-import { MenubarModule } from 'primeng/menubar';
-
-@NgModule({
-  declarations: [
-    AccountListComponent,
-    NavBarComponent
-  ],
-  imports: [
-    CommonModule,
-    MenubarModule,
-    HttpClientModule,
-    AccountRoutingModule,
-  ],
-  providers: [
-    /**
-     * It's necessary to provide the HttpClient
-     * and set up the Interceptors if it has one or more.
-     */
-    provideHttpClient(
-      withInterceptors([JwtInterceptor])
-    ),
-  ]
-})
+@NgModule({ 
+    declarations: [
+        AccountCenterComponent,
+        AccountCreateComponent,
+        AccountListComponent,
+        AccountTableComponent
+    ], 
+    imports: [
+        CommonModule,
+        BrowserModule,
+        BrowserAnimationsModule,
+        ReactiveFormsModule,
+        ButtonModule,
+        CardModule,
+        CategoryModule,
+        ConfirmDialogModule,
+        DatePicker,
+        DialogModule,
+        FloatLabel,
+        FormsModule,
+        InputNumberModule,
+        InputTextModule,
+        MessageModule,
+        MultiSelectModule,
+        PanelModule,
+        Select,
+        TableModule,
+        ToastModule,
+        SharedComponentModule,
+        AccountRoutingModule
+    ], 
+    providers: [
+        /**
+         * It's necessary to provide the HttpClient
+         * and set up the Interceptors if it has one or more.
+         */
+        provideHttpClient(withInterceptors([JwtInterceptor])),
+        provideHttpClient(withInterceptorsFromDi()),
+    ] })
 export class AccountModule { }
