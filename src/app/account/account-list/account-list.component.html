@@ -1,3 +1,144 @@
-<app-nav-bar></app-nav-bar>
+<div class="card flex justify-center">
+  <p-toast />
+</div>
 
-<p>account-list works!</p>
+<!-- 
+  The exclamation marks in the attribute class works as a modifier
+  that indicates we will use a tailwind class instead others. 
+-->
+<div class="!grid !grid-cols-12 !gap-4 !ml-4">
+  <div class="col-span-full md:col-span-3 lg:col-span-2 !pr-2">
+
+    <div class="basis-full sm:basis-1/2 md:basis-full mb-5 sm:pr-2 md:pr-0">
+      <p-button 
+        size="small" 
+        label="Add Category" 
+        icon="pi pi-plus-circle"
+        styleClass="w-full !mt-4 !mb-2"
+        severity="info"
+        (onClick)="showDialogCategory()"
+      />
+    </div>
+
+    <p class="mt-5 !mb-12 text-lg font-semibold">
+      <span class="pi pi-filter"></span>
+      Filter Accounts
+    </p>
+
+    <form [formGroup]="filterForm" (ngSubmit)="filterAccounts()" class="flex flex-wrap">
+      <div class="basis-full sm:basis-1/2 md:basis-full mb-5 sm:pr-2 md:pr-0">
+        <p-floatLabel>
+          <p-datepicker 
+            inputId="init_date" 
+            formControlName="init_date"
+            [showButtonBar]="true" 
+            styleClass="h-9 w-full"
+            dateFormat="yy-mm-dd"
+            [showIcon]="true"
+            [iconDisplay]="'input'"
+          />
+          <label for="init_date">Start Date:</label>
+        </p-floatLabel>
+      </div>
+    
+      <div class="basis-full sm:basis-1/2 md:basis-full mb-5 sm:pr-2 lg:pr-0">
+        <p-floatLabel>
+          <p-datepicker 
+            inputId="end_date" 
+            formControlName="end_date"
+            [showButtonBar]="true" 
+            styleClass="h-9 w-full"
+            dateFormat="yy-mm-dd"
+            [showIcon]="true"
+            [iconDisplay]="'input'"
+          />
+          <label for="end_date">End Date:</label>
+        </p-floatLabel>
+      </div>
+      <div class="basis-full sm:basis-1/2 md:basis-full mb-5 sm:pr-2 md:pr-0">
+        <p-floatlabel>
+            <p-select 
+              id="filter-statement"
+              formControlName="statementFilter" 
+              [options]="statementList"
+              [showClear]="true"
+              optionLabel="name"
+              optionValue="id"
+              styleClass="h-9 w-full items-center"
+              panelStyleClass="block w-full border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 p-1"
+              [filter]="true"
+              filterBy="name"
+            />
+            <label for="filter-statement" class="">Statement Filter:</label>
+          </p-floatlabel>
+      </div>
+    
+      <div class="basis-full sm:basis-1/2 md:basis-full mb-5 sm:pr-2 md:pr-0">
+        <p-floatLabel>
+            <p-multiselect
+              [options]="categoryList"
+              display="chip"
+              formControlName="categoryFilter"
+              optionLabel="name"
+              optionValue="id"
+              styleClass="h-9 w-full items-center"
+              panelStyleClass="block w-full border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 p-1"
+              filterBy="name"
+              size="small"
+            />
+            <label for="category-statement" class="">Category Filter:</label>
+          </p-floatLabel>
+      </div>
+    
+      <div class="flex justify-center mb-5 w-full">
+        <div class="max-sm:w-full sm:w-1/2 md:w-full">
+          <p-button size="small" type="submit" label="Search" styleClass="h-9 w-full" icon="pi pi-search"/>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="col-span-full md:col-span-9 lg:col-span-10 pr-4">
+    <app-account-create
+      [categoryList]="categoryList"
+      (onSubmitEvent)="onSubmit($event)"
+      (errorRequestEvent)="errorRequestToast($event)"
+    ></app-account-create>
+
+    <app-account-table 
+      [financialDataList]="financialDataList"
+      [categoryList]="categoryList"
+      (onSubmitEvent)="onSubmit($event)"
+      (errorRequestEvent)="errorRequestToast($event)"
+      (onDeleteEvent)="onDelete($event)"
+      [statementName]="statementName"
+      [dateStart]="dateStart"
+      [dateEnd]="dateEnd"
+    ></app-account-table>
+  </div>
+</div>
+
+<p-dialog
+  [modal]="true"
+  [(visible)]="visibleCategory"
+  [closable]="false"
+  >
+  <ng-template #headless>
+    <div class="flex justify-end !mt-1">
+      <p-button 
+        size="small"
+        icon="pi pi-times"
+        severity="secondary"
+        [rounded]="true" 
+        [text]="true"
+        (onClick)="closeDialogCategory()"
+      ></p-button>
+    </div>
+
+    <app-category-form 
+      [titleCard]="'Create'"
+      (onSubmit)="onCreateCategory($event)"
+      [enableButton]="true"
+    />
+  </ng-template>
+</p-dialog>

@@ -1,0 +1,208 @@
+<p-table 
+  styleClass="p-datatable-sm mt-4"
+  scrollHeight="700px"
+  showGridlines
+  stripedRows
+  sortMode="multiple"
+  dataKey="id"
+  editMode="row"
+  size="small"
+  [paginator]="true"
+  [rows]="10"
+  [rowsPerPageOptions]="[5, 10, 25, 50, 100]"
+  [scrollable]="true" 
+  [value]="financialDataList"
+  [editingRowKeys]="editingRowKeys"
+>
+  <ng-template #caption>
+    <div class="flex align-items-center justify-content-between">
+        <p>{{ statementName }}</p>
+        <p>
+          {{ dateStart }}
+          {{ ((dateEnd == null || dateEnd == '') ? '' : ' to ' + dateEnd) }}
+        </p>
+    </div>
+  </ng-template>
+  <ng-template #header>
+      <tr>
+          <th pSortableColumn="date">Date <p-sortIcon field="date" /></th>
+          <th pSortableColumn="financialStatement.name">Statement <p-sortIcon field="financialStatement.name" /></th>
+          <th pSortableColumn="categoryDTO.name">Category <p-sortIcon field="financialStatement.name" /></th>
+          <th>Income</th>
+          <th>Outlay</th>
+          <th>Total</th>
+          <th>Actions</th>
+      </tr>
+  </ng-template>
+  <ng-template #body let-financialData let-editing="editing" let-ri="rowIndex">
+      <tr [pEditableRow]="financialData" class="text-base">
+        <td>
+          <p-cellEditor>
+            <ng-template #input>
+              <p-datepicker 
+                [iconDisplay]="'input'"
+                [showButtonBar]="true" 
+                [showIcon]="true"
+                [(ngModel)]="financialData.date"
+                styleClass="h-9 !w-40"
+                dateFormat="yy-mm-dd"
+                appendTo="body"
+                size="small"
+                (onSelect)="getAllStatementByDate(financialData.date, financialData)"
+                (onInput)="getAllStatementByDate(financialData.date, financialData)"
+                [class]="(
+                  errorList.length > 0 
+                  && errorList[financialData.id] != undefined 
+                  && errorList[financialData.id].date != undefined 
+                  ) ? 'ng-invalid ng-dirty' : ''"
+              />
+
+              <div *ngIf="errorList.length > 0 && errorList[financialData.id] != undefined && errorList[financialData.id].date != undefined">
+                <p class="mt-2 text-sm !text-red-600 dark:text-red-500"><span class="font-medium">{{ errorList[financialData.id].date }}</span></p>
+              </div>
+            </ng-template>
+
+            <ng-template #output>
+              {{ financialData.date }}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <td>
+          <p-cellEditor>
+            <ng-template #input>
+              <p-select
+                [options]="statementsByDate"
+                optionLabel="name"
+                optionValue="id"
+                [(ngModel)]="financialData.financialStatement.id"
+                styleClass="h-9 !w-40 items-center"
+                appendTo="body"
+                required=""
+              ></p-select>
+            </ng-template>
+            <ng-template #output>
+              {{ financialData.financialStatement.name }}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <td>
+          <p-cellEditor>
+            <ng-template #input>
+              <p-select
+                [options]="categoryList"
+                optionLabel="name"
+                optionValue="id"
+                [(ngModel)]="financialData.categoryDTO.id"
+                styleClass="h-9 !w-40 items-center"
+                appendTo="body"
+                required=""
+              ></p-select>
+            </ng-template>
+            <ng-template #output>
+              {{ financialData.categoryDTO.name }}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+
+        @if (getTypeCatalogue(financialData.categoryDTO) != 1)
+        {
+          <td></td>
+        }
+
+        <td>
+          <p-cellEditor>
+            <ng-template #input>
+              <p-inputNumber 
+                size="small"
+                [(ngModel)]="financialData.amount"
+                mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="5"
+                class="w-full h-9"
+                styleClass="text-base text-color surface-overlay p-2 border-1 border-solid surface-border rounded-sm appearance-none outline-none focus:border-primary !w-full"
+                [class]="(
+                  errorList.length > 0 
+                  && errorList[financialData.id] != undefined 
+                  && errorList[financialData.id].amount != undefined 
+                  ) ? 'ng-invalid ng-dirty' : ''"
+              />
+
+              <div *ngIf="errorList.length > 0 && errorList[financialData.id] != undefined && errorList[financialData.id].amount != undefined">
+                <p class="mt-2 text-sm !text-red-600 dark:text-red-500"><span class="font-medium">{{ errorList[financialData.id].amount }}</span></p>
+              </div>
+            </ng-template>
+            <ng-template #output>
+              {{ financialData.amount | currency }}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+
+        @if (getTypeCatalogue(financialData.categoryDTO) == 1)
+        {
+          <td></td>
+        }
+        
+        <td>{{ financialData.total | currency }}</td>
+
+        <td class="text-center">
+            <p-button 
+              *ngIf="!editing"
+              styleClass="h-7 !w-9 !mr-1 !mb-1"
+              size="small" 
+              severity="info"
+              icon="pi pi-file-edit"
+              pInitEditableRow
+              (click)="onRowEditInit(financialData)"
+            />
+            <p-button
+              *ngIf="!editing"
+              styleClass="h-7 !w-9"
+              size="small"
+              severity="danger" 
+              icon="pi pi-trash"
+              (onClick)="deleteAccount(financialData.id, financialData.financialStatement.id)"
+            />
+
+            <!-- Editing Buttons -->
+            <button
+              *ngIf="editing"
+              pButton
+              pRipple
+              type="button"
+              pSaveEditableRow
+              (click)="onRowEditSave(financialData, ri)"
+              icon="pi pi-check"
+              text
+              rounded
+              severity="secondary"
+            ></button>
+            <button
+              *ngIf="editing"
+              pButton
+              pRipple
+              type="button"
+              pCancelEditableRow
+              icon="pi pi-times"
+              (click)="onRowEditCancel(financialData, ri)"
+              text
+              rounded
+              severity="secondary"
+            ></button>
+        </td>
+    </tr>
+  </ng-template>
+
+  <ng-template #emptymessage>
+    <tr>
+      <td colspan="7">
+        <p-message 
+          icon="pi pi-exclamation-circle"
+          styleClass="!w-full !text-end"
+        >
+          Select a Financial Statement to see your Accounts
+        </p-message>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<p-confirmdialog />
+<p-toast />

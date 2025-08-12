@@ -1,0 +1,119 @@
+<form [formGroup]="accountForm" (ngSubmit)="onSubmit()">
+    <p-panel      
+      [toggleable]="true" 
+      [(collapsed)]="toggle"
+      styleClass="!mt-4 !mb-6"
+    >
+    <ng-template #header>
+      <span class="font-bold">Add Account</span>
+    </ng-template>
+
+    <div class="!grid !grid-cols-4 !gap-8 lg:gap-4 md:mb-1 lg:mb-2 !mt-3">
+        <div class="col-span-full sm:col-span-2 lg:col-span-1 md:mt-0">
+          <p-floatLabel>
+            <p-datepicker 
+              inputId="date" 
+              formControlName="date"
+              [showButtonBar]="true" 
+              styleClass="h-9 w-full"
+              dateFormat="yy-mm-dd"
+              [showIcon]="true"
+              [iconDisplay]="'input'"
+              (onSelect)="getAllStatementByDate()"
+              (onInput)="getAllStatementByDate()"
+            />
+            <label for="date">Date:</label>
+          </p-floatLabel>
+
+          <div *ngIf="date?.invalid && (date?.dirty || date?.touched)">
+            <div *ngIf="date?.hasError('required')">
+              <p class="mt-2 text-sm !text-red-600 !dark:text-red-500"><span class="font-medium">Date is required!</span></p>
+            </div>
+          </div>
+        </div>
+  
+        <div class="col-span-full sm:col-span-2 lg:col-span-1 md:mt-0">
+          <p-floatLabel>
+            <p-select 
+              id="statement-by-date"
+              formControlName="financial_statement" 
+              [options]="statementsByDate"
+              [showClear]="true"
+              optionLabel="name"
+              optionValue="id"
+              styleClass="h-9 w-full items-center"
+              panelStyleClass="block w-full border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 p-1"
+            />
+            <label for="statement-by-date">Fin. statement:</label>
+          </p-floatLabel>
+
+          <div *ngIf="financial_statement?.invalid && (financial_statement?.dirty || financial_statement?.touched)">
+            <div *ngIf="financial_statement?.hasError('required')">
+              <p class="mt-2 text-sm !text-red-600 dark:text-red-500"><span class="font-medium">Fin. statement is required!</span></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-span-full sm:col-span-2 lg:col-span-1 md:mt-0">
+          <p-floatLabel>
+            <p-select 
+              id="category"
+              formControlName="category_id" 
+              [options]="categoryList"
+              [showClear]="true"
+              optionLabel="name"
+              optionValue="id"
+              [filter]="true"
+              filterBy="name"
+              styleClass="h-9 w-full items-center"
+              panelStyleClass="block w-full border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 p-1"
+            />
+            <label for="category" class="">Category:</label>
+          </p-floatLabel>
+
+          <div *ngIf="category_id?.invalid && (category_id?.dirty || category_id?.touched)">
+            <div *ngIf="category_id?.hasError('required')">
+              <p class="mt-2 text-sm !text-red-600 dark:text-red-500"><span class="font-medium">Category is required!</span></p>
+            </div>
+          </div>
+        </div>
+  
+        <div class="col-span-full sm:col-span-2 lg:col-span-1 md:mt-0">
+          <p-floatLabel>
+             <p-inputNumber 
+                inputId="amout"
+                size="small"
+                id="amount"
+                formControlName="amount"
+                mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="5"
+                class="w-full h-9"
+                styleClass="text-base text-color surface-overlay p-2 border-1 border-solid surface-border rounded-sm appearance-none outline-none focus:border-primary !w-full"
+              />
+            <label for="amount">Amount:</label>
+          </p-floatLabel>
+
+          <div *ngIf="amount!.invalid && (amount!.dirty || amount!.touched)">
+            <div *ngIf="amount!.hasError('required')">
+              <p class="mt-2 text-sm !text-red-600 dark:text-red-500"><span class="font-medium">Amount is required!</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="!flex !flex-row !mb-2 !mt-3" *ngIf="(validationError !== null && validationError !== undefined) && validationError.length > 0">
+        <div class="flex-auto">
+          @for(error of validationError; track error)
+          {
+            <p class="mt-2 text-sm !text-red-600 dark:text-red-500"><span class="font-medium">*{{ error }}</span></p>
+          }
+        </div>
+      </div>
+    
+      <ng-template pTemplate="footer">
+        <div class="flex flex-wrap align-items-center gap-3 justify-end">
+          <p-button size="small" severity="secondary" styleClass="h-9" label="Cancel" (onClick)="togglePanel()"/>
+          <p-button type="submit" size="small" icon="pi pi-plus-circle" styleClass="h-9" label="Add" [disabled]="!accountForm.valid"/>
+        </div>
+      </ng-template>
+    </p-panel>
+  </form>

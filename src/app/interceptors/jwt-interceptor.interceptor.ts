@@ -1,7 +1,10 @@
-import { HttpEvent, HttpHandler, HttpHandlerFn, HttpInterceptorFn, HttpRequest, HttpResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpEvent, HttpHandlerFn, HttpRequest, HttpResponse } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { LocalStorageService } from '../services/local-storage.service';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
+import { Router } from '@angular/router';
+
+import { environment } from 'environments/environment';
 
 /**
  * INTERCEPTORS
@@ -12,11 +15,11 @@ import { Observable } from 'rxjs';
  */
 export function JwtInterceptor (req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>>
 {
-  const LOGIN_URL = "/api/login";
+  const LOGIN_URL = environment.apiUrl + "/api/login";
+  const SIGNUP = environment.apiUrl + "/api/signup";
+  const OK = environment.apiUrl + "/api/ok_prueba";
 
-  console.log(req.url);
-
-  if (req.url === LOGIN_URL)
+  if (req.url === LOGIN_URL || req.url === SIGNUP || req.url === OK )
     return next(req);
 
   /**
@@ -24,6 +27,7 @@ export function JwtInterceptor (req: HttpRequest<unknown>, next: HttpHandlerFn):
    * to use its functionality here.
    */
   let token: string | any = inject(LocalStorageService).getItem("Bearer-token");
+  let router: Router = inject(Router);
 
   /**
    * Here we clone the request to add the bearer token,
@@ -36,5 +40,20 @@ export function JwtInterceptor (req: HttpRequest<unknown>, next: HttpHandlerFn):
     }
   });
 
-    return next(newRequest);
+  return next(newRequest).pipe(
+    tap({
+      next: (event) => {
+        if (event instanceof HttpResponse && (event.hasOwnProperty("status") && event.status == 401))
+        {
+          router.navigate(["/login"]);
+        }
+      },
+      error: (error) => {
+        if (error instanceof HttpErrorResponse && (error.hasOwnProperty("status") && error.status == 401))
+        {
+          router.navigate(["/login"]);
+        }
+      }
+    })
+  );
 };
